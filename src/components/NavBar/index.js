@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FaUserAlt } from 'react-icons/fa'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Logo from 'components/Logo'
 
@@ -36,6 +37,7 @@ export default class NavBar extends Component {
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {user.username}
+                  {!user.photo && <FaUserAlt className="mx-2" />}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={() => navigate('/me')}>Profile</DropdownItem>

@@ -1,9 +1,8 @@
-import { createAction, handleActions } from 'redux-actions'
-import { REQUEST_INITIAL, REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_FAIL } from 'constants.js'
+import { createAction, handleActions, combineActions } from 'redux-actions'
 import { getAuthData, setAuthData, clearAuthData } from 'utils/storage'
 import { successAction, failAction } from 'utils/state-helpers'
 
-import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT, SEND_VERIFY_EMAIL } from './constants'
 
 /* Inital state */
 
@@ -27,30 +26,34 @@ export const register = createAction(AUTH_REGISTER)
 export const registerSuccess = createAction(successAction(AUTH_REGISTER))
 export const registerFail = createAction(failAction(AUTH_REGISTER))
 
+export const sendVerifyEmail = createAction(SEND_VERIFY_EMAIL)
+export const sendVerifyEmailSuccess = createAction(successAction(SEND_VERIFY_EMAIL))
+export const sendVerifyEmailFail = createAction(successAction(SEND_VERIFY_EMAIL))
+
 export const reducer = handleActions(
   {
-    [AUTH_LOGIN]: state => ({ ...state, status: REQUEST_PENDING }),
-
-    [successAction(AUTH_LOGIN)]: (state, { payload }) => {
+    [successAction(AUTH_LOGIN)]: (state, { payload, type }) => {
       setAuthData(payload)
-      return { ...state, user: payload.user, status: REQUEST_SUCCESS }
+      return { ...state, user: payload.user, status: type }
     },
 
-    [failAction(AUTH_LOGIN)]: (state, { payload }) => ({ ...state, status: REQUEST_FAIL, error: payload }),
+    [successAction(AUTH_REGISTER)]: (state, { payload, type }) => {
+      setAuthData(payload)
+      return { ...state, user: payload.user, status: type }
+    },
 
-    [AUTH_LOGOUT]: state => {
+    [AUTH_LOGOUT]: (state, { type }) => {
       clearAuthData()
-      return { ...state, user: null, state: REQUEST_INITIAL }
+      return { ...state, user: null, state: type }
     },
 
-    [AUTH_REGISTER]: state => ({ ...state, status: REQUEST_PENDING }),
+    [combineActions(AUTH_LOGIN, AUTH_REGISTER, SEND_VERIFY_EMAIL, successAction(SEND_VERIFY_EMAIL))]: (state, { type }) => ({ ...state, status: type }),
 
-    [successAction(AUTH_REGISTER)]: (state, { payload }) => {
-      setAuthData(payload)
-      return { ...state, user: payload.user, status: REQUEST_SUCCESS }
-    },
-
-    [failAction(AUTH_REGISTER)]: (state, { payload }) => ({ ...state, status: REQUEST_FAIL, error: payload }),
+    [combineActions(failAction(AUTH_REGISTER), failAction(AUTH_LOGIN), failAction(SEND_VERIFY_EMAIL))]: (state, { payload, type }) => ({
+      ...state,
+      status: type,
+      error: payload,
+    }),
   },
   initialState,
 )

@@ -5,7 +5,6 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import { all } from 'redux-saga/effects'
-// import logger from 'redux-logger'
 
 import authMiddleware from 'store/middlewares/auth'
 

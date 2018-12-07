@@ -3,9 +3,9 @@ import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
 
-import { AUTH_LOGIN, AUTH_REGISTER } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, SEND_VERIFY_EMAIL } from './constants'
 
-import { logInSuccess, logInFail, registerSuccess, registerFail } from './reducer'
+import { logInSuccess, logInFail, registerSuccess, registerFail, sendVerifyEmailSuccess, sendVerifyEmailFail } from './reducer'
 
 const doLogIn = function*({ payload }) {
   try {
@@ -25,7 +25,17 @@ const doRegister = function*({ payload }) {
   }
 }
 
+const doSendVerifyEmail = function*() {
+  try {
+    yield call(axios.get, `${API_BASE_URL}/auth/email-verify`)
+    yield put(sendVerifyEmailSuccess())
+  } catch (error) {
+    yield put(sendVerifyEmailFail(error.response ? error.response.data : {}))
+  }
+}
+
 export const saga = function*() {
   yield takeLatest(AUTH_LOGIN, doLogIn)
   yield takeLatest(AUTH_REGISTER, doRegister)
+  yield takeLatest(SEND_VERIFY_EMAIL, doSendVerifyEmail)
 }

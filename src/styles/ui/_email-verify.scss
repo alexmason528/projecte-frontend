@@ -1,0 +1,9 @@
+.verify-alert-loader {
+  background-color: rgba(0, 0, 0, 0.1);
+
+  & > div {
+    @include pos-center();
+  }
+
+  @include pos-full();
+}
