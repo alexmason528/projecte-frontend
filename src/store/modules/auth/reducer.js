@@ -3,7 +3,7 @@ import { REQUEST_INITIAL, REQUEST_PENDING, REQUEST_SUCCESS, REQUEST_FAIL } from 
 import { getAuthData, setAuthData, clearAuthData } from 'utils/storage'
 import { successAction, failAction } from 'utils/state-helpers'
 
-import { AUTH_LOGIN, AUTH_LOGOUT } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT } from './constants'
 
 /* Inital state */
 
@@ -20,7 +20,12 @@ const initialState = {
 export const logIn = createAction(AUTH_LOGIN)
 export const logInSuccess = createAction(successAction(AUTH_LOGIN))
 export const logInFail = createAction(failAction(AUTH_LOGIN))
+
 export const logOut = createAction(AUTH_LOGOUT)
+
+export const register = createAction(AUTH_REGISTER)
+export const registerSuccess = createAction(successAction(AUTH_REGISTER))
+export const registerFail = createAction(failAction(AUTH_REGISTER))
 
 export const reducer = handleActions(
   {
@@ -37,6 +42,15 @@ export const reducer = handleActions(
       clearAuthData()
       return { ...state, user: null, state: REQUEST_INITIAL }
     },
+
+    [AUTH_REGISTER]: state => ({ ...state, status: REQUEST_PENDING }),
+
+    [successAction(AUTH_REGISTER)]: (state, { payload }) => {
+      setAuthData(payload)
+      return { ...state, user: payload.user, status: REQUEST_SUCCESS }
+    },
+
+    [failAction(AUTH_REGISTER)]: (state, { payload }) => ({ ...state, status: REQUEST_FAIL, error: payload }),
   },
   initialState,
 )

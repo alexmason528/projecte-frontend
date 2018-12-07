@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import { Button, Form } from 'reactstrap'
+import { Button, Form, Row, Col } from 'reactstrap'
 import { renderInput } from 'components/FormComponents'
 import validate from './validate'
 
@@ -15,10 +15,20 @@ class LogInForm extends Component {
 
     return (
       <Form onSubmit={handleSubmit}>
-        <h4 className="text-uppercase">LogIn</h4>
-        <Field className="form-input" name="username" placeholder="Username" component={renderInput} />
-        <Field className="form-input" name="password" type="password" placeholder="Password" component={renderInput} />
-        <Button className="form-submit-btn w-100">Log In</Button>
+        <Row>
+          <Col md={12}>
+            <h4 className="text-uppercase">LogIn</h4>
+          </Col>
+          <Col md={12} className="mb-3">
+            <Field className="form-input" name="username" placeholder="Username" component={renderInput} />
+          </Col>
+          <Col md={12} className="mb-3">
+            <Field className="form-input" name="password" type="password" placeholder="Password" component={renderInput} />
+          </Col>
+          <Col md={12} className="mb-3">
+            <Button className="form-submit-btn w-100">Log In</Button>
+          </Col>
+        </Row>
       </Form>
     )
   }

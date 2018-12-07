@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export class MyListings extends Component {
   render() {
-    return <div>This is my listings</div>
+    return <h3>My Listings</h3>
   }
 }
 

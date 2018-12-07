@@ -5,7 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import { all } from 'redux-saga/effects'
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 
 import authMiddleware from 'store/middlewares/auth'
 
@@ -20,7 +20,7 @@ const middleware = routerMiddleware(history)
 // Redux-saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
-const middlewares = [middleware, sagaMiddleware, authMiddleware, logger]
+const middlewares = [middleware, sagaMiddleware, authMiddleware]
 
 const enhancers = [applyMiddleware(...middlewares)]
 

@@ -24,9 +24,9 @@ export default class NavBar extends Component {
     const { isOpen } = this.state
 
     return (
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" light expand="md" style={{ padding: '1.5rem 0' }}>
         <div className="d-flex align-items-center">
-          <Logo onClick={() => navigate('/')} />
+          <Logo className="mr-4 c-pointer" onClick={() => navigate('/')} />
           Bares für Rares für jeden
         </div>
         <NavbarToggler onClick={this.toggle} />
@@ -43,7 +43,7 @@ export default class NavBar extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             ) : (
-              <NavItem className="text-uppercase" onClick={() => navigate('/auth')}>
+              <NavItem className="text-uppercase c-pointer" onClick={() => navigate('/auth')}>
                 Login / Register
               </NavItem>
             )}

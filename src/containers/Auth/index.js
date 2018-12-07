@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { logIn } from 'store/modules/auth'
+import { logIn, register } from 'store/modules/auth'
 import { Container, Row, Col } from 'reactstrap'
 import LogInForm from 'components/Forms/LogInForm'
 import RegisterForm from 'components/Forms/RegisterForm'
@@ -9,13 +9,16 @@ import RegisterForm from 'components/Forms/RegisterForm'
 export class Auth extends Component {
   static propTypes = {
     logIn: PropTypes.func,
+    register: PropTypes.func,
   }
 
   handleLogin = values => {
     this.props.logIn(values)
   }
 
-  handleRegister = values => {}
+  handleRegister = values => {
+    this.props.register(values)
+  }
 
   render() {
     return (
@@ -35,6 +38,7 @@ export class Auth extends Component {
 
 const actions = {
   logIn,
+  register,
 }
 
 export default connect(

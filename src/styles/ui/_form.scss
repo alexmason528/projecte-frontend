@@ -1,0 +1,28 @@
+.form-label {
+  font-family: 'Nexa Light';
+}
+
+.form-input {
+  @include border-radius(0);
+
+  background-color: $formInputColor;
+  color: black;
+  padding: 1.5rem 1rem;
+
+  &:focus {
+    background-color: $formInputColor;
+  }
+}
+
+.form-submit-btn {
+  @include border-radius(0);
+
+  border: none;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  background-color: $btnActiveColor;
+
+  &:hover {
+    background-color: lighten($btnActiveColor, 10%);
+  }
+}
