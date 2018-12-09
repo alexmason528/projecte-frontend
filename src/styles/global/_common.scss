@@ -40,6 +40,10 @@ a {
 button,
 .btn {
   outline: none !important;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .dropdown-item {

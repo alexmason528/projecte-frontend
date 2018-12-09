@@ -13,9 +13,29 @@
   @include border-radius(0);
 }
 
-.user-photo {
+.user-photo-wrapper {
   height: 183px;
-  border: 1px solid $btnInactiveColor;
+  position: relative;
+}
+
+.user-photo {
+  background-size: cover;
+  @include pos-full();
+}
+
+.user-photo-discard {
+  color: white;
+  font-size: 23px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.user-dummy {
+  font-size: 50px;
+  color: #ccc;
+  @include pos-center();
 }
 
 .user-stats {

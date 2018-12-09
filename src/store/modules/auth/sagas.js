@@ -1,10 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
 import axios from 'axios'
+import { setAuthData } from 'utils/storage'
 import { parseError } from 'utils/error-parser'
 
 import { API_BASE_URL } from 'config/base'
 
-import { AUTH_LOGIN, AUTH_REGISTER, SEND_VERIFY_EMAIL, VERIFY_EMAIL } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, SEND_VERIFY_EMAIL, VERIFY_EMAIL, UPDATE_PROFILE } from './constants'
 
 import {
   logInSuccess,
@@ -15,11 +16,14 @@ import {
   sendVerifyEmailFail,
   verifyEmailSuccess,
   verifyEmailFail,
+  updateProfileSuccess,
+  updateProfileFail,
 } from './reducer'
 
 const doLogIn = function*({ payload }) {
   try {
     const res = yield call(axios.post, `${API_BASE_URL}/auth/login`, payload)
+    setAuthData(res.data)
     yield put(logInSuccess(res.data))
   } catch (error) {
     yield put(logInFail(parseError(error)))
@@ -29,6 +33,7 @@ const doLogIn = function*({ payload }) {
 const doRegister = function*({ payload }) {
   try {
     const res = yield call(axios.post, `${API_BASE_URL}/auth/register`, payload)
+    setAuthData(res.data)
     yield put(registerSuccess(res.data))
   } catch (error) {
     yield put(registerFail(parseError(error)))
@@ -46,13 +51,21 @@ const doSendVerifyEmail = function*() {
 
 const doVerifyEmail = function*({ payload }) {
   try {
-    const auth = yield call(axios.post, `${API_BASE_URL}/auth/verify-email`, payload)
-
-    localStorage.setItem('auth', JSON.stringify(auth))
-
-    yield put(verifyEmailSuccess(auth))
+    const res = yield call(axios.post, `${API_BASE_URL}/auth/verify-email`, payload)
+    setAuthData(res.data)
+    yield put(verifyEmailSuccess(res.data))
   } catch (error) {
     yield put(verifyEmailFail(parseError(error)))
+  }
+}
+
+const doUpdateProfile = function*({ payload }) {
+  try {
+    const res = yield call(axios.patch, `${API_BASE_URL}/auth/profile`, payload, { headers: { 'Content-Type': 'multipart/form-data' } })
+    setAuthData(res.data)
+    yield put(updateProfileSuccess(res.data))
+  } catch (error) {
+    yield put(updateProfileFail(parseError(error)))
   }
 }
 
@@ -61,4 +74,5 @@ export const saga = function*() {
   yield takeLatest(AUTH_REGISTER, doRegister)
   yield takeLatest(SEND_VERIFY_EMAIL, doSendVerifyEmail)
   yield takeLatest(VERIFY_EMAIL, doVerifyEmail)
+  yield takeLatest(UPDATE_PROFILE, doUpdateProfile)
 }

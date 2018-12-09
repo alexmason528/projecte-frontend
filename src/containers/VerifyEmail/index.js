@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 import { Button, Container, Row, Col } from 'reactstrap'
-import { ClipLoader } from 'react-spinners'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
 import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, VERIFY_EMAIL } from 'store/modules/auth'
+import { QuarterSpinner } from 'components/SvgIcon'
 import { successAction, failAction } from 'utils/state-helpers'
 
 export class VerifyEmail extends Component {
@@ -72,7 +72,7 @@ export class VerifyEmail extends Component {
           <Col md={12}>{this.getTitle()}</Col>
           {loading && (
             <Col md={12}>
-              <ClipLoader size={50} color="#007bff" />
+              <QuarterSpinner />
             </Col>
           )}
 

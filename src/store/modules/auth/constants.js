@@ -7,3 +7,5 @@ export const AUTH_LOGOUT = 'projecte/auth/logout'
 export const SEND_VERIFY_EMAIL = 'projecte/auth/send_verify_email'
 
 export const VERIFY_EMAIL = 'projecte/auth/verify_email'
+
+export const UPDATE_PROFILE = 'projecte/auth/update_profile'

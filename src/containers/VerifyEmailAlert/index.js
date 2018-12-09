@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button, UncontrolledAlert } from 'reactstrap'
-import { BounceLoader } from 'react-spinners'
 import swal from 'sweetalert'
 import { sendVerifyEmail, selectUserData, selectAuthStatus, SEND_VERIFY_EMAIL } from 'store/modules/auth'
+import { QuarterSpinner } from 'components/SvgIcon'
 import { successAction } from 'utils/state-helpers'
 
 export class VerifyEmailAlert extends Component {
@@ -28,7 +28,7 @@ export class VerifyEmailAlert extends Component {
         icon: success ? 'success' : 'error',
         text: success
           ? 'Successfully sent verification code to your email.\n\n Check your inbox.'
-          : 'Failed to send verification code to your email',
+          : 'Failed to send verification code to your email.',
       })
     }
   }
@@ -58,7 +58,7 @@ export class VerifyEmailAlert extends Component {
         to send verification email.
         {pending && (
           <div className="verify-alert-loader">
-            <BounceLoader size={30} color="#856404" />
+            <QuarterSpinner />
           </div>
         )}
       </UncontrolledAlert>

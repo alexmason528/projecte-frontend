@@ -3,23 +3,25 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Row, Col, Button, Form } from 'reactstrap'
+import { Row, Col, Form } from 'reactstrap'
 import { selectUserData } from 'store/modules/auth'
-import { renderInput } from 'components/FormComponents'
+import { renderInput, renderPhotoField } from 'components/FormComponents'
+import Button from 'components/LoaderButton'
 import validate from './validate'
 
 class ProfileForm extends Component {
   static propTypes = {
+    loading: PropTypes.bool,
     handleSubmit: PropTypes.func,
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { loading, handleSubmit } = this.props
 
     return (
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col md={8} sm={12}>
+          <Col md={9} sm={12}>
             <Row>
               <Col md={12} className="mb-3">
                 <Field className="form-input" name="username" label="Username" component={renderInput} />
@@ -28,7 +30,14 @@ class ProfileForm extends Component {
                 <Field className="form-input" name="email" label="Email" component={renderInput} />
               </Col>
               <Col md={12} className="mb-3">
-                <Field className="form-input" name="password" label="Password" type="password" placeholder="Password" component={renderInput} />
+                <Field
+                  className="form-input"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Password"
+                  component={renderInput}
+                />
               </Col>
               <Col md={12}>
                 <Field
@@ -43,15 +52,14 @@ class ProfileForm extends Component {
             </Row>
           </Col>
           <Col md={3} sm={12} className="ml-auto">
-            <div className="user-photo mb-3" />
-            <Button type="button" className="form-submit-btn w-100">
-              Upload new photo
-            </Button>
+            <Field name="photo" component={renderPhotoField} />
           </Col>
         </Row>
         <Row>
           <Col md={12} className="text-right mt-3">
-            <Button className="form-submit-btn">Update</Button>
+            <Button className="form-submit-btn" loading={loading}>
+              Update
+            </Button>
           </Col>
         </Row>
       </Form>
@@ -65,6 +73,7 @@ export default compose(
   connect(selectors),
   reduxForm({
     form: 'ProfileForm',
+    enableReinitialize: true,
     validate,
   }),
 )(ProfileForm)

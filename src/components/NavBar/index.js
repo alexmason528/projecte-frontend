@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { FaUserAlt } from 'react-icons/fa'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import Logo from 'components/Logo'
+import { API_BASE_URL } from 'config/base'
 
 export default class NavBar extends Component {
   static propTypes = {
@@ -37,7 +38,11 @@ export default class NavBar extends Component {
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {user.username}
-                  {!user.photo && <FaUserAlt className="mx-2" />}
+                  {user.photo ? (
+                    <img src={`${API_BASE_URL}${user.photo}`} className="mx-2" style={{ width: 30, height: 30 }} alt="" />
+                  ) : (
+                    <FaUserAlt className="mx-2" />
+                  )}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={() => navigate('/me')}>Profile</DropdownItem>
