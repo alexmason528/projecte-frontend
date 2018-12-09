@@ -8,7 +8,7 @@ import swal from 'sweetalert'
 import { sendVerifyEmail, selectUserData, selectAuthStatus, SEND_VERIFY_EMAIL } from 'store/modules/auth'
 import { successAction } from 'utils/state-helpers'
 
-export class EmailVerifyAlert extends Component {
+export class VerifyEmailAlert extends Component {
   static propTypes = {
     user: PropTypes.shape({
       username: PropTypes.string,
@@ -78,4 +78,4 @@ const actions = {
 export default connect(
   selectors,
   actions,
-)(EmailVerifyAlert)
+)(VerifyEmailAlert)

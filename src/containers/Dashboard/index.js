@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import EmailVerifyAlert from 'containers/EmailVerifyAlert'
+import VerifyEmailAlert from 'containers/VerifyEmailAlert'
 
 export class Dashboard extends Component {
   render() {
@@ -8,7 +8,7 @@ export class Dashboard extends Component {
       <Container>
         <Row>
           <Col md={12}>
-            <EmailVerifyAlert />
+            <VerifyEmailAlert />
           </Col>
           <Col md={12}>
             <h3>Dashboard</h3>

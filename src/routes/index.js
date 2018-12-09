@@ -10,7 +10,7 @@ import Profile from 'containers/Profile'
 import MyListings from 'containers/MyListings'
 import WatchList from 'containers/WatchList'
 import Notifications from 'containers/Notifications'
-import EmailVerify from 'containers/EmailVerify'
+import VerifyEmail from 'containers/VerifyEmail'
 
 const UserRoutes = () => (
   <UserDetailLayout>
@@ -30,7 +30,7 @@ const Routes = () => (
       <ScrollToTop>
         <Route path="/auth" component={userIsNotAuthenticated(Auth)} />
         <Route path="/me" component={userIsAuthenticated(UserRoutes)} />
-        <Route path="/email-verify" component={EmailVerify} />
+        <Route path="/verify-email" component={VerifyEmail} />
         <Route exact path="/" component={Dashboard} />
       </ScrollToTop>
     </MainLayout>

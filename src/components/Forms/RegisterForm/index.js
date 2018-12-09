@@ -16,9 +16,6 @@ class RegisterForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col md={12}>
-            <h4 className="text-uppercase">Register</h4>
-          </Col>
           <Col md={12} className="mb-3">
             <Field className="form-input" name="username" placeholder="Username" component={renderInput} />
           </Col>

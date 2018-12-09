@@ -5,9 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import { all } from 'redux-saga/effects'
-
 import authMiddleware from 'store/middlewares/auth'
-
 import { reducer as authReducer, saga as authSaga } from 'store/modules/auth'
 
 // Create a history of your choosing (we're using a browser history in this case)
