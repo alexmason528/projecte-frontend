@@ -1,0 +1,37 @@
+.pe-btn {
+  padding: 0.8rem;
+  color: white;
+  background-color: $primaryColor;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($primaryColor, 10%);
+  }
+}
+
+.pe-heading {
+  font-weight: bold;
+  color: $primaryColor;
+  text-transform: uppercase;
+}
+
+.add-item-btn {
+  img {
+    height: 25px;
+  }
+}
+
+.category-btn {
+  padding: 2rem 4rem;
+
+  display: inline-block;
+  cursor: pointer;
+
+  img {
+    height: 80px;
+  }
+}

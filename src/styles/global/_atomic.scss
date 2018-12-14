@@ -13,3 +13,15 @@
 .decoration-none {
   text-decoration: none !important;
 }
+
+.color-primary {
+  color: $primaryColor;
+}
+
+.color-white {
+  color: white;
+}
+
+.back-primary {
+  background-color: $primaryColor;
+}

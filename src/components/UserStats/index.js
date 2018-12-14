@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import bronzeStar from 'assets/images/bronze-star.png'
 
 export default class UserStats extends Component {
   render() {
@@ -25,7 +24,7 @@ export default class UserStats extends Component {
           <Col md={6} className="py-4">
             <h3 className="mt-0 font-weight-bold">RANK</h3>
             Bronze Rater
-            <img className="user-stats-star" src={bronzeStar} alt="bronze-star" />
+            <img className="user-stats-star" src="../../assets/images/bronze-star.png" alt="bronze-star" />
           </Col>
         </Row>
       </Container>

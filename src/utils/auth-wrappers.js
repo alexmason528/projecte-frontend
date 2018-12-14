@@ -2,7 +2,7 @@ import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import { selectIsLoggedIn } from 'store/modules/auth'
 
 export const userIsAuthenticated = connectedRouterRedirect({
-  redirectPath: '/signin',
+  redirectPath: '/auth',
   allowRedirectBack: false,
   authenticatedSelector: selectIsLoggedIn,
   wrapperDisplayName: 'UserIsAuthenticated',

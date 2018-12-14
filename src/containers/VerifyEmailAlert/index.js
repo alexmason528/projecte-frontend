@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import { Button, UncontrolledAlert } from 'reactstrap'
 import swal from 'sweetalert'
 import { sendVerifyEmail, selectUserData, selectAuthStatus, SEND_VERIFY_EMAIL } from 'store/modules/auth'
-import { QuarterSpinner } from 'components/SvgIcon'
+import { QuarterSpinner } from 'components'
 import { successAction } from 'utils/state-helpers'
 
 export class VerifyEmailAlert extends Component {

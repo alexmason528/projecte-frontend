@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'reactstrap'
-import { QuarterSpinner } from 'components/SvgIcon'
+import { QuarterSpinner } from 'components'
 
 export default class LoaderButton extends Component {
   render() {

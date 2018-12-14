@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { Form, Row, Col } from 'reactstrap'
-import { renderInput } from 'components/FormComponents'
-import Button from 'components/LoaderButton'
+import { LoaderButton, renderInput } from 'components'
 import validate from './validate'
 
 class LogInForm extends Component {
@@ -25,9 +24,9 @@ class LogInForm extends Component {
             <Field className="form-input" name="password" type="password" placeholder="Password" component={renderInput} />
           </Col>
           <Col md={12} className="mb-3">
-            <Button className="form-submit-btn w-100" loading={loggingIn}>
+            <LoaderButton className="form-submit-btn w-100" loading={loggingIn}>
               Log In
-            </Button>
+            </LoaderButton>
           </Col>
         </Row>
       </Form>

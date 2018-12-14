@@ -6,8 +6,7 @@ import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 import { Container, Row, Col } from 'reactstrap'
 import { logOut, selectUserData, selectIsLoggedIn } from 'store/modules/auth'
-
-import NavBar from 'components/NavBar'
+import { NavBar } from 'components'
 
 class MainLayout extends Component {
   static propTypes = {

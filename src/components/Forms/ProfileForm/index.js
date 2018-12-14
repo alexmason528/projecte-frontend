@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Row, Col, Form } from 'reactstrap'
 import { selectUserData } from 'store/modules/auth'
-import { renderInput, renderPhotoField } from 'components/FormComponents'
-import Button from 'components/LoaderButton'
+import { LoaderButton, renderInput, renderPhotoField } from 'components'
 import validate from './validate'
 
 class ProfileForm extends Component {
@@ -57,9 +56,9 @@ class ProfileForm extends Component {
         </Row>
         <Row>
           <Col md={12} className="text-right mt-3">
-            <Button className="form-submit-btn" loading={loading}>
+            <LoaderButton className="form-submit-btn" loading={loading}>
               Update
-            </Button>
+            </LoaderButton>
           </Col>
         </Row>
       </Form>

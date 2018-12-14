@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FaUserAlt } from 'react-icons/fa'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import Logo from 'components/Logo'
+import { Logo } from 'components'
 import { API_BASE_URL } from 'config/base'
 
 export default class NavBar extends Component {

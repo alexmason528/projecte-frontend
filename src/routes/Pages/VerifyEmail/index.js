@@ -8,7 +8,7 @@ import { Button, Container, Row, Col } from 'reactstrap'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
 import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, VERIFY_EMAIL } from 'store/modules/auth'
-import { QuarterSpinner } from 'components/SvgIcon'
+import { QuarterSpinner } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
 
 export class VerifyEmail extends Component {
