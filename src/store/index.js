@@ -1,7 +1,6 @@
 import createHistory from 'history/createBrowserHistory'
 import createSagaMiddleware from 'redux-saga'
-import { combineReducers } from 'redux'
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import { all } from 'redux-saga/effects'

@@ -3,6 +3,7 @@ import { selectIsLoggedIn } from 'store/modules/auth'
 
 export const userIsAuthenticated = connectedRouterRedirect({
   redirectPath: '/signin',
+  allowRedirectBack: false,
   authenticatedSelector: selectIsLoggedIn,
   wrapperDisplayName: 'UserIsAuthenticated',
 })
