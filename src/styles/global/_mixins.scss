@@ -10,6 +10,12 @@
   -moz-transition: $args;
 }
 
+@mixin box-shadow($args...) {
+  box-shadow: $args;
+  -webkit-box-shadow: $args;
+  -moz-box-shadow: $args;
+}
+
 @mixin pos-center-y() {
   position: absolute;
   top: 50%;

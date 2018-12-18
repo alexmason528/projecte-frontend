@@ -1,0 +1,54 @@
+.wizard-nav-btn {
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+
+  .nav-order {
+    background-color: $primaryColor;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+  }
+
+  &.active,
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.item-preview {
+  width: 200px;
+  height: 150px;
+  border: 1px solid $secondaryColor;
+  background-size: cover;
+}
+
+.item-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  textarea {
+    width: 250px;
+    height: 80px;
+    resize: none;
+  }
+
+  .pe-btn {
+    padding: 0.3rem;
+  }
+}
+
+.wizard-box {
+  background-color: $primaryColor;
+  color: white;
+
+  textarea {
+    height: 150px;
+  }
+}

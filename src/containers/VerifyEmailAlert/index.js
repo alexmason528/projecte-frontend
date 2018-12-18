@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button, UncontrolledAlert } from 'reactstrap'
 import swal from 'sweetalert'
-import { sendVerifyEmail, selectUserData, selectAuthStatus, SEND_VERIFY_EMAIL } from 'store/modules/auth'
+import { sendVerifyEmail, selectUserData, selectAuthStatus, AUTH_SEND_VERIFY_EMAIL } from 'store/modules/auth'
 import { QuarterSpinner } from 'components'
 import { successAction } from 'utils/state-helpers'
 
@@ -22,8 +22,8 @@ export class VerifyEmailAlert extends Component {
   componentWillReceiveProps(nextProps) {
     const { status } = this.props
 
-    if (status === SEND_VERIFY_EMAIL && nextProps.status !== status) {
-      const success = nextProps.status === successAction(SEND_VERIFY_EMAIL)
+    if (status === AUTH_SEND_VERIFY_EMAIL && nextProps.status !== status) {
+      const success = nextProps.status === successAction(AUTH_SEND_VERIFY_EMAIL)
       swal({
         icon: success ? 'success' : 'error',
         text: success
@@ -35,7 +35,7 @@ export class VerifyEmailAlert extends Component {
 
   handleSendEmail = () => {
     const { status, sendVerifyEmail } = this.props
-    status !== SEND_VERIFY_EMAIL && sendVerifyEmail()
+    status !== AUTH_SEND_VERIFY_EMAIL && sendVerifyEmail()
   }
 
   render() {
@@ -46,7 +46,7 @@ export class VerifyEmailAlert extends Component {
     }
 
     const { username, email } = user
-    const pending = status === SEND_VERIFY_EMAIL
+    const pending = status === AUTH_SEND_VERIFY_EMAIL
 
     return (
       <UncontrolledAlert color="warning" className="mb-0">

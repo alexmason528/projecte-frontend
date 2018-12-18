@@ -1,13 +1,13 @@
 import React from 'react'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 import { withRouter } from 'react-router-dom'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
-import { MainCategory } from 'components'
+import { MainItemTable } from 'components'
 import AddImage from 'assets/images/plus.png'
 
 const Dashboard = ({ history }) => (
-  <Container>
-    <Row className="mt-5">
+  <div>
+    <Row>
       <Col md={12}>
         <VerifyEmailAlert />
       </Col>
@@ -15,18 +15,18 @@ const Dashboard = ({ history }) => (
     <Row className="mb-4">
       <Col md={6} />
       <Col md={6}>
-        <div className="pe-btn add-item-btn" onClick={() => history.push('/add-item')}>
+        <button className="pe-btn add-item-btn" onClick={() => history.push('/add-item')}>
           <img src={AddImage} className="mr-3" alt="" />
           Add item for estimation
-        </div>
+        </button>
       </Col>
     </Row>
     <Row>
       <Col md={12}>
-        <MainCategory onClick={category => history.push(category)} />
+        <MainItemTable onClick={item => history.push(`/item/${item}`)} />
       </Col>
     </Row>
-  </Container>
+  </div>
 )
 
 export default withRouter(Dashboard)

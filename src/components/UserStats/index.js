@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
 
 export default class UserStats extends Component {
   render() {
     return (
-      <Container className="user-stats px-4">
+      <div className="user-stats px-4">
         <Row>
           <Col md={6} className="py-4">
             <h3 className="mt-0 font-weight-bold">STATS</h3>
@@ -27,7 +27,7 @@ export default class UserStats extends Component {
             <img className="user-stats-star" src="../../assets/images/bronze-star.png" alt="bronze-star" />
           </Col>
         </Row>
-      </Container>
+      </div>
     )
   }
 }

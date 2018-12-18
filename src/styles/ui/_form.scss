@@ -3,11 +3,10 @@
 }
 
 .form-input {
-  @include border-radius(0);
-
   background-color: $formInputColor;
   color: black;
-  padding: 1.5rem 1rem;
+  padding: 0.75rem 1rem;
+  height: auto;
 
   &:focus {
     background-color: $formInputColor;
@@ -15,8 +14,6 @@
 }
 
 .form-submit-btn {
-  @include border-radius(0);
-
   border: none;
   padding: 0.8rem 1rem;
   text-transform: uppercase;
@@ -24,5 +21,30 @@
 
   &:hover {
     background-color: lighten($btnActiveColor, 10%);
+  }
+}
+
+.form-input,
+.form-submit-btn,
+.form-control,
+.form-dropdown,
+.dropdown-toggle {
+  &:focus,
+  &:active {
+    @include box-shadow(none !important);
+  }
+
+  @include border-radius(0);
+}
+
+.form-dropdown {
+  .dropdown-toggle {
+    background-color: $primaryColor;
+    border: none;
+  }
+
+  .dropdown-toggle,
+  .dropdown-menu {
+    @include border-radius(0);
   }
 }

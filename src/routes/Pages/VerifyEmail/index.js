@@ -4,10 +4,10 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
-import { Button, Container, Row, Col } from 'reactstrap'
+import { Button, Row, Col } from 'reactstrap'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
-import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, VERIFY_EMAIL } from 'store/modules/auth'
+import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, AUTH_VERIFY_EMAIL } from 'store/modules/auth'
 import { QuarterSpinner } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
 
@@ -49,9 +49,9 @@ export class VerifyEmail extends Component {
 
     let text
 
-    if (status === VERIFY_EMAIL) {
+    if (status === AUTH_VERIFY_EMAIL) {
       text = 'Verifying your email now...'
-    } else if (status === successAction(VERIFY_EMAIL)) {
+    } else if (status === successAction(AUTH_VERIFY_EMAIL)) {
       text = 'Email is verified now'
     } else {
       text = 'Failed to verify your email'
@@ -62,12 +62,12 @@ export class VerifyEmail extends Component {
 
   render() {
     const { status, error } = this.props
-    const loading = status === VERIFY_EMAIL
-    const success = status === successAction(VERIFY_EMAIL)
-    const fail = status === failAction(VERIFY_EMAIL)
+    const loading = status === AUTH_VERIFY_EMAIL
+    const success = status === successAction(AUTH_VERIFY_EMAIL)
+    const fail = status === failAction(AUTH_VERIFY_EMAIL)
 
     return (
-      <Container>
+      <div>
         <Row className="text-center">
           <Col md={12}>{this.getTitle()}</Col>
           {loading && (
@@ -99,7 +99,7 @@ export class VerifyEmail extends Component {
             </Col>
           )}
         </Row>
-      </Container>
+      </div>
     )
   }
 }

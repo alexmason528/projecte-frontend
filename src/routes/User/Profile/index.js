@@ -6,7 +6,7 @@ import { Alert, Row, Col } from 'reactstrap'
 import { keys, forEach, pick } from 'lodash'
 import swal from 'sweetalert'
 import { ProfileForm, UserStats } from 'components'
-import { updateProfile, selectUserData, selectAuthStatus, selectAuthError, UPDATE_PROFILE } from 'store/modules/auth'
+import { updateProfile, selectUserData, selectAuthStatus, selectAuthError, AUTH_UPDATE_PROFILE } from 'store/modules/auth'
 import { failAction } from 'utils/state-helpers'
 
 export class Profile extends Component {
@@ -20,8 +20,8 @@ export class Profile extends Component {
   componentWillReceiveProps(nextProps) {
     const { status } = this.props
 
-    if (status === UPDATE_PROFILE && nextProps.status !== status) {
-      const success = nextProps.status !== failAction(UPDATE_PROFILE)
+    if (status === AUTH_UPDATE_PROFILE && nextProps.status !== status) {
+      const success = nextProps.status !== failAction(AUTH_UPDATE_PROFILE)
 
       swal({
         icon: success ? 'success' : 'error',
@@ -48,8 +48,8 @@ export class Profile extends Component {
 
   render() {
     const { error, status } = this.props
-    const pending = status === UPDATE_PROFILE
-    const failed = status === failAction(UPDATE_PROFILE)
+    const pending = status === AUTH_UPDATE_PROFILE
+    const failed = status === failAction(AUTH_UPDATE_PROFILE)
 
     return (
       <Row>

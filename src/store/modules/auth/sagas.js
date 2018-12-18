@@ -5,7 +5,7 @@ import { parseError } from 'utils/error-parser'
 
 import { API_BASE_URL } from 'config/base'
 
-import { AUTH_LOGIN, AUTH_REGISTER, SEND_VERIFY_EMAIL, VERIFY_EMAIL, UPDATE_PROFILE } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, AUTH_SEND_VERIFY_EMAIL, AUTH_VERIFY_EMAIL, AUTH_UPDATE_PROFILE } from './constants'
 
 import {
   logInSuccess,
@@ -72,7 +72,7 @@ const doUpdateProfile = function*({ payload }) {
 export const saga = function*() {
   yield takeLatest(AUTH_LOGIN, doLogIn)
   yield takeLatest(AUTH_REGISTER, doRegister)
-  yield takeLatest(SEND_VERIFY_EMAIL, doSendVerifyEmail)
-  yield takeLatest(VERIFY_EMAIL, doVerifyEmail)
-  yield takeLatest(UPDATE_PROFILE, doUpdateProfile)
+  yield takeLatest(AUTH_SEND_VERIFY_EMAIL, doSendVerifyEmail)
+  yield takeLatest(AUTH_VERIFY_EMAIL, doVerifyEmail)
+  yield takeLatest(AUTH_UPDATE_PROFILE, doUpdateProfile)
 }

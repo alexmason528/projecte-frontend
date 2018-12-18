@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
+import { Row, Col, Button } from 'reactstrap'
 import cx from 'classnames'
-import { Container, Row, Col, Button } from 'reactstrap'
 
 export class UserDetailLayout extends Component {
   isActiveLink = link => {
@@ -32,7 +32,7 @@ export class UserDetailLayout extends Component {
     ]
 
     return (
-      <Container>
+      <div>
         <Row>
           {pages.map(({ link, name }) => (
             <Col key={link} sm={12} md={3}>
@@ -45,7 +45,7 @@ export class UserDetailLayout extends Component {
         <Row>
           <Col className="pt-4 pb-3">{children}</Col>
         </Row>
-      </Container>
+      </div>
     )
   }
 }

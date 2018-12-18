@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { Form, Row, Col } from 'reactstrap'
-import { LoaderButton, renderInput } from 'components'
+import { LoaderButton, Input } from 'components'
 import validate from './validate'
 
 class LogInForm extends Component {
@@ -18,10 +18,10 @@ class LogInForm extends Component {
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col md={12} className="mb-3">
-            <Field className="form-input" name="username" placeholder="Username" component={renderInput} />
+            <Field className="form-input" name="username" placeholder="Username" component={Input} />
           </Col>
           <Col md={12} className="mb-3">
-            <Field className="form-input" name="password" type="password" placeholder="Password" component={renderInput} />
+            <Field className="form-input" name="password" type="password" placeholder="Password" component={Input} />
           </Col>
           <Col md={12} className="mb-3">
             <LoaderButton className="form-submit-btn w-100" loading={loggingIn}>

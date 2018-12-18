@@ -38,7 +38,8 @@ a {
 }
 
 button,
-.btn {
+.btn,
+textarea {
   outline: none !important;
 
   &:disabled {

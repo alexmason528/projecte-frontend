@@ -10,4 +10,4 @@ export const ART = 'art'
 
 export const VALUABLE = 'valuable'
 
-export const MAIN_CATEGORIES = [REAL_ESTATE, AUTOMOBILE, ART, VALUABLE]
+export const MAIN_ITEMS = [REAL_ESTATE, AUTOMOBILE, ART, VALUABLE]
