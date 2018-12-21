@@ -27,7 +27,6 @@
 .form-input,
 .form-submit-btn,
 .form-control,
-.form-dropdown,
 .dropdown-toggle {
   &:focus,
   &:active {
@@ -35,16 +34,4 @@
   }
 
   @include border-radius(0);
-}
-
-.form-dropdown {
-  .dropdown-toggle {
-    background-color: $primaryColor;
-    border: none;
-  }
-
-  .dropdown-toggle,
-  .dropdown-menu {
-    @include border-radius(0);
-  }
 }

@@ -47,6 +47,11 @@ textarea {
   }
 }
 
+input {
+  outline: none;
+  box-shadow: none;
+}
+
 .dropdown-item {
   cursor: pointer;
 
@@ -55,4 +60,48 @@ textarea {
     background-color: darken(white, 10%);
     color: black;
   }
+}
+
+.pe-box {
+  background-color: $primaryColor;
+  color: white;
+
+  textarea {
+    height: 150px;
+  }
+}
+
+.pe-input {
+  background-color: $primaryColor;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+
+  &::placeholder {
+    color: white;
+  }
+}
+
+.pe-dropdown {
+  .dropdown-toggle {
+    background-color: $primaryColor;
+    border: none;
+
+    &::after {
+      right: 0.8rem;
+      @include pos-center-y();
+    }
+  }
+
+  .dropdown-toggle,
+  .dropdown-menu {
+    @include border-radius(0);
+  }
+
+  &:focus,
+  &:active {
+    @include box-shadow(none !important);
+  }
+
+  @include border-radius(0);
 }

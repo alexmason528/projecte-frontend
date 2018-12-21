@@ -8,7 +8,7 @@ import { categoryFetchSuccess, categoryFetchFail } from './reducer'
 
 const doCategoryFetch = function*({ payload }) {
   try {
-    const res = yield call(axios.get, `${API_BASE_URL}/api/category/${payload}`)
+    const res = yield call(axios.get, `${API_BASE_URL}/api/category/${payload}/`)
     yield put(categoryFetchSuccess(res.data))
   } catch (error) {
     yield put(categoryFetchFail(parseError(error)))

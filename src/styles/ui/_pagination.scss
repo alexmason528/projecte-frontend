@@ -1,0 +1,31 @@
+.pagination {
+  display: block;
+
+  li {
+    display: inline-block;
+    border: 1px solid $secondaryColor;
+    margin: 0 0.2rem;
+    cursor: pointer;
+
+    &.active {
+      background-color: $primaryColor;
+      color: white;
+      border: none;
+    }
+
+    &.disabled {
+      color: $secondaryColor;
+      cursor: not-allowed;
+    }
+  }
+
+  a {
+    padding: 0.5rem 1rem;
+    display: block;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}

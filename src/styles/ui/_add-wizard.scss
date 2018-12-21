@@ -21,14 +21,14 @@
   }
 }
 
-.item-preview {
+.image-preview {
   width: 200px;
   height: 150px;
   border: 1px solid $secondaryColor;
   background-size: cover;
 }
 
-.item-description {
+.image-description {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -41,14 +41,5 @@
 
   .pe-btn {
     padding: 0.3rem;
-  }
-}
-
-.wizard-box {
-  background-color: $primaryColor;
-  color: white;
-
-  textarea {
-    height: 150px;
   }
 }

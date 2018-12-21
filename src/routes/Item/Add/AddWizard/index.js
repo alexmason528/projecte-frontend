@@ -47,14 +47,28 @@ class AddWizard extends Component {
   }
 
   gotoFirstPage = () => {
-    this.setState({ page: 1 })
+    if (!this.submitting) {
+      this.setState({ page: 1 })
+    }
   }
 
   gotoSecondPage = () => {
-    this.setState({ page: 2 })
+    if (!this.submitting) {
+      this.setState({ page: 2 })
+    }
+  }
+
+  get submitting() {
+    const { status } = this.props
+
+    return status === ITEM_ADD
   }
 
   handleSubmit = values => {
+    if (this.submitting) {
+      return
+    }
+
     const parsed = pick(values, ['name', 'details', 'category'])
 
     const formData = new FormData()

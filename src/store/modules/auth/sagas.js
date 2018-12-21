@@ -22,7 +22,7 @@ import {
 
 const doLogIn = function*({ payload }) {
   try {
-    const res = yield call(axios.post, `${API_BASE_URL}/auth/login`, payload)
+    const res = yield call(axios.post, `${API_BASE_URL}/auth/login/`, payload)
     setAuthData(res.data)
     yield put(logInSuccess(res.data))
   } catch (error) {
@@ -32,7 +32,7 @@ const doLogIn = function*({ payload }) {
 
 const doRegister = function*({ payload }) {
   try {
-    const res = yield call(axios.post, `${API_BASE_URL}/auth/register`, payload)
+    const res = yield call(axios.post, `${API_BASE_URL}/auth/register/`, payload)
     setAuthData(res.data)
     yield put(registerSuccess(res.data))
   } catch (error) {
@@ -42,7 +42,7 @@ const doRegister = function*({ payload }) {
 
 const doSendVerifyEmail = function*() {
   try {
-    yield call(axios.get, `${API_BASE_URL}/auth/verify-email`)
+    yield call(axios.get, `${API_BASE_URL}/auth/verify-email/`)
     yield put(sendVerifyEmailSuccess())
   } catch (error) {
     yield put(sendVerifyEmailFail(parseError(error)))
@@ -51,7 +51,7 @@ const doSendVerifyEmail = function*() {
 
 const doVerifyEmail = function*({ payload }) {
   try {
-    const res = yield call(axios.post, `${API_BASE_URL}/auth/verify-email`, payload)
+    const res = yield call(axios.post, `${API_BASE_URL}/auth/verify-email/`, payload)
     setAuthData(res.data)
     yield put(verifyEmailSuccess(res.data))
   } catch (error) {
@@ -61,7 +61,7 @@ const doVerifyEmail = function*({ payload }) {
 
 const doUpdateProfile = function*({ payload }) {
   try {
-    const res = yield call(axios.patch, `${API_BASE_URL}/auth/profile`, payload, { headers: { 'Content-Type': 'multipart/form-data' } })
+    const res = yield call(axios.patch, `${API_BASE_URL}/auth/profile/`, payload, { headers: { 'Content-Type': 'multipart/form-data' } })
     setAuthData(res.data)
     yield put(updateProfileSuccess(res.data))
   } catch (error) {

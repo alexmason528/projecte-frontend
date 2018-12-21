@@ -16,6 +16,12 @@
   -moz-box-shadow: $args;
 }
 
+@mixin pos-center-x() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @mixin pos-center-y() {
   position: absolute;
   top: 50%;
@@ -35,4 +41,11 @@
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+@mixin d-flex($alignItems: initial, $justifyContent: initial, $flexDirection: initial) {
+  display: flex;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+  flex-direction: $flexDirection;
 }

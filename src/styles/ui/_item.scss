@@ -1,0 +1,14 @@
+.item-thumb {
+  width: 300px;
+  height: 150px;
+  border: 1px solid $secondaryColor;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.item-meta {
+  flex: 1;
+  padding: 1rem;
+
+  @include d-flex($flexDirection: column, $justifyContent: space-between);
+}

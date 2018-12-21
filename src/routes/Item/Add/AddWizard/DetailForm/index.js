@@ -123,7 +123,7 @@ class DetailForm extends Component {
             <Field name="category" component={CategoryDropdown} categories={categories} />
           </Col>
           <Col md={12} className="mb-3">
-            <Container className="wizard-box p-3">
+            <Container className="pe-box p-3">
               <Row className="mb-2">
                 <Col md={12}>
                   <h3 className="text-uppercase m-0 font-weight-bold">Facts</h3>
@@ -136,7 +136,7 @@ class DetailForm extends Component {
             </Container>
           </Col>
           <Col md={12} className="mb-3">
-            <div className="wizard-box p-3">
+            <div className="pe-box p-3">
               <h3 className="text-uppercase m-0 font-weight-bold mb-3">Details</h3>
               <Field className="w-100 resize-none back-secondary p-2" type="textarea" name="details" component={Input} />
             </div>

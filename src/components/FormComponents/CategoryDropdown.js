@@ -110,7 +110,7 @@ export default class Dropdown extends Component {
     return (
       <Row>
         <Col md={6}>
-          <UncontrolledDropdown className="form-dropdown" onChange={this.handleCategoryChange}>
+          <UncontrolledDropdown className="pe-dropdown" onChange={this.handleCategoryChange}>
             <DropdownToggle className="w-100 text-left py-2" caret>
               {categoryName}
             </DropdownToggle>
@@ -125,7 +125,7 @@ export default class Dropdown extends Component {
         </Col>
 
         <Col md={6}>
-          <UncontrolledDropdown className="form-dropdown">
+          <UncontrolledDropdown className="pe-dropdown">
             <DropdownToggle className="w-100 text-left py-2" caret>
               {subCategories && subCategories.length > 0 ? subCategoryName : 'No sub categories'}
             </DropdownToggle>
