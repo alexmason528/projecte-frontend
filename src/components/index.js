@@ -1,3 +1,4 @@
+import Loader from './Loader'
 import LoaderButton from './LoaderButton'
 import Logo from './Logo'
 import MainItemTable from './MainItemTable'
@@ -9,7 +10,7 @@ import ProfileForm from './Forms/ProfileForm'
 import RegisterForm from './Forms/RegisterForm'
 import RouteWithProps from './RouteWithProps'
 
-export { LoaderButton, Logo, MainItemTable, NavBar, ScrollToTop, UserStats, LogInForm, ProfileForm, RegisterForm, RouteWithProps }
+export { Loader, LoaderButton, Logo, MainItemTable, NavBar, ScrollToTop, UserStats, LogInForm, ProfileForm, RegisterForm, RouteWithProps }
 
 export * from './FormComponents'
 export * from './SvgIcon'
