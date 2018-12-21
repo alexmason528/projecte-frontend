@@ -12,6 +12,7 @@ const doItemAdd = function*({ payload }) {
   try {
     const res = yield call(axios.post, `${API_BASE_URL}/api/item/`, payload, { headers: { 'Content-Type': 'multipart/form-data' } })
     yield put(itemAddSuccess(res.data))
+    yield put(reset('add-wizard'))
   } catch (error) {
     yield put(itemAddFail(parseError(error)))
   }
