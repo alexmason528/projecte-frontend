@@ -4,7 +4,7 @@ import { reset } from 'redux-form'
 import axios from 'axios'
 import { parseError } from 'utils/error-parser'
 import { API_BASE_URL } from 'config/base'
-import { ITEM_LIST, ITEM_ADD, ITEM_GET, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST } from './constants'
+import { ITEM_LIST, ITEM_ADD, ITEM_GET, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY } from './constants'
 
 import {
   itemListSuccess,
@@ -17,6 +17,8 @@ import {
   itemAddEstimationFail,
   itemAddToWatchlistSuccess,
   itemAddToWatchlistFail,
+  itemAddReplySuccess,
+  itemAddReplyFail,
 } from './reducer'
 
 const doItemList = function*({ payload }) {
@@ -74,6 +76,17 @@ const doItemAddToWatchlist = function*({ payload }) {
   }
 }
 
+const doItemAddReply = function*({ payload }) {
+  const { type, id, data } = payload
+
+  try {
+    const res = yield call(axios.post, `${API_BASE_URL}/api/item/${type}/${id}/reply/`, data)
+    yield put(itemAddReplySuccess(res.data))
+  } catch (error) {
+    yield put(itemAddReplyFail(parseError(error)))
+  }
+}
+
 const doClearAddWizard = function*() {
   yield put(reset('add-wizard'))
 }
@@ -84,5 +97,6 @@ export const saga = function*() {
   yield takeLatest(ITEM_GET, doItemGet)
   yield takeLatest(ITEM_ADD_ESTIMATION, doItemAddEstimation)
   yield takeLatest(ITEM_ADD_TO_WATCHLIST, doItemAddToWatchlist)
+  yield takeLatest(ITEM_ADD_REPLY, doItemAddReply)
   yield takeLatest(LOCATION_CHANGE, doClearAddWizard)
 }

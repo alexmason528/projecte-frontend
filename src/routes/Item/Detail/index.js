@@ -15,12 +15,14 @@ import {
   itemGet,
   itemAddEstimation,
   itemAddToWatchlist,
+  itemAddReply,
   selectCurrentItem,
   selectItemStatus,
   selectItemError,
   ITEM_GET,
   ITEM_ADD_ESTIMATION,
   ITEM_ADD_TO_WATCHLIST,
+  ITEM_ADD_REPLY,
 } from 'store/modules/item'
 import { Loader, QuarterSpinner } from 'components'
 import { API_BASE_URL, MAIN_ITEM_TYPES } from 'config/base'
@@ -41,6 +43,7 @@ export class ItemDetailPage extends Component {
     itemGet: PropTypes.func,
     itemAddEstimation: PropTypes.func,
     itemAddToWatchlist: PropTypes.func,
+    itemAddReply: PropTypes.func,
   }
 
   constructor(props) {
@@ -81,6 +84,17 @@ export class ItemDetailPage extends Component {
         text: success ? 'This item is added to the watchlist successfully' : nextProps.error,
       })
     }
+
+    if (status === ITEM_ADD_REPLY && nextProps.status !== status) {
+      const success = nextProps.status === successAction(ITEM_ADD_REPLY)
+
+      this.setState({ isReplyModalOpen: false })
+
+      swal({
+        icon: success ? 'success' : 'error',
+        text: success ? 'Your comment is added successfully' : nextProps.error,
+      })
+    }
   }
 
   handleToggleModal = name => {
@@ -99,8 +113,11 @@ export class ItemDetailPage extends Component {
   }
 
   handleAddReply = values => {
+    const { type, item } = this.props
     const { selectedComment } = this.state
-    const { content } = values
+    const data = { ...values, item: item.id, parent: selectedComment }
+
+    this.props.itemAddReply({ type, id: item.id, data })
   }
 
   handleAddToWatchList = () => {
@@ -211,18 +228,20 @@ export class ItemDetailPage extends Component {
             {comments.length > 0 && (
               <div className="item-comments pe-box p-4 mt-3">
                 <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                {comments.map(comment => (
-                  <div key={comment.id} className="mb-5">
-                    <ItemComment {...comment} addReply={this.handleOpenReplyModal} />
-                    {comment.children.length > 0 && (
-                      <div className="pl-5 mt-3 mb-5">
-                        {comment.children.map(childComment => (
-                          <ItemComment key={childComment.id} child={true} {...childComment} />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                {comments
+                  .filter(({ parent }) => !parent)
+                  .map(comment => (
+                    <div key={comment.id} className="mb-3">
+                      <ItemComment {...comment} addReply={this.handleOpenReplyModal} />
+                      {comment.children.length > 0 && (
+                        <div className="pl-5 mt-3 mb-5">
+                          {comment.children.map(childComment => (
+                            <ItemComment key={childComment.id} child={true} {...childComment} />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
               </div>
             )}
           </Col>
@@ -264,6 +283,7 @@ const actions = {
   itemGet,
   itemAddEstimation,
   itemAddToWatchlist,
+  itemAddReply,
 }
 
 export default compose(

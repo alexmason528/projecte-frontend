@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
+import cx from 'classnames'
 import { MdReply } from 'react-icons/md'
 import { API_BASE_URL } from 'config/base'
 
 const Comment = ({ user, id, estimation, content, children, child, addReply }) => (
-  <div className="item-comment">
+  <div className={cx('item-comment', { 'mb-3': child })}>
     <div className="d-flex justify-content-between">
       <h4 className="item-comment__name my-0">
         {user.photo && <div className="item-comment__photo mr-3" style={{ backgroundImage: `url(${API_BASE_URL}${user.photo})` }} />}

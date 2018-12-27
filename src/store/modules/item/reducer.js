@@ -2,7 +2,16 @@ import { createAction, handleActions, combineActions } from 'redux-actions'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { successAction, failAction } from 'utils/state-helpers'
 
-import { ITEM_LIST, ITEM_ADD, ITEM_GET, ITEM_DELETE, CLEAR_ITEMS, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST } from './constants'
+import {
+  ITEM_LIST,
+  ITEM_ADD,
+  ITEM_GET,
+  ITEM_DELETE,
+  CLEAR_ITEMS,
+  ITEM_ADD_ESTIMATION,
+  ITEM_ADD_TO_WATCHLIST,
+  ITEM_ADD_REPLY,
+} from './constants'
 
 /* Inital state */
 
@@ -40,13 +49,17 @@ export const itemAddToWatchlist = createAction(ITEM_ADD_TO_WATCHLIST)
 export const itemAddToWatchlistSuccess = createAction(successAction(ITEM_ADD_TO_WATCHLIST))
 export const itemAddToWatchlistFail = createAction(failAction(ITEM_ADD_TO_WATCHLIST))
 
+export const itemAddReply = createAction(ITEM_ADD_REPLY)
+export const itemAddReplySuccess = createAction(successAction(ITEM_ADD_REPLY))
+export const itemAddReplyFail = createAction(failAction(ITEM_ADD_REPLY))
+
 export const clearItems = createAction(CLEAR_ITEMS)
 
 export const reducer = handleActions(
   {
     [ITEM_LIST]: (state, { payload, type }) => ({ ...state, status: type, error: null }),
 
-    [combineActions(ITEM_ADD, ITEM_DELETE, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST)]: (state, { type }) => ({
+    [combineActions(ITEM_ADD, ITEM_DELETE, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY)]: (state, { type }) => ({
       ...state,
       status: type,
       error: null,
@@ -62,26 +75,51 @@ export const reducer = handleActions(
 
     [successAction(ITEM_ADD_ESTIMATION)]: (state, { payload, type }) => {
       const { comment, ...data } = payload
+      const { currentItem } = state
+      const { estimations, comments } = currentItem
 
       return {
         ...state,
         currentItem: {
-          ...state.currentItem,
-          estimations: [...state.currentItem.estimations, data],
-          comments: comment ? [comment, ...state.currentItem.comments] : [...state.currentItem.comments],
+          ...currentItem,
+          estimations: [...estimations, data],
+          comments: comment ? [comment, ...comments] : [...comments],
         },
         status: type,
       }
     },
 
-    [successAction(ITEM_ADD_TO_WATCHLIST)]: (state, { payload, type }) => ({
-      ...state,
-      currentItem: {
-        ...state.currentItem,
-        in_watchlist: payload.item === state.currentItem.id ? true : state.currentItem.in_watchlist,
-      },
-      status: type,
-    }),
+    [successAction(ITEM_ADD_TO_WATCHLIST)]: (state, { payload, type }) => {
+      const { currentItem } = state
+      const { id, in_watchlist } = currentItem
+
+      return {
+        ...state,
+        currentItem: {
+          ...currentItem,
+          in_watchlist: payload.item === id ? true : in_watchlist,
+        },
+        status: type,
+      }
+    },
+
+    [successAction(ITEM_ADD_REPLY)]: (state, { payload, type }) => {
+      const { currentItem } = state
+      const { comments } = currentItem
+
+      const newComments = comments.map(comment =>
+        comment.id === payload.parent ? { ...comment, children: [payload, ...comment.children] } : comment,
+      )
+
+      return {
+        ...state,
+        currentItem: {
+          ...currentItem,
+          comments: [payload, ...newComments],
+        },
+        status: type,
+      }
+    },
 
     [combineActions(
       failAction(ITEM_LIST),
@@ -89,6 +127,7 @@ export const reducer = handleActions(
       failAction(ITEM_GET),
       failAction(ITEM_DELETE),
       failAction(ITEM_ADD_ESTIMATION),
+      failAction(ITEM_ADD_REPLY),
     )]: (state, { payload, type }) => ({
       ...state,
       status: type,

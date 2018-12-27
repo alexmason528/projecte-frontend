@@ -14,4 +14,6 @@ export const ITEM_ADD_COMMENT = 'projecte/item/add_comment'
 
 export const ITEM_ADD_TO_WATCHLIST = 'projecte/item/add_to_watchlist'
 
+export const ITEM_ADD_REPLY = 'projecte/item/add_reply'
+
 export const CLEAR_ITEMS = 'projecte/item/clear_items'
