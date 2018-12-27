@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import { Button, UncontrolledAlert } from 'reactstrap'
 import swal from 'sweetalert'
 import { sendVerifyEmail, selectUserData, selectAuthStatus, AUTH_SEND_VERIFY_EMAIL } from 'store/modules/auth'
-import { QuarterSpinner } from 'components'
+import { Loader } from 'components'
 import { successAction } from 'utils/state-helpers'
 
 export class VerifyEmailAlert extends Component {
@@ -49,18 +49,14 @@ export class VerifyEmailAlert extends Component {
     const pending = status === AUTH_SEND_VERIFY_EMAIL
 
     return (
-      <UncontrolledAlert color="warning" className="mb-0">
+      <UncontrolledAlert color="warning">
         Hi {username}, your email - {email} is not verified yet. <br />
         Please click{' '}
         <Button color="link" className="decoration-none p-0" onClick={this.handleSendEmail}>
           here
         </Button>{' '}
         to send verification email.
-        {pending && (
-          <div className="verify-alert-loader">
-            <QuarterSpinner />
-          </div>
-        )}
+        {pending && <Loader className="loader pos-center" />}
       </UncontrolledAlert>
     )
   }

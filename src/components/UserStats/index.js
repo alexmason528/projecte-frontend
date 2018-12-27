@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import numeral from 'numeral'
 import { Row, Col } from 'reactstrap'
 
 export default class UserStats extends Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      estimation_count: PropTypes.number,
+      total_amount: PropTypes.number,
+      accuracy: PropTypes.number,
+    }),
+  }
   render() {
+    const { estimation_count, total_amount, accuracy } = this.props.user
     return (
       <div className="user-stats px-4">
         <Row>
@@ -10,15 +20,15 @@ export default class UserStats extends Component {
             <h3 className="mt-0 font-weight-bold">STATS</h3>
             <div className="d-flex justify-content-between">
               <span>No estimations</span>
-              <span>4.332</span>
+              <span>{numeral(estimation_count).format('0,0')}</span>
             </div>
             <div className="d-flex justify-content-between">
               <span>Total amount</span>
-              <span>$1.323.010</span>
+              <span>€ {numeral(total_amount).format('0,0[.]00')}</span>
             </div>
             <div className="d-flex justify-content-between">
               <span>Accuracy</span>
-              <span>7.5%</span>
+              <span>{accuracy}%</span>
             </div>
           </Col>
           <Col md={6} className="py-4">

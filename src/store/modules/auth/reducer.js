@@ -3,7 +3,15 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { getAuthData, clearAuthData } from 'utils/storage'
 import { successAction, failAction } from 'utils/state-helpers'
 
-import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT, AUTH_SEND_VERIFY_EMAIL, AUTH_VERIFY_EMAIL, AUTH_UPDATE_PROFILE } from './constants'
+import {
+  AUTH_LOGIN,
+  AUTH_REGISTER,
+  AUTH_LOGOUT,
+  AUTH_SEND_VERIFY_EMAIL,
+  AUTH_VERIFY_EMAIL,
+  AUTH_GET_PROFILE,
+  AUTH_UPDATE_PROFILE,
+} from './constants'
 
 /* Inital state */
 
@@ -35,6 +43,10 @@ export const verifyEmail = createAction(AUTH_VERIFY_EMAIL)
 export const verifyEmailSuccess = createAction(successAction(AUTH_VERIFY_EMAIL))
 export const verifyEmailFail = createAction(failAction(AUTH_VERIFY_EMAIL))
 
+export const getProfile = createAction(AUTH_GET_PROFILE)
+export const getProfileSuccess = createAction(successAction(AUTH_GET_PROFILE))
+export const getProfileFail = createAction(failAction(AUTH_GET_PROFILE))
+
 export const updateProfile = createAction(AUTH_UPDATE_PROFILE)
 export const updateProfileSuccess = createAction(successAction(AUTH_UPDATE_PROFILE))
 export const updateProfileFail = createAction(failAction(AUTH_UPDATE_PROFILE))
@@ -48,6 +60,8 @@ export const reducer = handleActions(
       successAction(AUTH_UPDATE_PROFILE),
     )]: (state, { payload, type }) => ({ ...state, user: payload.user, status: type }),
 
+    [successAction(AUTH_GET_PROFILE)]: (state, { payload, type }) => ({ ...state, user: payload, status: type }),
+
     [AUTH_LOGOUT]: (state, { type }) => {
       clearAuthData()
       return { ...state, user: null, state: type }
@@ -59,6 +73,7 @@ export const reducer = handleActions(
       AUTH_SEND_VERIFY_EMAIL,
       AUTH_VERIFY_EMAIL,
       successAction(AUTH_SEND_VERIFY_EMAIL),
+      AUTH_GET_PROFILE,
       AUTH_UPDATE_PROFILE,
     )]: (state, { type }) => ({
       ...state,
@@ -70,6 +85,7 @@ export const reducer = handleActions(
       failAction(AUTH_LOGIN),
       failAction(AUTH_SEND_VERIFY_EMAIL),
       failAction(AUTH_VERIFY_EMAIL),
+      failAction(AUTH_GET_PROFILE),
       failAction(AUTH_UPDATE_PROFILE),
     )]: (state, { payload, type }) => ({
       ...state,

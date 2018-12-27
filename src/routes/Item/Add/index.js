@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Alert } from 'reactstrap'
 import { categoryFetch, selectCategories, selectCategoryStatus, selectCategoryError, CATEGORY_FETCH } from 'store/modules/category'
-import { MAIN_ITEMS } from 'config/base'
+import { MAIN_ITEM_TYPES } from 'config/base'
 import AddWizard from './AddWizard'
 
 class ItemAddPage extends Component {
   static propTypes = {
-    name: PropTypes.oneOf(MAIN_ITEMS),
+    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
@@ -20,18 +20,18 @@ class ItemAddPage extends Component {
   }
 
   componentWillMount() {
-    const { name } = this.props
+    const { type } = this.props
 
-    if (MAIN_ITEMS.indexOf(name) === -1) {
+    if (MAIN_ITEM_TYPES.indexOf(type) === -1) {
       this.props.history.push('/error-404')
       return
     }
 
-    this.props.categoryFetch(name)
+    this.props.categoryFetch(type)
   }
 
   render() {
-    const { name, categories, status, error } = this.props
+    const { type, categories, status, error } = this.props
 
     if (status === CATEGORY_FETCH || categories.length === 0) {
       return null
@@ -41,7 +41,11 @@ class ItemAddPage extends Component {
       return <Alert color="danger">{error}></Alert>
     }
 
-    return <AddWizard item={name} categories={categories} />
+    return (
+      <div className="item-add-page">
+        <AddWizard type={type} categories={categories} />
+      </div>
+    )
   }
 }
 

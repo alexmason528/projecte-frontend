@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { MAIN_ITEMS } from 'config/base'
+import { MAIN_ITEM_TYPES } from 'config/base'
 import { Field, reduxForm } from 'redux-form'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Input, CategoryDropdown } from 'components'
@@ -9,7 +9,7 @@ import validate from './validate'
 
 class DetailForm extends Component {
   static propTypes = {
-    item: PropTypes.oneOf(MAIN_ITEMS),
+    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
     handleSubmit: PropTypes.func,
   }
@@ -39,7 +39,7 @@ class DetailForm extends Component {
     <Fragment>
       <Row className="mb-2">
         <Col md={6}>
-          <Field className="form-input" name="artist" component={Input} label="artis" labelSize={5} />
+          <Field className="form-input" name="artist" component={Input} label="artist" labelSize={5} />
         </Col>
         <Col md={6}>
           <Field className="form-input" name="year" component={Input} label="year" labelSize={5} type="number" />
@@ -83,13 +83,13 @@ class DetailForm extends Component {
   )
 
   getCategoryPlaceholder = () => {
-    const { item } = this.props
+    const { type } = this.props
 
-    if (item === ART || item === VALUABLE) {
+    if (type === ART || type === VALUABLE) {
       return 'Select type'
-    } else if (item === AUTOMOBILE) {
+    } else if (type === AUTOMOBILE) {
       return 'Select brand'
-    } else if (item === REAL_ESTATE) {
+    } else if (type === REAL_ESTATE) {
       return 'Select category'
     }
 
@@ -97,13 +97,13 @@ class DetailForm extends Component {
   }
 
   getSubCategoryPlaceholder = () => {
-    const { item } = this.props
+    const { type } = this.props
 
-    if (item === ART || item === VALUABLE) {
+    if (type === ART || type === VALUABLE) {
       return 'Select sub-type'
-    } else if (item === AUTOMOBILE) {
+    } else if (type === AUTOMOBILE) {
       return 'Select type'
-    } else if (item === REAL_ESTATE) {
+    } else if (type === REAL_ESTATE) {
       return 'Select region'
     }
 
@@ -111,7 +111,7 @@ class DetailForm extends Component {
   }
 
   render() {
-    const { item, categories, handleSubmit } = this.props
+    const { type, categories, handleSubmit } = this.props
 
     return (
       <form onSubmit={handleSubmit}>
@@ -129,10 +129,10 @@ class DetailForm extends Component {
                   <h3 className="text-uppercase m-0 font-weight-bold">Facts</h3>
                 </Col>
               </Row>
-              {item === REAL_ESTATE && this.renderRealStateFacts()}
-              {item === ART && this.renderArtFacts()}
-              {item === AUTOMOBILE && this.renderAutomobileFacts()}
-              {item === VALUABLE && this.renderValuableFacts()}
+              {type === REAL_ESTATE && this.renderRealStateFacts()}
+              {type === ART && this.renderArtFacts()}
+              {type === AUTOMOBILE && this.renderAutomobileFacts()}
+              {type === VALUABLE && this.renderValuableFacts()}
             </Container>
           </Col>
           <Col md={12} className="mb-3">

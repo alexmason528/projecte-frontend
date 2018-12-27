@@ -15,21 +15,43 @@
 }
 
 .color-primary {
-  color: $primaryColor;
+  color: $primaryColor !important;
 }
 
 .color-white {
-  color: white;
+  color: white !important;
 }
 
 .back-primary {
-  background-color: $primaryColor;
+  background-color: $primaryColor !important;
 }
 
 .back-secondary {
-  background-color: $secondaryColor;
+  background-color: $secondaryColor !important;
+}
+
+.back-white {
+  background-color: white !important;
+}
+
+.line-height-1 {
+  line-height: 1 !important;
 }
 
 .resize-none {
-  resize: none;
+  resize: none !important;
+}
+
+.pos-center {
+  @include pos-center();
+}
+
+.-my-1 {
+  margin-top: -0.25rem !important;
+  margin-bottom: -0.25rem !important;
+}
+
+.-my-2 {
+  margin-top: -0.5rem !important;
+  margin-bottom: -0.5rem !important;
 }

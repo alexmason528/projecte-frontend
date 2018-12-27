@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, Input as RInput, Label, FormFeedback } from 'reactstrap'
 
@@ -16,10 +16,10 @@ export const Input = ({ input, label, placeholder, type, labelSize, meta: { touc
 
   if (!label) {
     return (
-      <div>
+      <Fragment>
         <RInput {...inputProps} />
         {touched && error && <FormFeedback>{error}</FormFeedback>}
-      </div>
+      </Fragment>
     )
   }
 

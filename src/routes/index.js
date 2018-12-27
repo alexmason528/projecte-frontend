@@ -14,7 +14,7 @@ const Routes = () => (
         <Route path="/auth" component={userIsNotAuthenticated(AuthPage)} />
         <Route path="/add-item" component={userIsAuthenticated(AddItemPage)} />
         <Route path="/me" component={userIsAuthenticated(UserRoutes)} />
-        <Route path="/item/:name" component={userIsAuthenticated(ItemRoutes)} />
+        <Route path="/item/:type" component={ItemRoutes} />
         <Route exact path="/verify-email" component={VerifyEmailPage} />
         <Route path="/error-404" component={Page404} />
         <Route exact path="/" component={Dashboard} />

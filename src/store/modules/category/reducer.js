@@ -24,7 +24,7 @@ export const reducer = handleActions(
 
     [successAction(CATEGORY_FETCH)]: (state, { payload, type }) => ({ ...state, categories: payload, status: type, error: null }),
 
-    [failAction(CATEGORY_FETCH)]: (state, { payload, type }) => ({ ...state, status: type, error: payload }),
+    [failAction(CATEGORY_FETCH)]: (state, { payload, type }) => ({ ...state, status: type, error: payload.message }),
 
     [LOCATION_CHANGE]: state => ({ ...state, error: null }),
   },

@@ -52,6 +52,11 @@ input {
   box-shadow: none;
 }
 
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 .dropdown-item {
   cursor: pointer;
 
@@ -63,11 +68,16 @@ input {
 }
 
 .pe-box {
+  position: relative;
   background-color: $primaryColor;
   color: white;
 
   textarea {
     height: 150px;
+  }
+
+  .invalid-feedback {
+    color: white;
   }
 }
 
@@ -104,4 +114,29 @@ input {
   }
 
   @include border-radius(0);
+}
+
+.pe-btn {
+  padding: 0.8rem;
+  color: white;
+  background-color: $primaryColor;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.2s all ease-in-out;
+  border: none;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($primaryColor, 10%);
+  }
+
+  @include border-radius(0);
+}
+
+.pe-heading {
+  font-weight: bold;
+  color: $primaryColor;
+  text-transform: uppercase;
 }

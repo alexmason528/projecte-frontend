@@ -33,7 +33,7 @@ export class Auth extends Component {
     const registering = status === AUTH_REGISTER
 
     return (
-      <Row>
+      <Row className="auth-page">
         <Col md={6} sm={12}>
           <h4 className="text-uppercase">LogIn</h4>
           {loginFailed && (

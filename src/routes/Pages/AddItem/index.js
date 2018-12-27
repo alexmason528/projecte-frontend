@@ -10,9 +10,9 @@ class AddItemPage extends Component {
 
   render() {
     return (
-      <Row>
+      <Row className="item-add-age">
         <Col md={12}>
-          <h3 className="pe-heading text-center mt-3" style={{ marginBottom: '1.65rem' }}>
+          <h3 className="pe-heading text-center mt-3" style={{ marginBottom: '1.45rem' }}>
             What do you want to add?
           </h3>
         </Col>

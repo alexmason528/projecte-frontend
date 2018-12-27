@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { forEach, keys, omit, pick, startCase } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
-import { MAIN_ITEMS } from 'config/base'
+import { MAIN_ITEM_TYPES } from 'config/base'
 import { itemAdd, selectItemStatus, selectItemError, ITEM_ADD } from 'store/modules/item'
 import { successAction } from 'utils/state-helpers'
 import DetailForm from './DetailForm/'
@@ -16,7 +16,7 @@ import ImageForm from './ImageForm/'
 
 class AddWizard extends Component {
   static propTypes = {
-    item: PropTypes.oneOf(MAIN_ITEMS),
+    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
@@ -32,7 +32,7 @@ class AddWizard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status, item } = this.props
+    const { status, type } = this.props
 
     if (status === ITEM_ADD && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD)
@@ -40,8 +40,8 @@ class AddWizard extends Component {
       swal({
         icon: success ? 'success' : 'error',
         text: success ? 'Successfully added your item.' : 'Failed to add your item.',
-      }).then(res => {
-        res && this.props.history.push(`/item/${item}`)
+      }).then(() => {
+        success && this.props.history.push(`/item/${type}`)
       })
     }
   }
@@ -65,6 +65,8 @@ class AddWizard extends Component {
   }
 
   handleSubmit = values => {
+    const { type } = this.props
+
     if (this.submitting) {
       return
     }
@@ -84,11 +86,11 @@ class AddWizard extends Component {
     const facts = omit(values, ['name', 'details', 'category', 'images'])
     formData.append('facts', JSON.stringify(facts))
 
-    this.props.itemAdd(formData)
+    this.props.itemAdd({ type, data: formData })
   }
 
   render() {
-    const { item, categories, error } = this.props
+    const { type, categories, error } = this.props
     const { page } = this.state
 
     return (
@@ -100,7 +102,7 @@ class AddWizard extends Component {
             </Col>
           )}
           <Col md={12}>
-            <h4 className="mt-0 mb-1 text-uppercase">Add {startCase(item)}</h4>
+            <h4 className="mt-0 mb-1 text-uppercase">Add {startCase(type)}</h4>
           </Col>
           <Col md={12}>
             <div className="wizard-nav d-flex justify-content-center">
@@ -117,7 +119,7 @@ class AddWizard extends Component {
         </Row>
         <Row>
           <Col md={12} className="mt-3">
-            {page === 1 && <DetailForm item={item} categories={categories} onSubmit={this.gotoSecondPage} />}
+            {page === 1 && <DetailForm type={type} categories={categories} onSubmit={this.gotoSecondPage} />}
             {page === 2 && <ImageForm onBack={this.gotoFirstPage} onSubmit={this.handleSubmit} />}
           </Col>
         </Row>

@@ -8,23 +8,25 @@ import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownI
 import { MdExpandLess, MdExpandMore, MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import Pagination from 'react-js-pagination'
 import queryString from 'query-string'
-import { keys, sumBy } from 'lodash'
+import { keys } from 'lodash'
 import { Loader } from 'components'
-import { itemList, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
-import { API_BASE_URL, ORDERING_CONSTS } from 'config/base'
+import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
+import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
+import Item from './Item'
 
 class ItemListingPage extends Component {
   static propTypes = {
-    name: PropTypes.string,
+    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     itemData: PropTypes.shape({
       totalItemsCount: PropTypes.number,
       itemsCountPerPage: PropTypes.number,
       activePage: PropTypes.number,
       results: PropTypes.array,
     }),
-    status: selectItemStatus,
-    error: selectItemError,
+    status: PropTypes.string,
+    error: PropTypes.string,
     itemList: PropTypes.func,
+    clearItems: PropTypes.func,
   }
 
   constructor(props) {
@@ -53,11 +55,12 @@ class ItemListingPage extends Component {
     const { search, ordering, page } = queryString.parse(location.search)
 
     if (initial) {
+      this.props.clearItems()
       this.setState(Object.assign({ search, page }, keys(ORDERING_CONSTS).indexOf(ordering) !== -1 && { ordering }))
     }
 
-    const { name } = props
-    this.props.itemList({ name, params: { search, ordering, page } })
+    const { type } = props
+    this.props.itemList({ type, params: { search, ordering, page } })
   }
 
   getDropdownToggleContent = () => {
@@ -95,12 +98,10 @@ class ItemListingPage extends Component {
     this.setState({ ordering: ordering === 'clear' ? undefined : ordering }, this.changeLocation)
   }
 
-  getEstimation = estimations => {
-    if (estimations.length === 0) {
-      return 0
-    }
+  handleItemClick = id => {
+    const { type } = this.props
 
-    return (sumBy(estimations, 'estimation') / estimations.length).toFixed(2)
+    this.props.history.push(`/item/${type}/${id}`)
   }
 
   render() {
@@ -110,39 +111,11 @@ class ItemListingPage extends Component {
     const { totalItemsCount, itemsCountPerPage, activePage } = itemData
 
     return (
-      <Row className="py-3">
+      <Row className="item-list-page py-3">
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
           <div>
-            {itemData.results.length > 0 &&
-              itemData.results.map(item => (
-                <div key={item.id} className="item d-flex w-100 mb-4">
-                  {item.images.length > 0 ? (
-                    <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${item.images[0].obj})` }} />
-                  ) : (
-                    <div className="item-thumb" />
-                  )}
-                  <div className="item-info d-flex flex-column w-100 ml-4">
-                    <h4 className="item-name mt-0 mb-3 text-uppercase">{item.name}</h4>
-                    <div className="item-meta pe-box">
-                      <Row className="font-weight-bold">
-                        <Col md={6}>
-                          <h3 className="m-0">Estimation</h3>
-                        </Col>
-                        <Col md={6} className="text-right">
-                          <h3 className="m-0">$ {this.getEstimation(item.estimations)}</h3>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={6}>Estimations: {item.estimations.length}</Col>
-                        <Col md={6} className="text-right">
-                          Comments: {item.comments.length}
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} item={item} onClick={this.handleItemClick} />)}
           </div>
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">
@@ -160,7 +133,7 @@ class ItemListingPage extends Component {
             </div>
           )}
         </Col>
-        <Col md={3}>
+        <Col md={3} className="pl-0">
           <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
           <UncontrolledDropdown className="pe-dropdown mt-2">
             <DropdownToggle className="w-100 text-left py-2" caret>
@@ -201,6 +174,7 @@ const selectors = createStructuredSelector({
 
 const actions = {
   itemList,
+  clearItems,
 }
 
 export default compose(

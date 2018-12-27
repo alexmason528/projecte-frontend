@@ -8,7 +8,7 @@ export default class LoaderButton extends Component {
 
     return (
       <Button {...props} disabled={loading}>
-        {loading && <QuarterSpinner className="mr-2" style={{ width: 30, fill: 'white' }} />}
+        {loading && <QuarterSpinner className="mr-2" width={30} height={30} fill="white" />}
         {children}
       </Button>
     )

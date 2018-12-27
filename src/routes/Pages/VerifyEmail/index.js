@@ -8,7 +8,7 @@ import { Button, Row, Col } from 'reactstrap'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
 import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, AUTH_VERIFY_EMAIL } from 'store/modules/auth'
-import { QuarterSpinner } from 'components'
+import { Loader } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
 
 export class VerifyEmail extends Component {
@@ -67,12 +67,12 @@ export class VerifyEmail extends Component {
     const fail = status === failAction(AUTH_VERIFY_EMAIL)
 
     return (
-      <div>
+      <div className="verify-email-page">
         <Row className="text-center">
           <Col md={12}>{this.getTitle()}</Col>
           {loading && (
             <Col md={12}>
-              <QuarterSpinner />
+              <Loader />
             </Col>
           )}
 

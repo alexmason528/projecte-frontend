@@ -5,7 +5,7 @@ import { parseError } from 'utils/error-parser'
 
 import { API_BASE_URL } from 'config/base'
 
-import { AUTH_LOGIN, AUTH_REGISTER, AUTH_SEND_VERIFY_EMAIL, AUTH_VERIFY_EMAIL, AUTH_UPDATE_PROFILE } from './constants'
+import { AUTH_LOGIN, AUTH_REGISTER, AUTH_SEND_VERIFY_EMAIL, AUTH_VERIFY_EMAIL, AUTH_GET_PROFILE, AUTH_UPDATE_PROFILE } from './constants'
 
 import {
   logInSuccess,
@@ -16,6 +16,8 @@ import {
   sendVerifyEmailFail,
   verifyEmailSuccess,
   verifyEmailFail,
+  getProfileSuccess,
+  getProfileFail,
   updateProfileSuccess,
   updateProfileFail,
 } from './reducer'
@@ -59,6 +61,15 @@ const doVerifyEmail = function*({ payload }) {
   }
 }
 
+const doGetProfile = function*() {
+  try {
+    const res = yield call(axios.get, `${API_BASE_URL}/auth/profile/`)
+    yield put(getProfileSuccess(res.data))
+  } catch (error) {
+    yield put(getProfileFail(parseError(error)))
+  }
+}
+
 const doUpdateProfile = function*({ payload }) {
   try {
     const res = yield call(axios.patch, `${API_BASE_URL}/auth/profile/`, payload, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -74,5 +85,6 @@ export const saga = function*() {
   yield takeLatest(AUTH_REGISTER, doRegister)
   yield takeLatest(AUTH_SEND_VERIFY_EMAIL, doSendVerifyEmail)
   yield takeLatest(AUTH_VERIFY_EMAIL, doVerifyEmail)
+  yield takeLatest(AUTH_GET_PROFILE, doGetProfile)
   yield takeLatest(AUTH_UPDATE_PROFILE, doUpdateProfile)
 }
