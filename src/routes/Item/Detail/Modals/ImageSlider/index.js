@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Modal, ModalBody } from 'reactstrap'
 import Slider from 'react-slick'
 import { MdClose, MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md'
+import { getURL } from 'utils/common'
 
 export default class ImageSliderModal extends Component {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class ImageSliderModal extends Component {
         <ModalBody>
           <Slider dots={false} infinite adaptiveHeight slidesToShow={1} slidesToScroll={1} ref={ref => (this.slider = ref)}>
             {images.map(({ id, obj }) => (
-              <img key={id} src={obj} alt="" />
+              <img key={id} src={getURL(obj)} alt="" />
             ))}
           </Slider>
           <Button className="pe-btn close-modal-btn" onClick={this.props.toggle}>
