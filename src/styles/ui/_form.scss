@@ -69,3 +69,44 @@
     border: 0.5rem solid white;
   }
 }
+
+.image-slider-modal {
+  .modal-body {
+    padding: 0;
+  }
+}
+
+.image-slider-modal {
+  .pe-btn {
+    position: absolute;
+    padding: 0;
+
+    svg {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  }
+
+  .close-modal-btn {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .prev-btn,
+  .next-btn {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .prev-btn {
+    left: 1rem;
+  }
+
+  .next-btn {
+    right: 1rem;
+  }
+
+  .slick-arrow {
+    display: none !important;
+  }
+}

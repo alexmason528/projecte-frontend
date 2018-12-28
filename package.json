@@ -71,6 +71,7 @@
     "reselect": "^4.0.0",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
+    "slick-carousel": "^1.8.1",
     "style-loader": "0.23.0",
     "styled-components": "^4.1.2",
     "sweetalert": "^2.1.2",

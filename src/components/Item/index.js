@@ -63,7 +63,7 @@ export default class Item extends Component {
           <div className="d-flex flex-column h-100">
             <h4 className="item-name mt-0 mb-3 text-uppercase">{name}</h4>
             <Row className="m-0 flex-grow-1">
-              <Col md={buttons !== 'none' ? 10 : 12} className="item-meta pe-box">
+              <Col md={buttons !== 'none' ? 10 : 12} className="item-meta p-3 pe-box">
                 <Row className="font-weight-bold">
                   <Col xs={6}>
                     <h3 className="m-0">Estimation</h3>

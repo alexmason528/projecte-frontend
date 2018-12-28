@@ -24,13 +24,14 @@ import {
 } from 'store/modules/item'
 import { Loader, QuarterSpinner } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
-import { getEstimation } from 'utils/common'
+import { getEstimation, getURL } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
 import ItemFact from './Fact'
 import ItemComment from './Comment'
 import EstimationModal from './Modals/Estimation'
 import ReplyModal from './Modals/Reply'
 import AuthModal from './Modals/Auth'
+import ImageSliderModal from './Modals/ImageSlider'
 
 export class ItemDetailPage extends Component {
   static propTypes = {
@@ -52,6 +53,7 @@ export class ItemDetailPage extends Component {
       isEstimationModalOpen: false,
       isReplyModalOpen: false,
       isAuthModalOpen: false,
+      isImageSliderOpen: false,
       selectedComment: null,
     }
   }
@@ -142,7 +144,7 @@ export class ItemDetailPage extends Component {
 
   render() {
     const { item, type, status, error } = this.props
-    const { isEstimationModalOpen, isReplyModalOpen, isAuthModalOpen } = this.state
+    const { isEstimationModalOpen, isReplyModalOpen, isAuthModalOpen, isImageSliderOpen } = this.state
 
     const loading = status === ITEM_GET
 
@@ -178,6 +180,7 @@ export class ItemDetailPage extends Component {
           onSubmit={this.handleAddReply}
         />
         <AuthModal isOpen={isAuthModalOpen} toggle={() => this.handleToggleModal('isAuthModalOpen')} />
+        <ImageSliderModal isOpen={isImageSliderOpen} images={images} toggle={() => this.handleToggleModal('isImageSliderOpen')} />
         <Row>
           <Col md={6}>
             <h3 className="my-0 text-uppercase">{name}</h3>
@@ -196,10 +199,10 @@ export class ItemDetailPage extends Component {
               <Col md={6} className="py-2">
                 <div
                   className="item-main-thumb w-100"
-                  style={{ backgroundImage: `url("${mainThumb.obj}")`, height: '100%', backgroundSize: 'cover' }}
+                  style={{ backgroundImage: `url("${getURL(mainThumb.obj)}")`, height: '100%', backgroundSize: 'cover' }}
                 >
                   <Button className="pe-btn p-1 item-thumb-magnify">
-                    <MdSearch style={{ fontSize: '2rem' }} />
+                    <MdSearch style={{ fontSize: '2rem' }} onClick={() => this.handleToggleModal('isImageSliderOpen')} />
                   </Button>
                 </div>
               </Col>
@@ -207,14 +210,7 @@ export class ItemDetailPage extends Component {
                 <Row>
                   {thumbs.map((image, ind) => (
                     <Col className="item-image pl-0 py-2" key={image.id} md={6}>
-                      <div
-                        className="item-thumb w-100"
-                        style={{
-                          backgroundImage: `url("${image.obj}")`,
-                          height: 150,
-                          backgroundSize: 'cover',
-                        }}
-                      >
+                      <div className="item-thumb w-100" style={{ backgroundImage: `url("${getURL(image.obj)}")` }}>
                         {ind === 3 && images.length > 5 && <div className="item-image-more">+{images.length - 5}</div>}
                       </div>
                     </Col>

@@ -12,8 +12,6 @@
 }
 
 .item-meta {
-  padding: 1rem;
-
   @include d-flex($flexDirection: column, $justifyContent: space-between);
 }
 
