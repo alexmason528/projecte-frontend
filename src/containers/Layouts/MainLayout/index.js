@@ -25,7 +25,7 @@ class MainLayout extends Component {
             <NavBar user={user} isLoggedIn={isLoggedIn} logOut={logOut} navigate={history.push} />
           </Col>
         </Row>
-        <Row className="main-content py-2">
+        <Row className="main-content pt-4 pb-3">
           <Col>{children}</Col>
         </Row>
       </Container>

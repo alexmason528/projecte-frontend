@@ -4,7 +4,7 @@ import { reset } from 'redux-form'
 import axios from 'axios'
 import { parseError } from 'utils/error-parser'
 import { API_BASE_URL } from 'config/base'
-import { ITEM_LIST, ITEM_ADD, ITEM_GET, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY } from './constants'
+import { ITEM_LIST, ITEM_ADD, ITEM_GET, ITEM_DELETE, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY } from './constants'
 
 import {
   itemListSuccess,
@@ -13,6 +13,8 @@ import {
   itemAddFail,
   itemGetSuccess,
   itemGetFail,
+  itemDeleteSuccess,
+  itemDeleteFail,
   itemAddEstimationSuccess,
   itemAddEstimationFail,
   itemAddToWatchlistSuccess,
@@ -51,6 +53,17 @@ const doItemGet = function*({ payload }) {
     yield put(itemGetSuccess(res.data))
   } catch (error) {
     yield put(itemGetFail(parseError(error)))
+  }
+}
+
+const doItemDelete = function*({ payload }) {
+  const { type, id } = payload
+
+  try {
+    const res = yield call(axios.delete, `${API_BASE_URL}/api/item/${type}/${id}/`)
+    yield put(itemDeleteSuccess(res.data))
+  } catch (error) {
+    yield put(itemDeleteFail(parseError(error)))
   }
 }
 
@@ -95,6 +108,7 @@ export const saga = function*() {
   yield takeLatest(ITEM_LIST, doItemList)
   yield takeLatest(ITEM_ADD, doItemAdd)
   yield takeLatest(ITEM_GET, doItemGet)
+  yield takeLatest(ITEM_DELETE, doItemDelete)
   yield takeLatest(ITEM_ADD_ESTIMATION, doItemAddEstimation)
   yield takeLatest(ITEM_ADD_TO_WATCHLIST, doItemAddToWatchlist)
   yield takeLatest(ITEM_ADD_REPLY, doItemAddReply)

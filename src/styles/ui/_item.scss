@@ -12,10 +12,17 @@
 }
 
 .item-meta {
-  flex: 1;
   padding: 1rem;
 
   @include d-flex($flexDirection: column, $justifyContent: space-between);
+}
+
+.item-action {
+  @include d-flex($flexDirection: column, $justifyContent: space-between);
+
+  .pe-btn {
+    font-size: 1rem;
+  }
 }
 
 .item-listing-date {

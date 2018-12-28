@@ -36,6 +36,16 @@
     background-color: white;
     color: #333;
     line-height: 1;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: #333;
+    }
+
+    &:hover svg path {
+      fill: white;
+    }
   }
 }
 
@@ -51,8 +61,9 @@
   @include border-radius(0);
 }
 
-.estimation-form,
-.reply-form {
+.estimation-modal,
+.reply-modal,
+.auth-modal {
   padding: 0.5rem;
   background: white;
   margin: 14.75rem auto;

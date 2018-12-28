@@ -1,20 +1,45 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, ModalBody } from 'reactstrap'
-import EstimateForm from './form'
+import swal from 'sweetalert'
+import { ITEM_ADD_REPLY } from 'store/modules/item'
+import { successAction } from 'utils/state-helpers'
+import ReplyForm from './form'
 
-const ReplyModal = ({ isOpen, toggle, onSubmit }) => (
-  <Modal className="reply-form" isOpen={isOpen} toggle={toggle}>
-    <ModalBody className="pe-box">
-      <EstimateForm onSubmit={onSubmit} />
-    </ModalBody>
-  </Modal>
-)
+export default class ReplyModal extends Component {
+  static propTypes = {
+    isOpen: PropTypes.bool,
+    status: PropTypes.string,
+    error: PropTypes.string,
+    toggle: PropTypes.func,
+    onSubmit: PropTypes.func,
+  }
 
-ReplyModal.propTypes = {
-  isOpen: PropTypes.bool,
-  toggle: PropTypes.func,
-  onSubmit: PropTypes.func,
+  componentWillReceiveProps(nextProps) {
+    const { status } = this.props
+    if (status === ITEM_ADD_REPLY && nextProps.status !== status) {
+      const success = nextProps.status === successAction(ITEM_ADD_REPLY)
+
+      this.props.toggle()
+
+      swal({
+        icon: success ? 'success' : 'error',
+        text: success ? 'Your comment is added successfully' : nextProps.error,
+      })
+    }
+  }
+
+  render() {
+    const { isOpen, status, toggle, onSubmit } = this.props
+
+    const loading = status === ITEM_ADD_REPLY
+
+    return (
+      <Modal className="reply-modal" isOpen={isOpen} toggle={toggle}>
+        <ModalBody className="pe-box">
+          <ReplyForm loading={loading} onSubmit={onSubmit} />
+        </ModalBody>
+      </Modal>
+    )
+  }
 }
-
-export default ReplyModal

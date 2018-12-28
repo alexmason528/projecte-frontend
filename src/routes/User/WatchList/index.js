@@ -8,7 +8,16 @@ import queryString from 'query-string'
 import { Row, Col } from 'reactstrap'
 import Pagination from 'react-js-pagination'
 import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
-import { listWatchlist, clearItems, selectItemData, selectAuthStatus, selectAuthError, AUTH_LIST_WATCHLIST } from 'store/modules/auth'
+import {
+  deleteItemFromWatchlist,
+  listWatchlist,
+  clearItems,
+  selectItemData,
+  selectAuthStatus,
+  selectAuthError,
+  AUTH_LIST_WATCHLIST,
+  AUTH_DELETE_ITEM_FROM_WATCHLIST,
+} from 'store/modules/auth'
 import { Item, Loader } from 'components'
 
 export class MyListingsPage extends Component {
@@ -24,6 +33,7 @@ export class MyListingsPage extends Component {
     error: PropTypes.string,
     listWatchlist: PropTypes.func,
     clearItems: PropTypes.func,
+    deleteItemFromWatchlist: PropTypes.func,
   }
 
   constructor(props) {
@@ -39,8 +49,8 @@ export class MyListingsPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { search } = this.props.location
-    if (search !== nextProps.location.search) {
+    const { location, status } = this.props
+    if (location.search !== nextProps.location.search || (status === AUTH_DELETE_ITEM_FROM_WATCHLIST && nextProps.status !== status)) {
       this.fetchData(nextProps)
     }
   }
@@ -71,12 +81,16 @@ export class MyListingsPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleItemClick = (id, type) => {
+  handleItemThumbClick = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
+  handleItemDelete = id => {
+    this.props.deleteItemFromWatchlist(id)
+  }
+
   render() {
-    const { status, itemData } = this.props
+    const { history, status, itemData } = this.props
     const { activePage, itemsCountPerPage, totalItemsCount } = itemData
 
     return (
@@ -84,7 +98,17 @@ export class MyListingsPage extends Component {
         {status === AUTH_LIST_WATCHLIST && <Loader />}
         <Col md={9}>
           <div>
-            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} {...item} onClick={this.handleItemClick} />)}
+            {itemData.results.length > 0 &&
+              itemData.results.map(item => (
+                <Item
+                  key={item.id}
+                  history={history}
+                  buttons="delete"
+                  {...item}
+                  onThumbClick={this.handleItemThumbClick}
+                  onDelete={this.handleItemDelete}
+                />
+              ))}
           </div>
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">
@@ -116,6 +140,7 @@ const selectors = createStructuredSelector({
 const actions = {
   listWatchlist,
   clearItems,
+  deleteItemFromWatchlist,
 }
 
 export default compose(

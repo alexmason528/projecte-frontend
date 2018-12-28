@@ -18,20 +18,24 @@
   color: $primaryColor !important;
 }
 
+.color-secondary {
+  color: $secondaryColor !important;
+}
+
 .color-white {
   color: white !important;
 }
 
-.back-primary {
+.color-grey {
+  color: grey !important;
+}
+
+.bg-primary {
   background-color: $primaryColor !important;
 }
 
-.back-secondary {
+.bg-secondary {
   background-color: $secondaryColor !important;
-}
-
-.back-white {
-  background-color: white !important;
 }
 
 .line-height-1 {
@@ -54,4 +58,8 @@
 .-my-2 {
   margin-top: -0.5rem !important;
   margin-bottom: -0.5rem !important;
+}
+
+.deco-underline {
+  text-decoration: underline !important;
 }

@@ -41,6 +41,10 @@ export const itemGet = createAction(ITEM_GET)
 export const itemGetSuccess = createAction(successAction(ITEM_GET))
 export const itemGetFail = createAction(failAction(ITEM_GET))
 
+export const itemDelete = createAction(ITEM_DELETE)
+export const itemDeleteSuccess = createAction(successAction(ITEM_DELETE))
+export const itemDeleteFail = createAction(failAction(ITEM_DELETE))
+
 export const itemAddEstimation = createAction(ITEM_ADD_ESTIMATION)
 export const itemAddEstimationSuccess = createAction(successAction(ITEM_ADD_ESTIMATION))
 export const itemAddEstimationFail = createAction(failAction(ITEM_ADD_ESTIMATION))
@@ -59,7 +63,7 @@ export const reducer = handleActions(
   {
     [ITEM_LIST]: (state, { payload, type }) => ({ ...state, status: type, error: null }),
 
-    [combineActions(ITEM_ADD, ITEM_DELETE, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY)]: (state, { type }) => ({
+    [combineActions(ITEM_ADD, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY)]: (state, { type }) => ({
       ...state,
       status: type,
       error: null,
@@ -125,7 +129,6 @@ export const reducer = handleActions(
       failAction(ITEM_LIST),
       failAction(ITEM_ADD),
       failAction(ITEM_GET),
-      failAction(ITEM_DELETE),
       failAction(ITEM_ADD_ESTIMATION),
       failAction(ITEM_ADD_REPLY),
     )]: (state, { payload, type }) => ({

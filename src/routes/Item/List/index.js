@@ -97,12 +97,12 @@ class ItemListingPage extends Component {
     this.setState({ ordering: ordering === 'clear' ? undefined : ordering }, this.changeLocation)
   }
 
-  handleItemClick = (id, type) => {
+  handleItemThumbClick = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
   render() {
-    const { itemData, status } = this.props
+    const { itemData, history, status } = this.props
     const { search } = this.state
 
     const { totalItemsCount, itemsCountPerPage, activePage } = itemData
@@ -112,7 +112,8 @@ class ItemListingPage extends Component {
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
           <div>
-            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} {...item} onClick={this.handleItemClick} />)}
+            {itemData.results.length > 0 &&
+              itemData.results.map(item => <Item key={item.id} history={history} {...item} onThumbClick={this.handleItemThumbClick} />)}
           </div>
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">

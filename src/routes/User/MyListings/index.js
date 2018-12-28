@@ -9,6 +9,7 @@ import { Row, Col } from 'reactstrap'
 import Pagination from 'react-js-pagination'
 import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import { listMyListings, clearItems, selectItemData, selectAuthStatus, selectAuthError, AUTH_LIST_MY_LISTINGS } from 'store/modules/auth'
+import { itemDelete, ITEM_DELETE } from 'store/modules/item'
 import { Item, Loader } from 'components'
 
 export class MyListingsPage extends Component {
@@ -23,6 +24,7 @@ export class MyListingsPage extends Component {
     error: PropTypes.string,
     listMyListings: PropTypes.func,
     clearItems: PropTypes.func,
+    itemDelete: PropTypes.func,
   }
 
   constructor(props) {
@@ -38,8 +40,8 @@ export class MyListingsPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { search } = this.props.location
-    if (search !== nextProps.location.search) {
+    const { location, status } = this.props
+    if (location.search !== nextProps.location.search || (status === ITEM_DELETE && nextProps.status !== status)) {
       this.fetchData(nextProps)
     }
   }
@@ -70,12 +72,16 @@ export class MyListingsPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleItemClick = (id, type) => {
+  handleItemThumbClick = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
+  handleItemDelete = (id, type) => {
+    this.props.itemDelete({ id, type })
+  }
+
   render() {
-    const { status, itemData } = this.props
+    const { history, status, itemData } = this.props
     const { activePage, itemsCountPerPage, totalItemsCount } = itemData
 
     return (
@@ -83,7 +89,17 @@ export class MyListingsPage extends Component {
         {status === AUTH_LIST_MY_LISTINGS && <Loader />}
         <Col md={9}>
           <div>
-            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} {...item} onClick={this.handleItemClick} />)}
+            {itemData.results.length > 0 &&
+              itemData.results.map(item => (
+                <Item
+                  key={item.id}
+                  history={history}
+                  buttons="all"
+                  {...item}
+                  onThumbClick={this.handleItemThumbClick}
+                  onDelete={this.handleItemDelete}
+                />
+              ))}
           </div>
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">
@@ -115,6 +131,7 @@ const selectors = createStructuredSelector({
 const actions = {
   listMyListings,
   clearItems,
+  itemDelete,
 }
 
 export default compose(

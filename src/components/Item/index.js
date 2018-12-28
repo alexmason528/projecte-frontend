@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'reactstrap'
+import cx from 'classnames'
 import numeral from 'numeral'
 import { API_BASE_URL } from 'config/base'
 import { getEstimation } from 'utils/common'
@@ -13,48 +14,92 @@ export default class Item extends Component {
     estimations: PropTypes.array,
     comments_count: PropTypes.number,
     category: PropTypes.object,
-    onClick: PropTypes.func,
+    buttons: PropTypes.string,
+    onThumbClick: PropTypes.func,
+    onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
   }
 
-  handleClick = () => {
-    const { id, category } = this.props
-    const { path } = category
+  static defaultProps = {
+    buttons: 'none',
+    onThumbClick: () => {},
+    onDelete: () => {},
+    onEdit: () => {},
+  }
 
-    const itemType = path.indexOf('.') === -1 ? path : path.split('.')[0]
+  get type() {
+    const { path } = this.props.category
 
-    this.props.onClick(id, itemType)
+    return path.indexOf('.') === -1 ? path : path.split('.')[0]
+  }
+
+  handleThumbClick = () => {
+    const { id } = this.props
+
+    this.props.onThumbClick(id, this.type)
+  }
+
+  handleEdit = () => {
+    const { id } = this.props
+
+    this.props.onEdit(id, this.type)
+  }
+
+  handleDelete = () => {
+    const { id } = this.props
+
+    this.props.onDelete(id, this.type)
   }
 
   render() {
-    const { id, name, images, estimations, comments_count } = this.props
+    const { id, name, images, estimations, comments_count, buttons } = this.props
 
     return (
-      <div key={id} className="item d-flex w-100 mb-4">
+      <Row key={id} className="item mb-4 ml-0">
         {images.length > 0 ? (
-          <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} onClick={this.handleClick} />
+          <Col
+            md={3}
+            className="item-thumb"
+            style={{ background: `url(${API_BASE_URL}${images[0].obj})` }}
+            onClick={this.handleThumbClick}
+          />
         ) : (
-          <div className="item-thumb" onClick={() => this.props.onClick(id)} />
+          <Col md={3} className="item-thumb" onClick={() => this.props.onClick(id)} />
         )}
-        <div className="item-info d-flex flex-column w-100 ml-4">
+        <Col md={9} className="item-info d-flex flex-column">
           <h4 className="item-name mt-0 mb-3 text-uppercase">{name}</h4>
-          <div className="item-meta pe-box">
-            <Row className="font-weight-bold">
-              <Col md={6}>
-                <h3 className="m-0">Estimation</h3>
+          <Row className="m-0 flex-grow-1">
+            <Col md={buttons !== 'none' ? 10 : 12} className="item-meta pe-box">
+              <Row className="font-weight-bold">
+                <Col md={6}>
+                  <h3 className="m-0">Estimation</h3>
+                </Col>
+                <Col md={6} className="text-right">
+                  <h3 className="m-0">€ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>Estimations: {numeral(estimations.length).format('0,0')}</Col>
+                <Col md={6} className="text-right">
+                  Comments: {numeral(comments_count).format('0,0')}
+                </Col>
+              </Row>
+            </Col>
+            {buttons !== 'none' && (
+              <Col md={2} className={cx('item-action pr-0', { 'justify-content-end': buttons === 'delete' })}>
+                {buttons === 'all' && (
+                  <div className="pe-btn" onClick={this.handleEdit}>
+                    Edit
+                  </div>
+                )}
+                <div className="pe-btn" onClick={this.handleDelete}>
+                  Delete
+                </div>
               </Col>
-              <Col md={6} className="text-right">
-                <h3 className="m-0">€ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>Estimations: {numeral(estimations.length).format('0,0')}</Col>
-              <Col md={6} className="text-right">
-                Comments: {numeral(comments_count).format('0,0')}
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </div>
+            )}
+          </Row>
+        </Col>
+      </Row>
     )
   }
 }

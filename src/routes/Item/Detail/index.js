@@ -20,9 +20,7 @@ import {
   selectItemStatus,
   selectItemError,
   ITEM_GET,
-  ITEM_ADD_ESTIMATION,
   ITEM_ADD_TO_WATCHLIST,
-  ITEM_ADD_REPLY,
 } from 'store/modules/item'
 import { Loader, QuarterSpinner } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
@@ -32,6 +30,7 @@ import ItemFact from './Fact'
 import ItemComment from './Comment'
 import EstimationModal from './Modals/Estimation'
 import ReplyModal from './Modals/Reply'
+import AuthModal from './Modals/Auth'
 
 export class ItemDetailPage extends Component {
   static propTypes = {
@@ -52,6 +51,7 @@ export class ItemDetailPage extends Component {
     this.state = {
       isEstimationModalOpen: false,
       isReplyModalOpen: false,
+      isAuthModalOpen: false,
       selectedComment: null,
     }
   }
@@ -65,34 +65,12 @@ export class ItemDetailPage extends Component {
   componentWillReceiveProps(nextProps) {
     const { status } = this.props
 
-    if (status === ITEM_ADD_ESTIMATION && nextProps.status !== status) {
-      const success = nextProps.status === successAction(ITEM_ADD_ESTIMATION)
-
-      this.setState({ isEstimationModalOpen: false })
-
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Estimation is given successfully' : nextProps.error,
-      })
-    }
-
     if (status === ITEM_ADD_TO_WATCHLIST && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD_TO_WATCHLIST)
 
       swal({
         icon: success ? 'success' : 'error',
         text: success ? 'This item is added to the watchlist successfully' : nextProps.error,
-      })
-    }
-
-    if (status === ITEM_ADD_REPLY && nextProps.status !== status) {
-      const success = nextProps.status === successAction(ITEM_ADD_REPLY)
-
-      this.setState({ isReplyModalOpen: false })
-
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Your comment is added successfully' : nextProps.error,
       })
     }
   }
@@ -105,6 +83,7 @@ export class ItemDetailPage extends Component {
     const { user } = this.props
 
     if (!user) {
+      this.handleToggleModal('isAuthModalOpen')
       return
     }
 
@@ -112,32 +91,17 @@ export class ItemDetailPage extends Component {
   }
 
   handleAddEstimation = values => {
-    const { user, type, item } = this.props
-
-    if (!user) {
-      return
-    }
+    const { type, item } = this.props
 
     const data = { ...values, item: item.id }
     this.props.itemAddEstimation({ type, id: item.id, data })
-  }
-
-  handleAddReply = values => {
-    const { user, type, item } = this.props
-
-    if (!user) {
-      return
-    }
-
-    const { selectedComment } = this.state
-    const data = { ...values, item: item.id, parent: selectedComment }
-    this.props.itemAddReply({ type, id: item.id, data })
   }
 
   handleAddToWatchList = () => {
     const { user, item } = this.props
 
     if (!user) {
+      this.setState({ isAuthModalOpen: true })
       return
     }
 
@@ -145,7 +109,21 @@ export class ItemDetailPage extends Component {
   }
 
   handleOpenReplyModal = id => {
+    const { user } = this.props
+
+    if (!user) {
+      this.handleToggleModal('isAuthModalOpen')
+      return
+    }
+
     this.setState({ selectedComment: id, isReplyModalOpen: true })
+  }
+
+  handleAddReply = values => {
+    const { type, item } = this.props
+    const { selectedComment } = this.state
+    const data = { ...values, item: item.id, parent: selectedComment }
+    this.props.itemAddReply({ type, id: item.id, data })
   }
 
   get canGiveEstimation() {
@@ -164,7 +142,7 @@ export class ItemDetailPage extends Component {
 
   render() {
     const { item, type, status, error } = this.props
-    const { isEstimationModalOpen, isReplyModalOpen } = this.state
+    const { isEstimationModalOpen, isReplyModalOpen, isAuthModalOpen } = this.state
 
     const loading = status === ITEM_GET
 
@@ -188,14 +166,23 @@ export class ItemDetailPage extends Component {
         <EstimationModal
           isOpen={isEstimationModalOpen}
           toggle={() => this.handleToggleModal('isEstimationModalOpen')}
+          status={status}
+          error={error}
           onSubmit={this.handleAddEstimation}
         />
-        <ReplyModal isOpen={isReplyModalOpen} toggle={() => this.handleToggleModal('isReplyModalOpen')} onSubmit={this.handleAddReply} />
+        <ReplyModal
+          isOpen={isReplyModalOpen}
+          toggle={() => this.handleToggleModal('isReplyModalOpen')}
+          status={status}
+          error={error}
+          onSubmit={this.handleAddReply}
+        />
+        <AuthModal isOpen={isAuthModalOpen} toggle={() => this.handleToggleModal('isAuthModalOpen')} />
         <Row>
           <Col md={6}>
             <h3 className="my-0 text-uppercase">{name}</h3>
           </Col>
-          <Col md={6} className="text-right">
+          <Col md={6} className="text-right" style={{ minHeight: '3rem' }}>
             {!in_watchlist && (
               <Button className="pe-btn p-2" onClick={this.handleAddToWatchList} disabled={addingToWatchlist}>
                 {addingToWatchlist ? <QuarterSpinner width={32} height={32} fill="white" /> : <MdStar style={{ fontSize: '2rem' }} />}

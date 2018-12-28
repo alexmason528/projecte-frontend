@@ -10,10 +10,13 @@ import {
   AUTH_REGISTER,
   AUTH_SEND_VERIFY_EMAIL,
   AUTH_VERIFY_EMAIL,
+  AUTH_SEND_PASSWORD_RESET_EMAIL,
+  AUTH_PASSWORD_RESET,
   AUTH_GET_PROFILE,
   AUTH_UPDATE_PROFILE,
   AUTH_LIST_MY_LISTINGS,
   AUTH_LIST_WATCHLIST,
+  AUTH_DELETE_ITEM_FROM_WATCHLIST,
 } from './constants'
 
 import {
@@ -25,6 +28,10 @@ import {
   sendVerifyEmailFail,
   verifyEmailSuccess,
   verifyEmailFail,
+  sendPasswordResetEmailSuccess,
+  sendPasswordResetEmailFail,
+  passwordResetSuccess,
+  passwordResetFail,
   getProfileSuccess,
   getProfileFail,
   updateProfileSuccess,
@@ -33,6 +40,8 @@ import {
   listMyListingsFail,
   listWatchlistSuccess,
   listWatchlistFail,
+  deleteItemFromWatchlistSuccess,
+  deleteItemFromWatchlistFail,
 } from './reducer'
 
 const doLogIn = function*({ payload }) {
@@ -74,6 +83,24 @@ const doVerifyEmail = function*({ payload }) {
   }
 }
 
+export const doSendPasswordResetEmail = function*({ payload }) {
+  try {
+    yield call(axios.post, `${API_BASE_URL}/auth/password-reset/`, payload)
+    yield put(sendPasswordResetEmailSuccess())
+  } catch (error) {
+    yield put(sendPasswordResetEmailFail(parseError(error)))
+  }
+}
+
+export const doPasswordReset = function*({ payload }) {
+  try {
+    const res = yield call(axios.put, `${API_BASE_URL}/auth/password-reset/`, payload)
+    yield put(passwordResetSuccess(res.data.new_password))
+  } catch (error) {
+    yield put(passwordResetFail(parseError(error)))
+  }
+}
+
 const doGetProfile = function*() {
   try {
     const res = yield call(axios.get, `${API_BASE_URL}/auth/profile/`)
@@ -111,13 +138,25 @@ const doListWatchlist = function*({ payload }) {
   }
 }
 
+const doDeleteItemFromWatchlist = function*({ payload }) {
+  try {
+    const res = yield call(axios.delete, `${API_BASE_URL}/auth/watchlist/${payload}/`)
+    yield put(deleteItemFromWatchlistSuccess(res.data))
+  } catch (error) {
+    yield put(deleteItemFromWatchlistFail(parseError(error)))
+  }
+}
+
 export const saga = function*() {
   yield takeLatest(AUTH_LOGIN, doLogIn)
   yield takeLatest(AUTH_REGISTER, doRegister)
   yield takeLatest(AUTH_SEND_VERIFY_EMAIL, doSendVerifyEmail)
   yield takeLatest(AUTH_VERIFY_EMAIL, doVerifyEmail)
+  yield takeLatest(AUTH_SEND_PASSWORD_RESET_EMAIL, doSendPasswordResetEmail)
+  yield takeLatest(AUTH_PASSWORD_RESET, doPasswordReset)
   yield takeLatest(AUTH_GET_PROFILE, doGetProfile)
   yield takeLatest(AUTH_UPDATE_PROFILE, doUpdateProfile)
   yield takeLatest(AUTH_LIST_MY_LISTINGS, doListMyListings)
   yield takeLatest(AUTH_LIST_WATCHLIST, doListWatchlist)
+  yield takeLatest(AUTH_DELETE_ITEM_FROM_WATCHLIST, doDeleteItemFromWatchlist)
 }

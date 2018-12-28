@@ -11,7 +11,7 @@ import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, ve
 import { Loader } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
 
-export class VerifyEmail extends Component {
+export class VerifyEmailPage extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
     status: PropTypes.string,
@@ -121,4 +121,4 @@ export default compose(
     selectors,
     actions,
   ),
-)(VerifyEmail)
+)(VerifyEmailPage)

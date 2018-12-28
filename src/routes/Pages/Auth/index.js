@@ -7,7 +7,7 @@ import { logIn, register, selectAuthStatus, selectAuthError, AUTH_LOGIN, AUTH_RE
 import { LogInForm, RegisterForm } from 'components'
 import { failAction } from 'utils/state-helpers'
 
-export class Auth extends Component {
+export class AuthPage extends Component {
   static propTypes = {
     status: PropTypes.string,
     error: PropTypes.string,
@@ -70,4 +70,4 @@ const actions = {
 export default connect(
   selectors,
   actions,
-)(Auth)
+)(AuthPage)
