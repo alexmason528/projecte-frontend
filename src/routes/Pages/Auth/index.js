@@ -35,7 +35,7 @@ export class AuthPage extends Component {
     return (
       <Row className="auth-page">
         <Col md={6} sm={12}>
-          <h4 className="text-uppercase">LogIn</h4>
+          <h4 className="text-uppercase form-title">LogIn</h4>
           {loginFailed && (
             <Alert color="danger" className="mb-3">
               {error}
@@ -44,7 +44,7 @@ export class AuthPage extends Component {
           <LogInForm loggingIn={loggingIn} onSubmit={this.handleLogin} />
         </Col>
         <Col md={6} sm={12}>
-          <h4 className="text-uppercase">Register</h4>
+          <h4 className="text-uppercase form-title">Register</h4>
           {registerFailed && (
             <Alert color="danger" className="mb-3">
               {error}

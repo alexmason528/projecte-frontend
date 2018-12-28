@@ -93,6 +93,21 @@ input {
   }
 }
 
+.dropdown-toggle,
+.dropdown-menu,
+.navbar-toggler {
+  @include border-radius(0);
+}
+
+.navbar-toggler {
+  padding: 0.25rem 0.55rem;
+
+  .navbar-toggler-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
 .pe-dropdown {
   .dropdown-toggle {
     background-color: $primaryColor;
@@ -102,11 +117,6 @@ input {
       right: 0.8rem;
       @include pos-center-y();
     }
-  }
-
-  .dropdown-toggle,
-  .dropdown-menu {
-    @include border-radius(0);
   }
 
   &:focus,
@@ -154,4 +164,26 @@ input {
   font-weight: bold;
   color: $primaryColor;
   text-transform: uppercase;
+}
+
+.loader-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+
+  .loader {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 50px;
+
+    @include pos-center-x();
+
+    path {
+      fill: #f5a623;
+    }
+  }
 }

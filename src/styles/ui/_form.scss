@@ -61,15 +61,11 @@
   @include border-radius(0);
 }
 
-.estimation-modal,
-.reply-modal,
-.auth-modal {
-  padding: 0.5rem;
-  background: white;
+.popup-modal {
   margin: 14.75rem auto;
 
   .modal-content {
     border-radius: 0;
-    border: 0;
+    border: 0.5rem solid white;
   }
 }

@@ -15,7 +15,7 @@ class ImageForm extends Component {
     const { handleSubmit } = this.props
 
     return (
-      <form className="mt-5" onSubmit={handleSubmit}>
+      <form className="mt-3" onSubmit={handleSubmit}>
         <Row>
           <Col md={12} className="mb-3">
             <Field name="images" component={MultipleImages} validate={[validate]} />

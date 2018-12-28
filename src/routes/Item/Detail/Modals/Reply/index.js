@@ -35,7 +35,7 @@ export default class ReplyModal extends Component {
     const loading = status === ITEM_ADD_REPLY
 
     return (
-      <Modal className="reply-modal" isOpen={isOpen} toggle={toggle}>
+      <Modal className="popup-modal reply-modal" isOpen={isOpen} toggle={toggle}>
         <ModalBody className="pe-box">
           <ReplyForm loading={loading} onSubmit={onSubmit} />
         </ModalBody>

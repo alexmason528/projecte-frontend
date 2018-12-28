@@ -111,12 +111,10 @@ class ItemListingPage extends Component {
       <Row className="item-list-page py-3">
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
-          <div>
-            {itemData.results.length > 0 &&
-              itemData.results.map(item => <Item key={item.id} history={history} {...item} onThumbClick={this.handleItemThumbClick} />)}
-          </div>
+          {itemData.results.length > 0 &&
+            itemData.results.map(item => <Item key={item.id} history={history} {...item} onThumbClick={this.handleItemThumbClick} />)}
           {totalItemsCount > 0 && (
-            <div className="mt-3 text-right">
+            <div className="pagination-wrapper text-right">
               <Pagination
                 className="pe-pagination"
                 activePage={activePage}
@@ -131,7 +129,7 @@ class ItemListingPage extends Component {
             </div>
           )}
         </Col>
-        <Col md={3} className="pl-0">
+        <Col md={3}>
           <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
           <UncontrolledDropdown className="pe-dropdown mt-2">
             <DropdownToggle className="w-100 text-left py-2" caret>

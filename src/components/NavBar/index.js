@@ -28,7 +28,7 @@ export default class NavBar extends Component {
     return (
       <Navbar color="light" light expand="md" style={{ padding: '1.5rem 0' }}>
         <div className="d-flex align-items-center">
-          <Logo className="mr-4 c-pointer" onClick={() => navigate('/')} />
+          <Logo className="logo mr-4 c-pointer" onClick={() => navigate('/')} />
           Bares für Rares für jeden
         </div>
         <NavbarToggler onClick={this.toggle} />

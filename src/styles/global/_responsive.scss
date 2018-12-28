@@ -1,0 +1,104 @@
+@media screen and (min-width: 768px) {
+  .logo img {
+    width: 150px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    .logo img {
+      width: 75px;
+    }
+
+    .navbar-collapse {
+      margin-top: 1rem;
+      text-align: right;
+    }
+  }
+
+  .profile-nav-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-page {
+    .form-title {
+      text-align: center;
+    }
+  }
+
+  .dashboard {
+    .add-item-btn {
+      width: 100%;
+    }
+
+    .item-btn {
+      padding: 1rem 2rem;
+    }
+  }
+
+  .profile-page {
+    .user-photo-wrapper {
+      margin-top: 1rem;
+    }
+  }
+
+  .add-wizard {
+    width: 100% !important;
+
+    .subcategory-dropdown {
+      margin-top: 1rem;
+    }
+
+    .image-preview {
+      width: 300px !important;
+    }
+
+    .image-description textarea {
+      width: 150px !important;
+    }
+  }
+
+  .item-list-page,
+  .my-listing-page,
+  .watchlist-page {
+    .item-name {
+      margin-top: 1rem !important;
+    }
+
+    .item-action {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 1rem;
+    }
+
+    .item-delete-btn {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .item-detail-page {
+    .item-main-thumb {
+      height: 300px !important;
+    }
+
+    .item-image {
+      padding-left: 1rem !important;
+    }
+
+    .right-panel {
+      margin-top: 1rem;
+    }
+  }
+
+  .popup-modal {
+    margin: 5.75rem 1rem !important;
+  }
+
+  .pagination-wrapper {
+    text-align: left !important;
+
+    .pagination li a {
+      padding: 0.2rem 0.5rem;
+    }
+  }
+}

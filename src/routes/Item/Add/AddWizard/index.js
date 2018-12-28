@@ -102,7 +102,7 @@ class AddWizard extends Component {
             </Col>
           )}
           <Col md={12}>
-            <h4 className="mt-0 mb-1 text-uppercase">Add {startCase(type)}</h4>
+            <h4 className="mt-0 mb-3 text-uppercase">Add {startCase(type)}</h4>
           </Col>
           <Col md={12}>
             <div className="wizard-nav d-flex justify-content-center">

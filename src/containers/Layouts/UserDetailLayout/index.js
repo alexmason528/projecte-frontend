@@ -33,9 +33,9 @@ export class UserDetailLayout extends Component {
 
     return (
       <div>
-        <Row>
+        <Row className="profile-nav">
           {pages.map(({ link, name }) => (
-            <Col key={link} sm={12} md={3}>
+            <Col key={link} sm={12} md={3} className="profile-nav-item">
               <Link to={`${match.url}/${link}`}>
                 <Button className={cx('user-btn w-100', { 'active-link': this.isActiveLink(link) })}>{name}</Button>
               </Link>

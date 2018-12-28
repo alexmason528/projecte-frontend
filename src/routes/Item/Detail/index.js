@@ -182,7 +182,7 @@ export class ItemDetailPage extends Component {
           <Col md={6}>
             <h3 className="my-0 text-uppercase">{name}</h3>
           </Col>
-          <Col md={6} className="text-right" style={{ minHeight: '3rem' }}>
+          <Col md={6} className="text-right">
             {!in_watchlist && (
               <Button className="pe-btn p-2" onClick={this.handleAddToWatchList} disabled={addingToWatchlist}>
                 {addingToWatchlist ? <QuarterSpinner width={32} height={32} fill="white" /> : <MdStar style={{ fontSize: '2rem' }} />}
@@ -206,7 +206,7 @@ export class ItemDetailPage extends Component {
               <Col md={6}>
                 <Row>
                   {thumbs.map((image, ind) => (
-                    <Col className="pl-0 py-2" key={image.id} md={6}>
+                    <Col className="item-image pl-0 py-2" key={image.id} md={6}>
                       <div
                         className="item-thumb w-100"
                         style={{
@@ -254,7 +254,7 @@ export class ItemDetailPage extends Component {
               </div>
             )}
           </Col>
-          <Col md={3} className="pl-0 text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
+          <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
             {this.canGiveEstimation && (
               <Button className="pe-btn w-100 mb-3" onClick={this.handleGiveEstimate}>
                 Give estimate

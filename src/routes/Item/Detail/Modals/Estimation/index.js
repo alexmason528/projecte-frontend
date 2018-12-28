@@ -35,7 +35,7 @@ export default class EstimationModal extends Component {
     const loading = status === ITEM_ADD_ESTIMATION
 
     return (
-      <Modal className="estimation-modal" isOpen={isOpen} toggle={toggle}>
+      <Modal className="popup-modal estimation-modal" isOpen={isOpen} toggle={toggle}>
         <ModalBody className="pe-box">
           <EstimateForm loading={loading} onSubmit={onSubmit} />
         </ModalBody>

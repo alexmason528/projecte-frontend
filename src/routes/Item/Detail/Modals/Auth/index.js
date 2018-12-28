@@ -101,7 +101,7 @@ export class AuthModal extends Component {
     const sendingPasswordResetEmail = status === AUTH_SEND_PASSWORD_RESET_EMAIL
 
     return (
-      <Modal className="auth-modal" isOpen={isOpen} toggle={this.handleToggle}>
+      <Modal className="popup-modal auth-modal" isOpen={isOpen} toggle={this.handleToggle}>
         <ModalBody className="pe-box">
           {formType === 'logIn' && (
             <LogInForm loading={loggingIn} onSubmit={this.props.logIn} onChangeFormType={this.handleChangeFormType} />

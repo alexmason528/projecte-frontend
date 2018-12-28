@@ -97,19 +97,17 @@ export class MyListingsPage extends Component {
       <Row className="watchlist-page py-3">
         {status === AUTH_LIST_WATCHLIST && <Loader />}
         <Col md={9}>
-          <div>
-            {itemData.results.length > 0 &&
-              itemData.results.map(item => (
-                <Item
-                  key={item.id}
-                  history={history}
-                  buttons="delete"
-                  {...item}
-                  onThumbClick={this.handleItemThumbClick}
-                  onDelete={this.handleItemDelete}
-                />
-              ))}
-          </div>
+          {itemData.results.length > 0 &&
+            itemData.results.map(item => (
+              <Item
+                key={item.id}
+                history={history}
+                buttons="delete"
+                {...item}
+                onThumbClick={this.handleItemThumbClick}
+                onDelete={this.handleItemDelete}
+              />
+            ))}
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">
               <Pagination
