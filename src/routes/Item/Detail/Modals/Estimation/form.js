@@ -18,7 +18,13 @@ const EstimationForm = ({ handleSubmit }) => (
     <Row className="mt-3">
       <Col md={12} className="d-flex align-items-end">
         <div className="w-100 mr-2">
-          <Field name="comment" type="textarea" className="w-100 resize-none border-0 p-2" component={Input} />
+          <Field
+            name="comment"
+            type="textarea"
+            className="w-100 resize-none border-0 p-2"
+            placeholder="Write comment..."
+            component={Input}
+          />
         </div>
         <Button className="form-submit-btn white">OK</Button>
       </Col>

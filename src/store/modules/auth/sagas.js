@@ -5,7 +5,16 @@ import { parseError } from 'utils/error-parser'
 
 import { API_BASE_URL } from 'config/base'
 
-import { AUTH_LOGIN, AUTH_REGISTER, AUTH_SEND_VERIFY_EMAIL, AUTH_VERIFY_EMAIL, AUTH_GET_PROFILE, AUTH_UPDATE_PROFILE } from './constants'
+import {
+  AUTH_LOGIN,
+  AUTH_REGISTER,
+  AUTH_SEND_VERIFY_EMAIL,
+  AUTH_VERIFY_EMAIL,
+  AUTH_GET_PROFILE,
+  AUTH_UPDATE_PROFILE,
+  AUTH_LIST_MY_LISTINGS,
+  AUTH_LIST_WATCHLIST,
+} from './constants'
 
 import {
   logInSuccess,
@@ -20,6 +29,10 @@ import {
   getProfileFail,
   updateProfileSuccess,
   updateProfileFail,
+  listMyListingsSuccess,
+  listMyListingsFail,
+  listWatchlistSuccess,
+  listWatchlistFail,
 } from './reducer'
 
 const doLogIn = function*({ payload }) {
@@ -80,6 +93,24 @@ const doUpdateProfile = function*({ payload }) {
   }
 }
 
+const doListMyListings = function*({ payload }) {
+  try {
+    const res = yield call(axios.get, `${API_BASE_URL}/auth/my-listings/`, { params: payload })
+    yield put(listMyListingsSuccess(res.data))
+  } catch (error) {
+    yield put(listMyListingsFail(parseError(error)))
+  }
+}
+
+const doListWatchlist = function*({ payload }) {
+  try {
+    const res = yield call(axios.get, `${API_BASE_URL}/auth/watchlist/`, { params: payload })
+    yield put(listWatchlistSuccess(res.data))
+  } catch (error) {
+    yield put(listWatchlistFail(parseError(error)))
+  }
+}
+
 export const saga = function*() {
   yield takeLatest(AUTH_LOGIN, doLogIn)
   yield takeLatest(AUTH_REGISTER, doRegister)
@@ -87,4 +118,6 @@ export const saga = function*() {
   yield takeLatest(AUTH_VERIFY_EMAIL, doVerifyEmail)
   yield takeLatest(AUTH_GET_PROFILE, doGetProfile)
   yield takeLatest(AUTH_UPDATE_PROFILE, doUpdateProfile)
+  yield takeLatest(AUTH_LIST_MY_LISTINGS, doListMyListings)
+  yield takeLatest(AUTH_LIST_WATCHLIST, doListWatchlist)
 }

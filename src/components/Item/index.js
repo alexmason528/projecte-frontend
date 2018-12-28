@@ -7,27 +7,31 @@ import { getEstimation } from 'utils/common'
 
 export default class Item extends Component {
   static propTypes = {
-    item: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      images: PropTypes.array,
-      estimations: PropTypes.array,
-      comments: PropTypes.array,
-    }),
+    id: PropTypes.number,
+    name: PropTypes.string,
+    images: PropTypes.array,
+    estimations: PropTypes.array,
+    comments_count: PropTypes.number,
+    category: PropTypes.object,
     onClick: PropTypes.func,
   }
 
+  handleClick = () => {
+    const { id, category } = this.props
+    const { path } = category
+
+    const itemType = path.indexOf('.') === -1 ? path : path.split('.')[0]
+
+    this.props.onClick(id, itemType)
+  }
+
   render() {
-    const { id, name, images, estimations, comments } = this.props.item
+    const { id, name, images, estimations, comments_count } = this.props
 
     return (
       <div key={id} className="item d-flex w-100 mb-4">
         {images.length > 0 ? (
-          <div
-            className="item-thumb"
-            style={{ background: `url(${API_BASE_URL}${images[0].obj})` }}
-            onClick={() => this.props.onClick(id)}
-          />
+          <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} onClick={this.handleClick} />
         ) : (
           <div className="item-thumb" onClick={() => this.props.onClick(id)} />
         )}
@@ -45,7 +49,7 @@ export default class Item extends Component {
             <Row>
               <Col md={6}>Estimations: {numeral(estimations.length).format('0,0')}</Col>
               <Col md={6} className="text-right">
-                Comments: {numeral(comments.length).format('0,0')}
+                Comments: {numeral(comments_count).format('0,0')}
               </Col>
             </Row>
           </div>

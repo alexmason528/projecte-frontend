@@ -7,10 +7,10 @@ import {
   ITEM_ADD,
   ITEM_GET,
   ITEM_DELETE,
-  CLEAR_ITEMS,
   ITEM_ADD_ESTIMATION,
   ITEM_ADD_TO_WATCHLIST,
   ITEM_ADD_REPLY,
+  CLEAR_ITEMS,
 } from './constants'
 
 /* Inital state */

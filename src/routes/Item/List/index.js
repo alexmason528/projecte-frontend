@@ -9,10 +9,9 @@ import { MdExpandLess, MdExpandMore, MdFirstPage, MdLastPage, MdChevronLeft, MdC
 import Pagination from 'react-js-pagination'
 import queryString from 'query-string'
 import { keys } from 'lodash'
-import { Loader } from 'components'
+import { Item, Loader } from 'components'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
 import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
-import Item from './Item'
 
 class ItemListingPage extends Component {
   static propTypes = {
@@ -98,9 +97,7 @@ class ItemListingPage extends Component {
     this.setState({ ordering: ordering === 'clear' ? undefined : ordering }, this.changeLocation)
   }
 
-  handleItemClick = id => {
-    const { type } = this.props
-
+  handleItemClick = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
@@ -115,7 +112,7 @@ class ItemListingPage extends Component {
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
           <div>
-            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} item={item} onClick={this.handleItemClick} />)}
+            {itemData.results.length > 0 && itemData.results.map(item => <Item key={item.id} {...item} onClick={this.handleItemClick} />)}
           </div>
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">

@@ -6,6 +6,8 @@ export const selectUserData = state => get(state, ['auth', 'user'])
 
 export const selectIsLoggedIn = state => !!get(state, ['auth', 'user'])
 
+export const selectItemData = state => get(state, ['auth', 'items'])
+
 export const selectAuthStatus = state => get(state, ['auth', 'status'])
 
 export const selectAuthError = state => get(state, ['auth', 'error'])

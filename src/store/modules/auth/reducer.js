@@ -11,6 +11,9 @@ import {
   AUTH_VERIFY_EMAIL,
   AUTH_GET_PROFILE,
   AUTH_UPDATE_PROFILE,
+  AUTH_LIST_MY_LISTINGS,
+  AUTH_LIST_WATCHLIST,
+  CLEAR_ITEMS,
 } from './constants'
 
 /* Inital state */
@@ -19,6 +22,12 @@ const authData = getAuthData()
 
 const initialState = {
   user: authData ? authData.user : null,
+  items: {
+    totalItemsCount: 0,
+    itemsCountPerPage: 0,
+    activePage: 1,
+    results: [],
+  },
   status: null,
   error: null,
 }
@@ -51,6 +60,16 @@ export const updateProfile = createAction(AUTH_UPDATE_PROFILE)
 export const updateProfileSuccess = createAction(successAction(AUTH_UPDATE_PROFILE))
 export const updateProfileFail = createAction(failAction(AUTH_UPDATE_PROFILE))
 
+export const listMyListings = createAction(AUTH_LIST_MY_LISTINGS)
+export const listMyListingsSuccess = createAction(successAction(AUTH_LIST_MY_LISTINGS))
+export const listMyListingsFail = createAction(failAction(AUTH_LIST_MY_LISTINGS))
+
+export const listWatchlist = createAction(AUTH_LIST_WATCHLIST)
+export const listWatchlistSuccess = createAction(successAction(AUTH_LIST_WATCHLIST))
+export const listWatchlistFail = createAction(failAction(AUTH_LIST_WATCHLIST))
+
+export const clearItems = createAction(CLEAR_ITEMS)
+
 export const reducer = handleActions(
   {
     [combineActions(
@@ -61,6 +80,10 @@ export const reducer = handleActions(
     )]: (state, { payload, type }) => ({ ...state, user: payload.user, status: type }),
 
     [successAction(AUTH_GET_PROFILE)]: (state, { payload, type }) => ({ ...state, user: payload, status: type }),
+
+    [successAction(AUTH_LIST_MY_LISTINGS)]: (state, { payload, type }) => ({ ...state, items: payload, status: type }),
+
+    [successAction(AUTH_LIST_WATCHLIST)]: (state, { payload, type }) => ({ ...state, items: payload, status: type }),
 
     [AUTH_LOGOUT]: (state, { type }) => {
       clearAuthData()
@@ -75,6 +98,8 @@ export const reducer = handleActions(
       successAction(AUTH_SEND_VERIFY_EMAIL),
       AUTH_GET_PROFILE,
       AUTH_UPDATE_PROFILE,
+      AUTH_LIST_MY_LISTINGS,
+      AUTH_LIST_WATCHLIST,
     )]: (state, { type }) => ({
       ...state,
       status: type,
@@ -87,11 +112,15 @@ export const reducer = handleActions(
       failAction(AUTH_VERIFY_EMAIL),
       failAction(AUTH_GET_PROFILE),
       failAction(AUTH_UPDATE_PROFILE),
+      failAction(AUTH_LIST_MY_LISTINGS),
+      failAction(AUTH_LIST_WATCHLIST),
     )]: (state, { payload, type }) => ({
       ...state,
       status: type,
       error: payload.message,
     }),
+
+    [CLEAR_ITEMS]: (state, { type }) => ({ ...state, items: { ...initialState.items }, status: type }),
 
     [LOCATION_CHANGE]: state => ({ ...state, error: null }),
   },

@@ -25,7 +25,7 @@ import {
   ITEM_ADD_REPLY,
 } from 'store/modules/item'
 import { Loader, QuarterSpinner } from 'components'
-import { API_BASE_URL, MAIN_ITEM_TYPES } from 'config/base'
+import { MAIN_ITEM_TYPES } from 'config/base'
 import { getEstimation } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
 import ItemFact from './Fact'
@@ -102,26 +102,44 @@ export class ItemDetailPage extends Component {
   }
 
   handleGiveEstimate = () => {
+    const { user } = this.props
+
+    if (!user) {
+      return
+    }
+
     this.handleToggleModal('isEstimationModalOpen')
   }
 
   handleAddEstimation = values => {
-    const { type, item } = this.props
-    const data = { ...values, item: item.id }
+    const { user, type, item } = this.props
 
+    if (!user) {
+      return
+    }
+
+    const data = { ...values, item: item.id }
     this.props.itemAddEstimation({ type, id: item.id, data })
   }
 
   handleAddReply = values => {
-    const { type, item } = this.props
+    const { user, type, item } = this.props
+
+    if (!user) {
+      return
+    }
+
     const { selectedComment } = this.state
     const data = { ...values, item: item.id, parent: selectedComment }
-
     this.props.itemAddReply({ type, id: item.id, data })
   }
 
   handleAddToWatchList = () => {
-    const { item } = this.props
+    const { user, item } = this.props
+
+    if (!user) {
+      return
+    }
 
     this.props.itemAddToWatchlist(item.id)
   }
@@ -133,11 +151,15 @@ export class ItemDetailPage extends Component {
   get canGiveEstimation() {
     const { item, user } = this.props
 
-    if (find(item.estimations, { user: user.id })) {
+    if (user && user.id === item.user.id) {
       return false
     }
 
-    return !user || user.id !== item.user.id
+    if (user && find(item.estimations, { user: user.id })) {
+      return false
+    }
+
+    return true
   }
 
   render() {
@@ -187,7 +209,7 @@ export class ItemDetailPage extends Component {
               <Col md={6} className="py-2">
                 <div
                   className="item-main-thumb w-100"
-                  style={{ backgroundImage: `url("${API_BASE_URL}${mainThumb.obj}")`, height: '100%', backgroundSize: 'cover' }}
+                  style={{ backgroundImage: `url("${mainThumb.obj}")`, height: '100%', backgroundSize: 'cover' }}
                 >
                   <Button className="pe-btn p-1 item-thumb-magnify">
                     <MdSearch style={{ fontSize: '2rem' }} />
@@ -201,7 +223,7 @@ export class ItemDetailPage extends Component {
                       <div
                         className="item-thumb w-100"
                         style={{
-                          backgroundImage: `url("${API_BASE_URL}${image.obj}")`,
+                          backgroundImage: `url("${image.obj}")`,
                           height: 150,
                           backgroundSize: 'cover',
                         }}
