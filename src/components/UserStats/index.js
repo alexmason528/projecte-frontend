@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import { Row, Col } from 'reactstrap'
+import { USER_RANK } from 'config/base'
 
 export default class UserStats extends Component {
   static propTypes = {
@@ -11,6 +12,21 @@ export default class UserStats extends Component {
       accuracy: PropTypes.number,
     }),
   }
+
+  getUserRank() {
+    const { estimation_count } = this.props.user
+
+    for (let rank of USER_RANK) {
+      const { min, max, value } = rank
+
+      if ((min && min > estimation_count) || (max && max < estimation_count)) {
+        continue
+      }
+
+      return value
+    }
+  }
+
   render() {
     const { estimation_count, total_amount, accuracy } = this.props.user
     return (
@@ -33,7 +49,7 @@ export default class UserStats extends Component {
           </Col>
           <Col md={6} className="py-4">
             <h3 className="mt-0 font-weight-bold">RANK</h3>
-            Bronze Rater
+            {this.getUserRank()}
             <img className="user-stats-star" src="../../assets/images/bronze-star.png" alt="bronze-star" />
           </Col>
         </Row>
