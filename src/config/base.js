@@ -15,30 +15,46 @@ export const VALUABLE = 'valuable'
 
 export const MAIN_ITEM_TYPES = [REAL_ESTATE, AUTOMOBILE, ART, VALUABLE]
 
-export const ORDERING_CONSTS = {
-  '-price': (
-    <Fragment>
-      Price <MdExpandMore />
-    </Fragment>
-  ),
-  price: (
-    <Fragment>
-      Price <MdExpandLess />
-    </Fragment>
-  ),
-  '-estimation': (
-    <Fragment>
-      Estimation <MdExpandMore />
-    </Fragment>
-  ),
-  estimation: (
-    <Fragment>
-      Estimation <MdExpandLess />
-    </Fragment>
-  ),
-  '-date': (
-    <Fragment>
-      Most Recent <MdExpandMore />
-    </Fragment>
-  ),
-}
+export const ORDERING_CONSTS = [
+  {
+    id: '-price',
+    content: (
+      <Fragment>
+        Estimation <MdExpandMore />
+      </Fragment>
+    ),
+  },
+  {
+    id: 'price',
+    content: (
+      <Fragment>
+        Estimation <MdExpandLess />
+      </Fragment>
+    ),
+  },
+  {
+    id: '-estimation',
+    content: (
+      <Fragment>
+        Number of Estimations <MdExpandMore />
+      </Fragment>
+    ),
+  },
+  {
+    id: 'estimation',
+    content: (
+      <Fragment>
+        Number of Estimations <MdExpandLess />
+      </Fragment>
+    ),
+  },
+  {
+    id: '-date',
+    content: (
+      <Fragment>
+        Most Recent Listings
+        <MdExpandMore />
+      </Fragment>
+    ),
+  },
+]

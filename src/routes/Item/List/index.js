@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { MdExpandLess, MdExpandMore, MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
+import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import Pagination from 'react-js-pagination'
 import queryString from 'query-string'
-import { keys } from 'lodash'
+import { find, findIndex } from 'lodash'
 import { Item, Loader } from 'components'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
 import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
@@ -55,7 +55,7 @@ class ItemListingPage extends Component {
 
     if (initial) {
       this.props.clearItems()
-      this.setState(Object.assign({ search, page }, keys(ORDERING_CONSTS).indexOf(ordering) !== -1 && { ordering }))
+      this.setState(Object.assign({ search, page }, findIndex(ORDERING_CONSTS, { id: ordering }) !== -1 && { ordering }))
     }
 
     const { type } = props
@@ -64,9 +64,10 @@ class ItemListingPage extends Component {
 
   getDropdownToggleContent = () => {
     const { ordering } = this.state
+    const current = find(ORDERING_CONSTS, { id: ordering })
 
-    if (ordering && keys(ORDERING_CONSTS).indexOf(ordering) !== -1) {
-      return ORDERING_CONSTS[ordering]
+    if (ordering && current) {
+      return current.content
     }
 
     return 'Sort by'
@@ -93,8 +94,8 @@ class ItemListingPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleOrderingChange = ordering => {
-    this.setState({ ordering: ordering === 'clear' ? undefined : ordering }, this.changeLocation)
+  handleOrderingChange = id => {
+    this.setState({ ordering: id === 'clear' ? undefined : id }, this.changeLocation)
   }
 
   handleItemThumbClick = (id, type) => {
@@ -136,23 +137,11 @@ class ItemListingPage extends Component {
               {this.getDropdownToggleContent()}
             </DropdownToggle>
             <DropdownMenu className="w-100">
-              <DropdownItem onClick={() => this.handleOrderingChange('price')}>
-                Price
-                <MdExpandLess />
-              </DropdownItem>
-              <DropdownItem onClick={() => this.handleOrderingChange('-price')}>
-                Price
-                <MdExpandMore />
-              </DropdownItem>
-              <DropdownItem onClick={() => this.handleOrderingChange('estimation')}>
-                Estimations
-                <MdExpandLess />
-              </DropdownItem>
-              <DropdownItem onClick={() => this.handleOrderingChange('-estimation')}>
-                Estimations
-                <MdExpandMore />
-              </DropdownItem>
-              <DropdownItem onClick={() => this.handleOrderingChange('-date')}>Most recent</DropdownItem>
+              {ORDERING_CONSTS.map(ordering => (
+                <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
+                  {ordering.content}
+                </DropdownItem>
+              ))}
               <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
