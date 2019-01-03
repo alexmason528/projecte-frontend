@@ -200,9 +200,10 @@ export class ItemDetailPage extends Component {
                 <div
                   className="item-main-thumb w-100"
                   style={{ backgroundImage: `url("${getURL(mainThumb.obj)}")`, height: '100%', backgroundSize: 'cover' }}
+                  onClick={() => this.handleToggleModal('isImageSliderOpen')}
                 >
                   <Button className="pe-btn p-1 item-thumb-magnify">
-                    <MdSearch style={{ fontSize: '2rem' }} onClick={() => this.handleToggleModal('isImageSliderOpen')} />
+                    <MdSearch style={{ fontSize: '2rem' }} />
                   </Button>
                 </div>
               </Col>

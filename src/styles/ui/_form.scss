@@ -77,6 +77,10 @@
 }
 
 .image-slider-modal {
+  @media screen and (min-width: 576px) {
+    max-width: 800px;
+  }
+
   .pe-btn {
     position: absolute;
     padding: 0;
