@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import cx from 'classnames'
 import { MdReply } from 'react-icons/md'
-import { getURL } from 'utils/common'
+import { getUserPhotoUrl } from 'utils/common'
 
 const Comment = ({ user, id, estimation, content, children, child, addReply }) => (
   <div className={cx('item-comment', { 'mb-3': child })}>
     <div className="d-flex justify-content-between">
       <h4 className="item-comment__name my-0">
-        {user.photo && <div className="item-comment__photo mr-3" style={{ backgroundImage: `url(${getURL(user.photo)})` }} />}
+        <img src={getUserPhotoUrl(user.photo)} className="mr-2" style={{ width: 30, height: 30 }} alt="" />
         {user.username}
       </h4>
       {estimation && <h4 className="item-comment__estimation my-0">Estimation: $ {numeral(estimation.value).format('0,00[.]00')}</h4>}

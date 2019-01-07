@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FaUserAlt } from 'react-icons/fa'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { Logo } from 'components'
-import { API_BASE_URL } from 'config/base'
+import { getUserPhotoUrl } from 'utils/common'
 
 export default class NavBar extends Component {
   static propTypes = {
@@ -26,7 +25,7 @@ export default class NavBar extends Component {
     const { isOpen } = this.state
 
     return (
-      <Navbar color="light" light expand="md" style={{ padding: '1.5rem 0' }}>
+      <Navbar expand="md" style={{ padding: '1.5rem 0' }}>
         <div className="d-flex align-items-center">
           <Logo className="logo mr-4 c-pointer" onClick={() => navigate('/')} />
           Bares für Rares für jeden
@@ -38,11 +37,7 @@ export default class NavBar extends Component {
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {user.username}
-                  {user.photo ? (
-                    <img src={`${API_BASE_URL}${user.photo}`} className="mx-2" style={{ width: 30, height: 30 }} alt="" />
-                  ) : (
-                    <FaUserAlt className="mx-2" />
-                  )}
+                  <img src={getUserPhotoUrl(user.photo)} className="mx-2" style={{ width: 30, height: 30 }} alt="" />
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem onClick={() => navigate('/me')}>Profile</DropdownItem>
