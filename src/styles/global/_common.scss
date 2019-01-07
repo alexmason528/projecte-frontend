@@ -200,19 +200,20 @@ input {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 1.2rem;
+    line-height: 1.5;
   }
 
   .swal-button {
     color: $primaryColor;
     background-color: white;
     transition: 0.2s all ease-in-out;
+    border: none !important;
 
     @include border-radius(0);
 
     &:hover {
       color: white !important;
       background-color: lighten($primaryColor, 10%) !important;
-      border-width: 0;
     }
   }
 }

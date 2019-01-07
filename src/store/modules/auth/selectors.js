@@ -10,6 +10,8 @@ export const selectItemData = state => get(state, ['auth', 'items'])
 
 export const selectNewPassword = state => get(state, ['auth', 'newPassword'])
 
+export const selectUserInfo = state => get(state, ['auth', 'userInfo'])
+
 export const selectAuthStatus = state => get(state, ['auth', 'status'])
 
 export const selectAuthError = state => get(state, ['auth', 'error'])

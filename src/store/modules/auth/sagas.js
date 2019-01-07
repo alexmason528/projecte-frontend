@@ -17,6 +17,7 @@ import {
   AUTH_LIST_MY_LISTINGS,
   AUTH_LIST_WATCHLIST,
   AUTH_DELETE_ITEM_FROM_WATCHLIST,
+  AUTH_GET_USER_INFO,
 } from './constants'
 
 import {
@@ -42,6 +43,8 @@ import {
   listWatchlistFail,
   deleteItemFromWatchlistSuccess,
   deleteItemFromWatchlistFail,
+  getUserInfoSuccess,
+  getUserInfoFail,
 } from './reducer'
 
 const doLogIn = function*({ payload }) {
@@ -147,6 +150,15 @@ const doDeleteItemFromWatchlist = function*({ payload }) {
   }
 }
 
+const doGetUserInfo = function*({ payload }) {
+  try {
+    const res = yield call(axios.get, `${API_BASE_URL}/auth/user-info/${payload}/`)
+    yield put(getUserInfoSuccess(res.data))
+  } catch (error) {
+    yield put(getUserInfoFail(parseError(error)))
+  }
+}
+
 export const saga = function*() {
   yield takeLatest(AUTH_LOGIN, doLogIn)
   yield takeLatest(AUTH_REGISTER, doRegister)
@@ -159,4 +171,5 @@ export const saga = function*() {
   yield takeLatest(AUTH_LIST_MY_LISTINGS, doListMyListings)
   yield takeLatest(AUTH_LIST_WATCHLIST, doListWatchlist)
   yield takeLatest(AUTH_DELETE_ITEM_FROM_WATCHLIST, doDeleteItemFromWatchlist)
+  yield takeLatest(AUTH_GET_USER_INFO, doGetUserInfo)
 }

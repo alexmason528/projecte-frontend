@@ -16,6 +16,7 @@ import {
   AUTH_LIST_MY_LISTINGS,
   AUTH_LIST_WATCHLIST,
   AUTH_DELETE_ITEM_FROM_WATCHLIST,
+  AUTH_GET_USER_INFO,
   CLEAR_ITEMS,
 } from './constants'
 
@@ -34,6 +35,7 @@ const initialState = {
     results: [],
   },
   newPassword: null,
+  userInfo: null,
   status: null,
   error: null,
 }
@@ -86,6 +88,10 @@ export const deleteItemFromWatchlist = createAction(AUTH_DELETE_ITEM_FROM_WATCHL
 export const deleteItemFromWatchlistSuccess = createAction(successAction(AUTH_DELETE_ITEM_FROM_WATCHLIST))
 export const deleteItemFromWatchlistFail = createAction(failAction(AUTH_DELETE_ITEM_FROM_WATCHLIST))
 
+export const getUserInfo = createAction(AUTH_GET_USER_INFO)
+export const getUserInfoSuccess = createAction(successAction(AUTH_GET_USER_INFO))
+export const getUserInfoFail = createAction(failAction(AUTH_GET_USER_INFO))
+
 export const clearItems = createAction(CLEAR_ITEMS)
 
 export const reducer = handleActions(
@@ -107,12 +113,16 @@ export const reducer = handleActions(
 
     [successAction(AUTH_PASSWORD_RESET)]: (state, { payload, type }) => ({ ...state, newPassword: payload, status: type }),
 
+    [successAction(AUTH_GET_USER_INFO)]: (state, { payload, type }) => ({ ...state, userInfo: payload, status: type }),
+
     [AUTH_PASSWORD_RESET]: (state, { type }) => ({ ...state, newPassword: null, status: type }),
 
     [AUTH_LOGOUT]: (state, { type }) => {
       clearAuthData()
-      return { ...state, user: null, state: type }
+      return { ...state, user: null, status: type }
     },
+
+    [AUTH_GET_USER_INFO]: (state, { type }) => ({ ...state, userInfo: null, stats: type }),
 
     [combineActions(
       AUTH_LOGIN,
@@ -147,6 +157,7 @@ export const reducer = handleActions(
       failAction(AUTH_LIST_MY_LISTINGS),
       failAction(AUTH_LIST_WATCHLIST),
       failAction(AUTH_DELETE_ITEM_FROM_WATCHLIST),
+      failAction(AUTH_GET_USER_INFO),
       failAction(ITEM_DELETE),
     )]: (state, { payload, type }) => ({
       ...state,

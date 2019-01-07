@@ -1,5 +1,5 @@
 import { sumBy } from 'lodash'
-import { API_BASE_URL } from 'config/base'
+import { API_BASE_URL, USER_RANK } from 'config/base'
 import UserPic from 'assets/images/profile.png'
 
 export function getEstimation(estimations) {
@@ -16,4 +16,32 @@ export function getURL(url) {
 
 export function getUserPhotoUrl(photo) {
   return photo ? getURL(photo) : UserPic
+}
+
+export function getUserRank(estimation_count) {
+  for (let rank of USER_RANK) {
+    const { min, max, value } = rank
+
+    if ((min && min > estimation_count) || (max && max < estimation_count)) {
+      continue
+    }
+
+    return value
+  }
+}
+
+export function getUserEmblem(accuracy) {
+  const diff = 100 - accuracy
+
+  let emblem
+
+  if (diff <= 2.5) {
+    emblem = 'gold'
+  } else if (diff <= 5) {
+    emblem = 'silver'
+  } else if (diff <= 10) {
+    emblem = 'bronze'
+  }
+
+  return emblem
 }

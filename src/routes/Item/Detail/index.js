@@ -128,6 +128,10 @@ export class ItemDetailPage extends Component {
     this.props.itemAddReply({ type, id: item.id, data })
   }
 
+  gotoPublicUserPage = id => {
+    this.props.history.push(`/user/${id}`)
+  }
+
   get canGiveEstimation() {
     const { item, user } = this.props
 
@@ -270,7 +274,7 @@ export class ItemDetailPage extends Component {
                 <br />
               </div>
               <div className="text-right text-lowercase">mehr</div>
-              <div className="item-lister">
+              <div className="item-lister c-pointer" onClick={() => this.gotoPublicUserPage(user.id)}>
                 <div className="mb-2">Lister</div>
                 <div className="d-flex align-items-center">
                   <img src={getUserPhotoUrl(user.photo)} className="mr-2" style={{ width: 30, height: 30 }} alt="" />

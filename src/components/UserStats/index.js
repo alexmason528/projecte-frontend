@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import { Row, Col } from 'reactstrap'
-import { USER_RANK } from 'config/base'
+import { getUserRank, getUserEmblem } from 'utils/common'
 
 export default class UserStats extends Component {
   static propTypes = {
@@ -11,47 +11,22 @@ export default class UserStats extends Component {
       total_amount: PropTypes.number,
       accuracy: PropTypes.number,
     }),
+    inline: PropTypes.bool,
   }
 
-  getUserRank() {
-    const { estimation_count } = this.props.user
-
-    for (let rank of USER_RANK) {
-      const { min, max, value } = rank
-
-      if ((min && min > estimation_count) || (max && max < estimation_count)) {
-        continue
-      }
-
-      return value
-    }
-  }
-
-  getEmblem() {
-    const { accuracy } = this.props.user
-    const diff = 100 - accuracy
-
-    let emblem
-
-    if (diff <= 2.5) {
-      emblem = 'gold'
-    } else if (diff <= 5) {
-      emblem = 'silver'
-    } else if (diff <= 10) {
-      emblem = 'bronze'
-    }
-
-    return emblem
+  static defaultProps = {
+    inline: true,
   }
 
   render() {
-    const { estimation_count, total_amount, accuracy } = this.props.user
-    const emblem = this.getEmblem()
+    const { inline, user } = this.props
+    const { estimation_count, total_amount, accuracy } = user
+    const emblem = getUserEmblem(accuracy)
 
     return (
       <div className="user-stats px-4">
         <Row>
-          <Col md={6} className="py-4">
+          <Col md={inline ? 6 : 12} className="py-4">
             <h3 className="mt-0 font-weight-bold">STATS</h3>
             <div className="d-flex justify-content-between">
               <span>No estimations</span>
@@ -66,9 +41,9 @@ export default class UserStats extends Component {
               <span>{numeral(accuracy).format('0[.]00')}%</span>
             </div>
           </Col>
-          <Col md={6} className="py-4">
+          <Col md={inline ? 6 : 12} className="py-4">
             <h3 className="mt-0 font-weight-bold text-uppercase">Rank</h3>
-            {this.getUserRank()}
+            {getUserRank(estimation_count)}
             {emblem && <img className="user-stats-emblem" src={`../../assets/images/${emblem}-star.png`} alt="" />}
           </Col>
         </Row>
