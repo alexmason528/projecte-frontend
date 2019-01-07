@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md'
-import { getURL } from 'utils/common'
 
 export default class Image extends Component {
   static propTypes = {
@@ -30,7 +29,7 @@ export default class Image extends Component {
 
     return (
       <div className="d-flex justify-content-center mt-4">
-        <div className="image-preview mr-4" style={{ backgroundImage: `url(${getURL(file.image)})` }} />
+        <div className="image-preview mr-4" style={{ backgroundImage: `url(${file.image})` }} />
         <div className="image-description">
           <div>
             <div className="mb-2 font-weight-bold">Image description</div>
