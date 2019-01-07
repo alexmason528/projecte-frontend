@@ -47,7 +47,7 @@ export class AuthModal extends Component {
       if (success) {
         this.props.toggle()
       } else {
-        swal({ icon: 'error', text: nextProps.error })
+        swal({ className: 'pe-swal', text: nextProps.error })
       }
     }
 
@@ -58,10 +58,7 @@ export class AuthModal extends Component {
         this.props.toggle()
       }
 
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'You are registered successfully' : nextProps.error,
-      })
+      swal({ className: 'pe-swal', text: success ? 'You are registered successfully' : nextProps.error })
     }
 
     if (status === AUTH_SEND_PASSWORD_RESET_EMAIL && nextProps.status !== status) {
@@ -71,10 +68,7 @@ export class AuthModal extends Component {
         this.props.toggle()
       }
 
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Sent password reset email. Please check your inbox' : nextProps.error,
-      })
+      swal({ className: 'pe-swal', text: success ? 'Sent password reset email. \n\n Please check your inbox.' : nextProps.error })
     }
   }
 

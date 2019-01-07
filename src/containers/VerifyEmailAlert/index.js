@@ -25,7 +25,7 @@ export class VerifyEmailAlert extends Component {
     if (status === AUTH_SEND_VERIFY_EMAIL && nextProps.status !== status) {
       const success = nextProps.status === successAction(AUTH_SEND_VERIFY_EMAIL)
       swal({
-        icon: success ? 'success' : 'error',
+        className: 'pe-swal',
         text: success
           ? 'Successfully sent verification code to your email.\n\n Check your inbox.'
           : 'Failed to send verification code to your email.',

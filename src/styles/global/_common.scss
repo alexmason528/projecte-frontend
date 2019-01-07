@@ -187,3 +187,32 @@ input {
     }
   }
 }
+
+.pe-swal {
+  background-color: $primaryColor;
+  border: 0.5rem solid white;
+
+  @include border-radius(0);
+
+  .swal-text {
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .swal-button {
+    color: $primaryColor;
+    background-color: white;
+    transition: 0.2s all ease-in-out;
+
+    @include border-radius(0);
+
+    &:hover {
+      color: white !important;
+      background-color: lighten($primaryColor, 10%) !important;
+      border-width: 0;
+    }
+  }
+}

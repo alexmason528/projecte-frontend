@@ -71,7 +71,7 @@ export class ItemDetailPage extends Component {
       const success = nextProps.status === successAction(ITEM_ADD_TO_WATCHLIST)
 
       swal({
-        icon: success ? 'success' : 'error',
+        className: 'pe-swal',
         text: success ? 'This item is added to the watchlist successfully' : nextProps.error,
       })
     }

@@ -37,10 +37,7 @@ class AddWizard extends Component {
     if (status === ITEM_ADD && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD)
 
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Successfully added your item.' : 'Failed to add your item.',
-      }).then(() => {
+      swal({ className: 'pe-swal', text: success ? 'Successfully added your item.' : 'Failed to add your item.' }).then(() => {
         success && this.props.history.push(`/item/${type}`)
       })
     }

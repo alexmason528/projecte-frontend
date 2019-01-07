@@ -22,10 +22,7 @@ export default class ReplyModal extends Component {
 
       this.props.toggle()
 
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Your comment is added successfully' : nextProps.error,
-      })
+      swal({ className: 'pe-swal', text: success ? 'Your comment is added successfully' : nextProps.error })
     }
   }
 

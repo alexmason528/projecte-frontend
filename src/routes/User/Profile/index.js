@@ -28,10 +28,7 @@ export class Profile extends Component {
     if (status === AUTH_UPDATE_PROFILE && nextProps.status !== status) {
       const success = nextProps.status !== failAction(AUTH_UPDATE_PROFILE)
 
-      swal({
-        icon: success ? 'success' : 'error',
-        text: success ? 'Your profile is updated successfully.' : 'Failed to update your profile.',
-      })
+      swal({ className: 'pe-swal', text: success ? 'Your profile is updated successfully.' : 'Failed to update your profile.' })
     }
   }
 
