@@ -10,6 +10,7 @@ import LogInForm from './Forms/LogInForm'
 import ProfileForm from './Forms/ProfileForm'
 import RegisterForm from './Forms/RegisterForm'
 import RouteWithProps from './RouteWithProps'
+import Breadcrumbs from './Breadcrumbs'
 
 export {
   Item,
@@ -24,6 +25,7 @@ export {
   ProfileForm,
   RegisterForm,
   RouteWithProps,
+  Breadcrumbs,
 }
 
 export * from './FormComponents'

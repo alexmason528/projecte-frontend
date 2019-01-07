@@ -22,7 +22,7 @@ import {
   ITEM_GET,
   ITEM_ADD_TO_WATCHLIST,
 } from 'store/modules/item'
-import { Loader, QuarterSpinner } from 'components'
+import { Loader, QuarterSpinner, Breadcrumbs } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
 import { getEstimation, getURL, getUserPhotoUrl } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
@@ -169,6 +169,7 @@ export class ItemDetailPage extends Component {
 
     return (
       <div className="item-detail-page">
+        <Breadcrumbs path={`${item.category.path}.${item.name}`} className="mb-4" listClassName="px-0 bg-transparent" />
         <EstimationModal
           isOpen={isEstimationModalOpen}
           toggle={() => this.handleToggleModal('isEstimationModalOpen')}
