@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { MAIN_ITEM_TYPES } from 'config/base'
 import { Field, reduxForm } from 'redux-form'
 import { Container, Row, Col, Button } from 'reactstrap'
-import { Input, CategoryDropdown } from 'components'
+import { Input, CategoryDropdown, TextArea } from 'components'
 import { REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
 import validate from './validate'
 
@@ -138,7 +138,7 @@ class DetailForm extends Component {
           <Col md={12} className="mb-3">
             <div className="pe-box p-3">
               <h3 className="text-uppercase m-0 font-weight-bold mb-3">Details</h3>
-              <Field className="w-100 resize-none bg-secondary p-2" type="textarea" name="details" component={Input} />
+              <Field className="pe-quill" name="details" component={TextArea} />
             </div>
           </Col>
           <Col md={12} className="text-right">

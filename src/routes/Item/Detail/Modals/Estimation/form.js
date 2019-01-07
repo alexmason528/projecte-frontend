@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 import { Row, Col, Form } from 'reactstrap'
-import { LoaderButton, Input } from 'components'
+import { LoaderButton, Input, TextArea } from 'components'
 import validate from './validate'
 
 const EstimationForm = ({ loading, handleSubmit }) => (
@@ -18,7 +18,7 @@ const EstimationForm = ({ loading, handleSubmit }) => (
     <Row className="mt-3">
       <Col md={12} className="d-flex align-items-end">
         <div className="w-100 mr-2">
-          <Field name="comment" type="textarea" className="w-100 resize-none p-2" placeholder="Write comment..." component={Input} />
+          <Field name="comment" className="pe-quill bg-white color-black" placeholder="Write comment..." component={TextArea} />
         </div>
         <LoaderButton className="form-submit-btn white" loading={loading}>
           OK

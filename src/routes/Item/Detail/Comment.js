@@ -14,7 +14,7 @@ const Comment = ({ user, id, estimation, content, children, child, addReply }) =
       </h4>
       {estimation && <h4 className="item-comment__estimation my-0">Estimation: $ {numeral(estimation.value).format('0,00[.]00')}</h4>}
     </div>
-    <div className="item-comment__content mt-3">{content}</div>
+    <div className="item-comment__content pe-textarea mt-3" dangerouslySetInnerHTML={{ __html: content }} />
     <div className="item-comment__reply mt-2">
       <div>{children.length > 0 && `Replys (${children.length})`}</div>
       <div>

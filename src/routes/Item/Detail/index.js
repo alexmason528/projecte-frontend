@@ -233,7 +233,7 @@ export class ItemDetailPage extends Component {
 
             <div className="item-details pe-box p-4 mt-3">
               <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Details</h3>
-              {details}
+              <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
             </div>
 
             {comments.length > 0 && (
