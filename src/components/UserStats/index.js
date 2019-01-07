@@ -27,8 +27,27 @@ export default class UserStats extends Component {
     }
   }
 
+  getEmblem() {
+    const { accuracy } = this.props.user
+    const diff = 100 - accuracy
+
+    let emblem
+
+    if (diff <= 2.5) {
+      emblem = 'gold'
+    } else if (diff <= 5) {
+      emblem = 'silver'
+    } else if (diff <= 10) {
+      emblem = 'bronze'
+    }
+
+    return emblem
+  }
+
   render() {
     const { estimation_count, total_amount, accuracy } = this.props.user
+    const emblem = this.getEmblem()
+
     return (
       <div className="user-stats px-4">
         <Row>
@@ -44,13 +63,13 @@ export default class UserStats extends Component {
             </div>
             <div className="d-flex justify-content-between">
               <span>Accuracy</span>
-              <span>{accuracy}%</span>
+              <span>{numeral(accuracy).format('0[.]00')}%</span>
             </div>
           </Col>
           <Col md={6} className="py-4">
-            <h3 className="mt-0 font-weight-bold">RANK</h3>
+            <h3 className="mt-0 font-weight-bold text-uppercase">Rank</h3>
             {this.getUserRank()}
-            <img className="user-stats-star" src="../../assets/images/bronze-star.png" alt="bronze-star" />
+            {emblem && <img className="user-stats-emblem" src={`../../assets/images/${emblem}-star.png`} alt="" />}
           </Col>
         </Row>
       </div>
