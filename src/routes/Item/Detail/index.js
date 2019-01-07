@@ -24,7 +24,7 @@ import {
 } from 'store/modules/item'
 import { Loader, QuarterSpinner } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
-import { getEstimation, getURL } from 'utils/common'
+import { getEstimation, getURL, getUserPhotoUrl } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
 import ItemFact from './Fact'
 import ItemComment from './Comment'
@@ -156,7 +156,7 @@ export class ItemDetailPage extends Component {
       return null
     }
 
-    const { name, estimations, comments, details, facts, images, date, in_watchlist } = item
+    const { name, estimations, comments, details, facts, images, date, in_watchlist, user } = item
 
     const mainThumb = images[0]
     const thumbs = slice(images, 1, 5)
@@ -270,6 +270,15 @@ export class ItemDetailPage extends Component {
                 <br />
               </div>
               <div className="text-right text-lowercase">mehr</div>
+              <div className="item-lister">
+                <div className="mb-2">Lister</div>
+                <div className="d-flex align-items-center">
+                  <img src={getUserPhotoUrl(user.photo)} className="mr-2" style={{ width: 30, height: 30 }} alt="" />
+                  <div className="text-none font-weight-normal" style={{ fontSize: '1rem' }}>
+                    {user.username}
+                  </div>
+                </div>
+              </div>
             </div>
           </Col>
         </Row>
