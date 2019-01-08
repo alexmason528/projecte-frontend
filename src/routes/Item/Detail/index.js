@@ -215,7 +215,11 @@ export class ItemDetailPage extends Component {
                 <Row>
                   {thumbs.map((image, ind) => (
                     <Col className="item-image pl-0 py-2" key={image.id} md={6}>
-                      <div className="item-thumb w-100" style={{ backgroundImage: `url("${getURL(image.obj)}")` }}>
+                      <div
+                        className="item-thumb w-100"
+                        style={{ backgroundImage: `url("${getURL(image.obj)}")` }}
+                        onClick={() => this.handleToggleModal('isImageSliderOpen')}
+                      >
                         {ind === 3 && images.length > 5 && <div className="item-image-more">+{images.length - 5}</div>}
                       </div>
                     </Col>
