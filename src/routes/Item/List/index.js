@@ -32,6 +32,7 @@ class ItemListingPage extends Component {
     super(props)
 
     this.state = {
+      cid: undefined,
       search: undefined,
       ordering: undefined,
       page: 1,
@@ -51,15 +52,15 @@ class ItemListingPage extends Component {
 
   fetchData = (props, initial = false) => {
     const { location } = props
-    const { search, ordering, page } = queryString.parse(location.search)
+    const { search, ordering, page, cid } = queryString.parse(location.search)
 
     if (initial) {
       this.props.clearItems()
-      this.setState(Object.assign({ search, page }, findIndex(ORDERING_CONSTS, { id: ordering }) !== -1 && { ordering }))
+      this.setState(Object.assign({ search, page, cid }, findIndex(ORDERING_CONSTS, { id: ordering }) !== -1 && { ordering }))
     }
 
     const { type } = props
-    this.props.itemList({ type, params: { search, ordering, page } })
+    this.props.itemList({ type, params: { search, ordering, page, cid } })
   }
 
   getDropdownToggleContent = () => {
@@ -74,9 +75,9 @@ class ItemListingPage extends Component {
   }
 
   changeLocation = () => {
-    const { page, ordering, search } = this.state
+    const { page, ordering, search, cid } = this.state
     const { match } = this.props
-    const queryParam = queryString.stringify({ page, ordering, search })
+    const queryParam = queryString.stringify({ page, ordering, search, cid })
 
     const newUrl = `${match.url}?${queryParam}`
 

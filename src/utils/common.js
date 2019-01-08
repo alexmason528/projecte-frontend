@@ -45,3 +45,18 @@ export function getUserEmblem(accuracy) {
 
   return emblem
 }
+
+export function findCategory(categories, path) {
+  for (let category of categories) {
+    if (category.path === path) {
+      return category.id
+    }
+
+    const { children } = category
+    for (let child of children) {
+      if (child.path === path) {
+        return child.id
+      }
+    }
+  }
+}
