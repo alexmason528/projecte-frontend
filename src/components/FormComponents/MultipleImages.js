@@ -30,8 +30,9 @@ export default class MultipleImages extends Component {
   }
 
   handleUploaderChange = evt => {
-    const files = values(evt.target.files)
-    const newFiles = files.map(obj => ({ description: '', obj, image: null }))
+    const files = values(evt.target.files).map(obj => ({ description: '', obj, image: null }))
+
+    const newFiles = [...this.state.files, ...files]
 
     this.setState({ files: newFiles }, this.emitChange)
     this.readImages(newFiles)
