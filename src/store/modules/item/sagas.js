@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { reset } from 'redux-form'
 import axios from 'axios'
 import { parseError } from 'utils/error-parser'

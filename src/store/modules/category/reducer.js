@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { successAction, failAction } from 'utils/state-helpers'
 
 import { CATEGORY_FETCH } from './constants'

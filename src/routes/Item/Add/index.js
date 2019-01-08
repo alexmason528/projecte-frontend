@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { reset } from 'redux-form'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Alert } from 'reactstrap'
@@ -17,6 +18,7 @@ class ItemAddPage extends Component {
     error: PropTypes.string,
     categoryFetch: PropTypes.func,
     itemAdd: PropTypes.func,
+    reset: PropTypes.func,
   }
 
   componentWillMount() {
@@ -28,6 +30,7 @@ class ItemAddPage extends Component {
     }
 
     this.props.categoryFetch(type)
+    this.props.reset('add-wizard')
   }
 
   render() {
@@ -57,6 +60,7 @@ const selectors = createStructuredSelector({
 
 const actions = {
   categoryFetch,
+  reset,
 }
 
 export default compose(

@@ -1,5 +1,5 @@
 import { createAction, handleActions, combineActions } from 'redux-actions'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { getAuthData, clearAuthData } from 'utils/storage'
 import { successAction, failAction } from 'utils/state-helpers'
 

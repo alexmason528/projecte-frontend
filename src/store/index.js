@@ -1,7 +1,7 @@
 import createHistory from 'history/createBrowserHistory'
 import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
-import { routerMiddleware, routerReducer } from 'react-router-redux'
+import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { reducer as formReducer } from 'redux-form'
 import { all } from 'redux-saga/effects'
 import authMiddleware from 'store/middlewares/auth'
@@ -36,7 +36,7 @@ export const store = createStore(
     category: categoryReducer,
     item: itemReducer,
     form: formReducer,
-    router: routerReducer,
+    router: connectRouter(history),
   }),
   composeEnhancers(...enhancers),
 )

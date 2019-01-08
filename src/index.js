@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 import axios from 'axios'
 
 import 'polyfills/localStorage'
-import { store } from 'store'
+import { store, history } from 'store'
 import Routes from 'routes'
 import { getAuthData } from 'utils/storage'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -23,7 +24,9 @@ axios.interceptors.request.use(config => {
 /* Render app components */
 ReactDOM.render(
   <Provider store={store}>
-    <Routes />
+    <ConnectedRouter history={history}>
+      <Routes />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
 )
