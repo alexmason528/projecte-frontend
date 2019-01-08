@@ -22,9 +22,10 @@ import {
   ITEM_GET,
   ITEM_ADD_TO_WATCHLIST,
 } from 'store/modules/item'
-import { Loader, QuarterSpinner, Breadcrumbs } from 'components'
+import { categoryFetch } from 'store/modules/category'
+import { Loader, QuarterSpinner, Breadcrumbs, UserDetail } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
-import { getEstimation, getURL, getUserPhotoUrl } from 'utils/common'
+import { getEstimation, getURL } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
 import ItemFact from './Fact'
 import ItemComment from './Comment'
@@ -44,6 +45,7 @@ export class ItemDetailPage extends Component {
     itemAddEstimation: PropTypes.func,
     itemAddToWatchlist: PropTypes.func,
     itemAddReply: PropTypes.func,
+    categoryFetch: PropTypes.func,
   }
 
   constructor(props) {
@@ -62,6 +64,7 @@ export class ItemDetailPage extends Component {
     const { type, match } = this.props
 
     this.props.itemGet({ type, id: match.params.id })
+    this.props.categoryFetch(type)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -128,10 +131,6 @@ export class ItemDetailPage extends Component {
     this.props.itemAddReply({ type, id: item.id, data })
   }
 
-  gotoPublicUserPage = id => {
-    this.props.history.push(`/user/${id}`)
-  }
-
   get canGiveEstimation() {
     const { item, user } = this.props
 
@@ -169,7 +168,7 @@ export class ItemDetailPage extends Component {
 
     return (
       <div className="item-detail-page">
-        <Breadcrumbs path={`${item.category.path}.${item.name}`} className="mb-4" listClassName="px-0 bg-transparent" />
+        <Breadcrumbs path={item.category.path} className="mb-4" listClassName="px-0 bg-transparent" />
         <EstimationModal
           isOpen={isEstimationModalOpen}
           toggle={() => this.handleToggleModal('isEstimationModalOpen')}
@@ -264,7 +263,7 @@ export class ItemDetailPage extends Component {
             )}
             <div className="pe-box mb-3 p-3">
               <div>Estimation</div>
-              <div className="text-right">€ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
+              <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
             </div>
             <div className="pe-box p-3">
               <div className="mb-2">Infos</div>
@@ -274,15 +273,9 @@ export class ItemDetailPage extends Component {
                 Comments: {numeral(comments.length).format('0,0')}
                 <br />
               </div>
-              <div className="text-right text-lowercase">mehr</div>
-              <div className="item-lister c-pointer" onClick={() => this.gotoPublicUserPage(user.id)}>
+              <div className="item-lister mt-3">
                 <div className="mb-2">Lister</div>
-                <div className="d-flex align-items-center">
-                  <img src={getUserPhotoUrl(user.photo)} className="mr-2" style={{ width: 30, height: 30 }} alt="" />
-                  <div className="text-none font-weight-normal" style={{ fontSize: '1rem' }}>
-                    {user.username}
-                  </div>
-                </div>
+                <UserDetail user={user} isLister />
               </div>
             </div>
           </Col>
@@ -304,6 +297,7 @@ const actions = {
   itemAddEstimation,
   itemAddToWatchlist,
   itemAddReply,
+  categoryFetch,
 }
 
 export default compose(

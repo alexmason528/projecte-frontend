@@ -22,7 +22,7 @@ export default class EstimationModal extends Component {
 
       this.props.toggle()
 
-      swal({ className: 'pe-swal', text: success ? 'Your comment is added successfully' : nextProps.error })
+      swal({ className: 'pe-swal', text: success ? 'Your estimate and comment are added successfully' : nextProps.error })
     }
   }
 
