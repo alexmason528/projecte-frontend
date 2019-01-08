@@ -69,7 +69,7 @@ export default class Item extends Component {
                     <h3 className="m-0">Estimation</h3>
                   </Col>
                   <Col xs={6} className="text-right">
-                    <h3 className="m-0">€ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
+                    <h3 className="m-0">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
                   </Col>
                 </Row>
                 <Row>

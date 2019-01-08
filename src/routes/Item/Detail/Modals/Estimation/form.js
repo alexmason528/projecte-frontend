@@ -10,8 +10,9 @@ const EstimationForm = ({ loading, handleSubmit }) => (
     <Row>
       <Col md={12} className="d-flex justify-content-between">
         <h5 className="my-0 text-uppercase">Give estimate</h5>
-        <div className="w-auto">
-          <Field className="line-height-1 p-2" name="value" component={Input} type="number" />
+        <div className="w-auto position-relative">
+          <Field className="line-height-1 p-2 pl-4" name="value" component={Input} type="number" />
+          <span className="form-input__prefix">$</span>
         </div>
       </Col>
     </Row>

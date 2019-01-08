@@ -48,7 +48,7 @@ export class PublicUserPage extends Component {
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>Total amount</span>
-                  <span>€ {numeral(total_amount).format('0,0[.]00')}</span>
+                  <span>$ {numeral(total_amount).format('0,0[.]00')}</span>
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>Accuracy</span>
