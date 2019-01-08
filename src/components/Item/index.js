@@ -15,14 +15,14 @@ export default class Item extends Component {
     comments_count: PropTypes.number,
     category: PropTypes.object,
     buttons: PropTypes.string,
-    onThumbClick: PropTypes.func,
+    onRedirect: PropTypes.func,
     onDelete: PropTypes.func,
     onEdit: PropTypes.func,
   }
 
   static defaultProps = {
     buttons: 'none',
-    onThumbClick: () => {},
+    onRedirect: () => {},
     onDelete: () => {},
     onEdit: () => {},
   }
@@ -33,10 +33,10 @@ export default class Item extends Component {
     return path.indexOf('.') === -1 ? path : path.split('.')[0]
   }
 
-  handleThumbClick = () => {
+  gotoItemDetailPage = () => {
     const { id } = this.props
 
-    this.props.onThumbClick(id, this.type)
+    this.props.onRedirect(id, this.type)
   }
 
   handleEdit = () => {
@@ -56,12 +56,14 @@ export default class Item extends Component {
 
     return (
       <Row key={id} className="item mb-4">
-        <Col sm={12} md={3} onClick={this.handleThumbClick}>
+        <Col sm={12} md={3} onClick={this.gotoItemDetailPage}>
           <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} />
         </Col>
         <Col sm={12} md={9}>
           <div className="d-flex flex-column h-100">
-            <h4 className="item-name mt-0 mb-3 text-uppercase">{name}</h4>
+            <h4 className="item-name mt-0 mb-3 text-uppercase c-pointer" onClick={this.gotoItemDetailPage}>
+              {name}
+            </h4>
             <Row className="m-0 flex-grow-1">
               <Col md={buttons !== 'none' ? 10 : 12} className="item-meta p-3 pe-box">
                 <Row className="font-weight-bold">

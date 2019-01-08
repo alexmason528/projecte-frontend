@@ -81,7 +81,7 @@ export class MyListingsPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleItemThumbClick = (id, type) => {
+  handleRedirect = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
@@ -104,7 +104,7 @@ export class MyListingsPage extends Component {
                 history={history}
                 buttons="delete"
                 {...item}
-                onThumbClick={this.handleItemThumbClick}
+                onRedirect={this.handleRedirect}
                 onDelete={this.handleItemDelete}
               />
             ))}

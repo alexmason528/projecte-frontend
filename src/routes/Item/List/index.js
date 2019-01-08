@@ -99,7 +99,7 @@ class ItemListingPage extends Component {
     this.setState({ ordering: id === 'clear' ? undefined : id }, this.changeLocation)
   }
 
-  handleItemThumbClick = (id, type) => {
+  handleRedirect = (id, type) => {
     this.props.history.push(`/item/${type}/${id}`)
   }
 
@@ -114,7 +114,7 @@ class ItemListingPage extends Component {
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
           {itemData.results.length > 0 &&
-            itemData.results.map(item => <Item key={item.id} history={history} {...item} onThumbClick={this.handleItemThumbClick} />)}
+            itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
           {totalItemsCount > 0 && (
             <div className="pagination-wrapper text-right">
               <Pagination
