@@ -35,7 +35,7 @@ class ImageForm extends Component {
 }
 
 export default reduxForm({
-  form: 'add-wizard',
+  form: 'item-wizard',
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
 })(ImageForm)

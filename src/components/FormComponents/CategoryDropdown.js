@@ -22,50 +22,39 @@ export default class Dropdown extends Component {
   }
 
   componentWillMount() {
-    const { input, categories } = this.props
+    this.intializeState(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.intializeState(nextProps)
+  }
+
+  intializeState = props => {
+    const { input, categories } = props
 
     if (input.value) {
       const category = find(categories, { id: input.value })
 
       if (category) {
-        this.setState(
-          {
-            categoryId: input.value,
-            subCategoryId: null,
-          },
-          this.emitChange,
-        )
+        this.setState({ categoryId: input.value, subCategoryId: null })
+        return
       } else {
         for (let category of categories) {
           const { children } = category
           const subCategory = find(children, { id: input.value })
 
           if (subCategory) {
-            this.setState(
-              {
-                categoryId: category.id,
-                subCategoryId: subCategory.id,
-              },
-              this.emitChange,
-            )
+            this.setState({ categoryId: category.id, subCategoryId: subCategory.id })
+            return
           }
         }
       }
-
-      return
     }
 
-    const firstCategory = categories[0]
+    const categoryId = get(categories, [0, 'id'])
+    const subCategoryId = get(categories, [0, 'children', 0, 'id'], null)
 
-    this.setState(
-      {
-        categoryId: get(firstCategory, 'id'),
-        subCategoryId: get(firstCategory, ['children', 0, 'id'], null),
-      },
-      this.emitChange,
-    )
-
-    return
+    this.setState({ categoryId, subCategoryId }, this.emitChange)
   }
 
   getCategoryName = categoryId => {

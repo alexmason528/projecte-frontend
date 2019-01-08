@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { MAIN_ITEM_TYPES } from 'config/base'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Input, CategoryDropdown, TextArea } from 'components'
-import { REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
+import { MAIN_ITEM_TYPES, REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
 import validate from './validate'
 
 class DetailForm extends Component {
@@ -150,9 +151,22 @@ class DetailForm extends Component {
   }
 }
 
-export default reduxForm({
-  form: 'add-wizard',
-  destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true,
-  validate,
-})(DetailForm)
+const selectors = (state, props) => {
+  if (!props.item || !props.editing) {
+    return props
+  }
+
+  const { category, facts, ...itemData } = props.item
+
+  return { ...props, initialValues: { category: category.id, ...facts, ...itemData } }
+}
+
+export default compose(
+  connect(selectors),
+  reduxForm({
+    form: 'item-wizard',
+    destroyOnUnmount: false,
+    forceUnregisterOnUnmount: true,
+    validate,
+  }),
+)(DetailForm)

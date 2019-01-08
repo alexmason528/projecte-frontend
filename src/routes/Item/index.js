@@ -6,12 +6,14 @@ import { userIsAuthenticated } from 'utils/auth-wrappers'
 import ListPage from './List'
 import AddPage from './Add'
 import DetailPage from './Detail'
+import EditPage from './Edit'
 
 const Routes = ({ match }) => (
   <Switch>
     <RouteWithProps exact path={`${match.url}`} component={ListPage} {...match.params} />
     <RouteWithProps exact path={`${match.url}/new`} component={userIsAuthenticated(AddPage)} {...match.params} />
     <RouteWithProps exact path={`${match.url}/:id`} component={DetailPage} {...match.params} />
+    <RouteWithProps exact path={`${match.url}/:id/edit`} component={EditPage} {...match.params} />
     <Route path="*" component={Page404} />
   </Switch>
 )

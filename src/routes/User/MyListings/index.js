@@ -80,6 +80,10 @@ export class MyListingsPage extends Component {
     this.props.itemDelete({ id, type })
   }
 
+  handleItemEdit = (id, type) => {
+    this.props.history.push(`/item/${type}/${id}/edit`)
+  }
+
   render() {
     const { history, status, itemData } = this.props
     const { activePage, itemsCountPerPage, totalItemsCount } = itemData
@@ -96,6 +100,7 @@ export class MyListingsPage extends Component {
                 buttons="all"
                 {...item}
                 onRedirect={this.handleRedirect}
+                onEdit={this.handleItemEdit}
                 onDelete={this.handleItemDelete}
               />
             ))}

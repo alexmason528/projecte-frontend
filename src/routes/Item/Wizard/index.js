@@ -8,19 +8,29 @@ import cx from 'classnames'
 import { forEach, keys, omit, pick, startCase } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
+import { reset } from 'redux-form'
 import { MAIN_ITEM_TYPES } from 'config/base'
 import { itemAdd, selectItemStatus, selectItemError, ITEM_ADD } from 'store/modules/item'
+import { categoryFetch, selectCategories } from 'store/modules/category'
 import { successAction } from 'utils/state-helpers'
 import DetailForm from './DetailForm/'
 import ImageForm from './ImageForm/'
 
-class AddWizard extends Component {
+class ItemWizard extends Component {
   static propTypes = {
+    item: PropTypes.object,
+    editing: PropTypes.bool,
     type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
     itemAdd: PropTypes.func,
+    categoryFetch: PropTypes.func,
+    reset: PropTypes.func,
+  }
+
+  static defaultProps = {
+    editing: false,
   }
 
   constructor(props) {
@@ -29,6 +39,13 @@ class AddWizard extends Component {
     this.state = {
       page: 1,
     }
+  }
+
+  componentWillMount() {
+    const { type } = this.props
+
+    this.props.categoryFetch(type)
+    this.props.reset('item-wizard')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,11 +104,15 @@ class AddWizard extends Component {
   }
 
   render() {
-    const { type, categories, error } = this.props
+    const { editing, item, type, categories, error } = this.props
     const { page } = this.state
 
+    if (categories.length === 0) {
+      return null
+    }
+
     return (
-      <div className="add-wizard w-75 mx-auto">
+      <div className="item-wizard w-75 mx-auto">
         <Row>
           {error && (
             <Col md={12}>
@@ -99,7 +120,9 @@ class AddWizard extends Component {
             </Col>
           )}
           <Col md={12}>
-            <h4 className="mt-0 mb-3 text-uppercase">Add {startCase(type)}</h4>
+            <h4 className="mt-0 mb-3 text-uppercase">
+              {editing ? 'Edit' : 'Add'} {startCase(type)}
+            </h4>
           </Col>
           <Col md={12}>
             <div className="wizard-nav d-flex justify-content-center">
@@ -116,8 +139,8 @@ class AddWizard extends Component {
         </Row>
         <Row>
           <Col md={12} className="mt-3">
-            {page === 1 && <DetailForm type={type} categories={categories} onSubmit={this.gotoSecondPage} />}
-            {page === 2 && <ImageForm onBack={this.gotoFirstPage} onSubmit={this.handleSubmit} />}
+            {page === 1 && <DetailForm type={type} categories={categories} item={item} onSubmit={this.gotoSecondPage} />}
+            {page === 2 && <ImageForm item={item} onBack={this.gotoFirstPage} onSubmit={this.handleSubmit} />}
           </Col>
         </Row>
       </div>
@@ -126,12 +149,15 @@ class AddWizard extends Component {
 }
 
 const selectors = createStructuredSelector({
+  categories: selectCategories,
   status: selectItemStatus,
   error: selectItemError,
 })
 
 const actions = {
   itemAdd,
+  categoryFetch,
+  reset,
 }
 
 export default compose(
@@ -140,4 +166,4 @@ export default compose(
     selectors,
     actions,
   ),
-)(AddWizard)
+)(ItemWizard)
