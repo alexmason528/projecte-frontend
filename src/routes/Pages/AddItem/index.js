@@ -12,7 +12,7 @@ class AddItemPage extends Component {
     return (
       <Row className="item-add-age">
         <Col md={12}>
-          <h3 className="pe-heading text-center mt-3" style={{ marginBottom: '1.45rem' }}>
+          <h3 className="pe-heading text-center mt-3" style={{ marginBottom: '1.8rem' }}>
             What do you want to add?
           </h3>
         </Col>
