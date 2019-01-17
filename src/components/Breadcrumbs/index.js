@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import { Breadcrumb as RBreadcrumb, BreadcrumbItem as RBreadcrumbItem } from 'reactstrap'
 import { upperCase, slice } from 'lodash'
 import { selectCategories } from 'store/modules/category'
-import { findCategory } from 'utils/common'
+import { findCategoryId } from 'utils/common'
 
 export class Breadcrumbs extends Component {
   static propTypes = {
@@ -31,7 +31,7 @@ export class Breadcrumbs extends Component {
     }
 
     const category = slice(crumbs, 0, ind + 1).join('.')
-    const id = findCategory(categories, category)
+    const id = findCategoryId(categories, category)
 
     id && this.props.history.push(`/item/${crumbs[0]}?cid=${id}`)
   }

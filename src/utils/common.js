@@ -1,4 +1,5 @@
 import { sumBy } from 'lodash'
+import qs from 'query-string'
 import { API_BASE_URL, USER_RANK } from 'config/base'
 import UserPic from 'assets/images/profile.png'
 
@@ -46,7 +47,7 @@ export function getUserEmblem(accuracy) {
   return emblem
 }
 
-export function findCategory(categories, path) {
+export function findCategoryId(categories, path) {
   for (let category of categories) {
     if (category.path === path) {
       return category.id
@@ -59,4 +60,29 @@ export function findCategory(categories, path) {
       }
     }
   }
+}
+
+export function findCategoryPath(categories, id) {
+  for (let category of categories) {
+    if (category.id === id) {
+      return category.path
+    }
+
+    const { children } = category
+    for (let child of children) {
+      if (child.id === id) {
+        return child.path
+      }
+    }
+  }
+}
+
+export function getItemListingPagePath(type, search, categories) {
+  if (!search) {
+    return type
+  }
+
+  const { cid } = qs.parse(search)
+
+  return findCategoryPath(categories, parseInt(cid))
 }

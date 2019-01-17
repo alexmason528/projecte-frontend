@@ -9,9 +9,11 @@ import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-ic
 import Pagination from 'react-js-pagination'
 import queryString from 'query-string'
 import { find, findIndex } from 'lodash'
-import { Item, Loader } from 'components'
+import { Breadcrumbs, Item, Loader } from 'components'
+import { categoryFetch, selectCategories } from 'store/modules/category'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
 import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
+import { getItemListingPagePath } from 'utils/common'
 
 class ItemListingPage extends Component {
   static propTypes = {
@@ -22,10 +24,12 @@ class ItemListingPage extends Component {
       activePage: PropTypes.number,
       results: PropTypes.array,
     }),
+    categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
     itemList: PropTypes.func,
     clearItems: PropTypes.func,
+    categoryFetch: PropTypes.func,
   }
 
   constructor(props) {
@@ -51,15 +55,15 @@ class ItemListingPage extends Component {
   }
 
   fetchData = (props, initial = false) => {
-    const { location } = props
+    const { location, type } = props
     const { search, ordering, page, cid } = queryString.parse(location.search)
 
     if (initial) {
+      this.props.categoryFetch(type)
       this.props.clearItems()
       this.setState(Object.assign({ search, page, cid }, findIndex(ORDERING_CONSTS, { id: ordering }) !== -1 && { ordering }))
     }
 
-    const { type } = props
     this.props.itemList({ type, params: { search, ordering, page, cid } })
   }
 
@@ -104,15 +108,22 @@ class ItemListingPage extends Component {
   }
 
   render() {
-    const { itemData, history, status } = this.props
+    const { itemData, history, status, location, categories, type } = this.props
     const { search } = this.state
+
+    if (!categories) {
+      return null
+    }
 
     const { totalItemsCount, itemsCountPerPage, activePage } = itemData
 
+    const path = getItemListingPagePath(type, location.search, categories)
+
     return (
-      <Row className="item-list-page py-3">
+      <Row className="item-list-page pb-3">
         {status === ITEM_LIST && <Loader />}
         <Col md={9}>
+          {path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}
           {itemData.results.length > 0 &&
             itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
           {totalItemsCount > 0 && (
@@ -154,6 +165,7 @@ class ItemListingPage extends Component {
 
 const selectors = createStructuredSelector({
   itemData: selectItemData,
+  categories: selectCategories,
   status: selectItemStatus,
   error: selectItemError,
 })
@@ -161,6 +173,7 @@ const selectors = createStructuredSelector({
 const actions = {
   itemList,
   clearItems,
+  categoryFetch,
 }
 
 export default compose(
