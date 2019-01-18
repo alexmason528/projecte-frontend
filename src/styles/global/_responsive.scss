@@ -2,12 +2,20 @@
   .logo img {
     width: 150px;
   }
+
+  .item-image {
+    height: 150px !important;
+  }
+
+  // .item-thumb {
+  //   height: 200px !important;
+  // }
 }
 
 @media screen and (max-width: 767px) {
   .header {
     .logo img {
-      width: 75px;
+      width: 120px;
     }
 
     .navbar-collapse {
@@ -57,10 +65,6 @@
   .item-list-page,
   .my-listing-page,
   .watchlist-page {
-    .item-name {
-      margin-top: 1rem !important;
-    }
-
     .item-action {
       padding-left: 0;
       padding-right: 0;

@@ -4,12 +4,11 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
-import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
-import Pagination from 'react-js-pagination'
+import { Row, Col } from 'reactstrap'
+// import Adsense from 'react-adsense'
 import queryString from 'query-string'
 import { find, findIndex } from 'lodash'
-import { Breadcrumbs, Item, Loader, Desktop, Tablet } from 'components'
+import { Breadcrumbs, Item, ItemFilter, Loader, Pagination, Desktop, TabletOrMobile } from 'components'
 import { categoryFetch, selectCategories } from 'store/modules/category'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
 import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
@@ -126,44 +125,31 @@ class ItemListingPage extends Component {
           <Row>
             <Col md={9}>
               {path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}
-              {itemData.results.length > 0 &&
-                itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
-              {totalItemsCount > 0 && (
-                <div className="pagination-wrapper text-right">
-                  <Pagination
-                    className="pe-pagination"
-                    activePage={activePage}
-                    itemsCountPerPage={itemsCountPerPage}
-                    totalItemsCount={totalItemsCount}
-                    firstPageText={<MdFirstPage />}
-                    lastPageText={<MdLastPage />}
-                    prevPageText={<MdChevronLeft />}
-                    nextPageText={<MdChevronRight />}
-                    onChange={this.handlePageChange}
-                  />
-                </div>
-              )}
+              {itemData.results.map(item => (
+                <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />
+              ))}
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={itemsCountPerPage}
+                totalItemsCount={totalItemsCount}
+                onChange={this.handlePageChange}
+              />
             </Col>
             <Col md={3}>
-              <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
-              <UncontrolledDropdown className="pe-dropdown mt-2">
-                <DropdownToggle className="w-100 text-left py-2" caret>
-                  {this.getDropdownToggleContent()}
-                </DropdownToggle>
-                <DropdownMenu className="w-100">
-                  {ORDERING_CONSTS.map(ordering => (
-                    <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
-                      {ordering.content}
-                    </DropdownItem>
-                  ))}
-                  <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <input placeholder="Search..." className="pe-input w-100 mb-2" defaultValue={search} onKeyDown={this.handleSearchChange} />
+              <ItemFilter caption={this.getDropdownToggleContent()} onChange={this.handleOrderingChange} />
+              {/* <Adsense.Google
+                client="ca-pub-9509130066791988"
+                slot="4021498111"
+                style={{ display: 'block' }}
+                format="auto"
+                responsive="true"
+              /> */}
             </Col>
           </Row>
         </Desktop>
 
-        <Tablet>
+        <TabletOrMobile>
           <Row>
             <Col className="col-12">{path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}</Col>
           </Row>
@@ -172,43 +158,23 @@ class ItemListingPage extends Component {
               <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
             </Col>
             <Col className="col-6">
-              <UncontrolledDropdown className="pe-dropdown">
-                <DropdownToggle className="w-100 text-left py-2" caret>
-                  {this.getDropdownToggleContent()}
-                </DropdownToggle>
-                <DropdownMenu className="w-100">
-                  {ORDERING_CONSTS.map(ordering => (
-                    <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
-                      {ordering.content}
-                    </DropdownItem>
-                  ))}
-                  <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <ItemFilter caption={this.getDropdownToggleContent()} onChange={this.handleOrderingChange} />
             </Col>
           </Row>
           <Row className="mt-4">
             <Col className="col-12">
-              {itemData.results.length > 0 &&
-                itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
-              {totalItemsCount > 0 && (
-                <div className="pagination-wrapper text-right">
-                  <Pagination
-                    className="pe-pagination"
-                    activePage={activePage}
-                    itemsCountPerPage={itemsCountPerPage}
-                    totalItemsCount={totalItemsCount}
-                    firstPageText={<MdFirstPage />}
-                    lastPageText={<MdLastPage />}
-                    prevPageText={<MdChevronLeft />}
-                    nextPageText={<MdChevronRight />}
-                    onChange={this.handlePageChange}
-                  />
-                </div>
-              )}
+              {itemData.results.map(item => (
+                <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />
+              ))}
+              <Pagination
+                activePage={activePage}
+                itemsCountPerPage={itemsCountPerPage}
+                totalItemsCount={totalItemsCount}
+                onChange={this.handlePageChange}
+              />
             </Col>
           </Row>
-        </Tablet>
+        </TabletOrMobile>
       </div>
     )
   }

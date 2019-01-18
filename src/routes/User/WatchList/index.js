@@ -6,8 +6,6 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import queryString from 'query-string'
 import { Row, Col } from 'reactstrap'
-import Pagination from 'react-js-pagination'
-import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import {
   deleteItemFromWatchlist,
   listWatchlist,
@@ -18,7 +16,7 @@ import {
   AUTH_LIST_WATCHLIST,
   AUTH_DELETE_ITEM_FROM_WATCHLIST,
 } from 'store/modules/auth'
-import { Item, Loader } from 'components'
+import { Item, Loader, Pagination } from 'components'
 
 export class MyListingsPage extends Component {
   static propTypes = {
@@ -96,29 +94,23 @@ export class MyListingsPage extends Component {
     return (
       <Row className="watchlist-page py-3">
         {status === AUTH_LIST_WATCHLIST && <Loader />}
-        <Col md={9}>
-          {itemData.results.length > 0 &&
-            itemData.results.map(item => (
-              <Item
-                key={item.id}
-                history={history}
-                buttons="delete"
-                {...item}
-                onRedirect={this.handleRedirect}
-                onDelete={this.handleItemDelete}
-              />
-            ))}
+        <Col md={12} lg={9}>
+          {itemData.results.map(item => (
+            <Item
+              key={item.id}
+              history={history}
+              buttons="delete"
+              {...item}
+              onRedirect={this.handleRedirect}
+              onDelete={this.handleItemDelete}
+            />
+          ))}
           {totalItemsCount > 0 && (
             <div className="mt-3 text-right">
               <Pagination
-                className="pe-pagination"
                 activePage={activePage}
                 itemsCountPerPage={itemsCountPerPage}
                 totalItemsCount={totalItemsCount}
-                firstPageText={<MdFirstPage />}
-                lastPageText={<MdLastPage />}
-                prevPageText={<MdChevronLeft />}
-                nextPageText={<MdChevronRight />}
                 onChange={this.handlePageChange}
               />
             </div>

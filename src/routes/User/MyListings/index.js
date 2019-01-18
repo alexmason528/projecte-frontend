@@ -6,11 +6,9 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import queryString from 'query-string'
 import { Row, Col } from 'reactstrap'
-import Pagination from 'react-js-pagination'
-import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import { listMyListings, clearItems, selectItemData, selectAuthStatus, selectAuthError, AUTH_LIST_MY_LISTINGS } from 'store/modules/auth'
 import { itemDelete, ITEM_DELETE } from 'store/modules/item'
-import { Item, Loader } from 'components'
+import { Item, Loader, Pagination } from 'components'
 
 export class MyListingsPage extends Component {
   static propTypes = {
@@ -89,36 +87,26 @@ export class MyListingsPage extends Component {
     const { activePage, itemsCountPerPage, totalItemsCount } = itemData
 
     return (
-      <Row className="my-listing-page py-3">
+      <Row className="my-listing-page py-3" style={{ fontSize: '1rem' }}>
         {status === AUTH_LIST_MY_LISTINGS && <Loader />}
-        <Col md={9}>
-          {itemData.results.length > 0 &&
-            itemData.results.map(item => (
-              <Item
-                key={item.id}
-                history={history}
-                buttons="all"
-                {...item}
-                onRedirect={this.handleRedirect}
-                onEdit={this.handleItemEdit}
-                onDelete={this.handleItemDelete}
-              />
-            ))}
-          {totalItemsCount > 0 && (
-            <div className="pagination-wrapper text-right">
-              <Pagination
-                className="pe-pagination"
-                activePage={activePage}
-                itemsCountPerPage={itemsCountPerPage}
-                totalItemsCount={totalItemsCount}
-                firstPageText={<MdFirstPage />}
-                lastPageText={<MdLastPage />}
-                prevPageText={<MdChevronLeft />}
-                nextPageText={<MdChevronRight />}
-                onChange={this.handlePageChange}
-              />
-            </div>
-          )}
+        <Col md={12} lg={9}>
+          {itemData.results.map(item => (
+            <Item
+              key={item.id}
+              history={history}
+              buttons="all"
+              {...item}
+              onRedirect={this.handleRedirect}
+              onEdit={this.handleItemEdit}
+              onDelete={this.handleItemDelete}
+            />
+          ))}
+          <Pagination
+            activePage={activePage}
+            itemsCountPerPage={itemsCountPerPage}
+            totalItemsCount={totalItemsCount}
+            onChange={this.handlePageChange}
+          />
         </Col>
       </Row>
     )

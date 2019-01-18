@@ -1,4 +1,5 @@
 import Item from './Item'
+import ItemFilter from './ItemFilter'
 import Loader from './Loader'
 import LoaderButton from './LoaderButton'
 import Logo from './Logo'
@@ -12,9 +13,11 @@ import RegisterForm from './Forms/RegisterForm'
 import RouteWithProps from './RouteWithProps'
 import Breadcrumbs from './Breadcrumbs'
 import UserDetail from './UserDetail'
+import Pagination from './Pagination'
 
 export {
   Item,
+  ItemFilter,
   Loader,
   LoaderButton,
   Logo,
@@ -28,6 +31,7 @@ export {
   RouteWithProps,
   Breadcrumbs,
   UserDetail,
+  Pagination,
 }
 
 export * from './FormComponents'

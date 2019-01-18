@@ -10,6 +10,7 @@ import numeral from 'numeral'
 import moment from 'moment'
 import swal from 'sweetalert'
 import { MdStar, MdSearch } from 'react-icons/md'
+import { FaCoins } from 'react-icons/fa'
 import { selectUserData } from 'store/modules/auth'
 import {
   itemGet,
@@ -23,12 +24,12 @@ import {
   ITEM_ADD_TO_WATCHLIST,
 } from 'store/modules/item'
 import { categoryFetch } from 'store/modules/category'
-import { Loader, QuarterSpinner, Breadcrumbs, UserDetail, Desktop, Tablet } from 'components'
+import { Loader, QuarterSpinner, Breadcrumbs, UserDetail, Desktop, Tablet, TabletOrMobile, Mobile } from 'components'
 import { MAIN_ITEM_TYPES } from 'config/base'
 import { getEstimation, getURL } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
-import ItemFact from './Fact'
-import ItemComment from './Comment'
+import ItemFact from './Elements/Fact'
+import ItemComments from './Elements/Comments'
 import EstimationModal from './Modals/Estimation'
 import ReplyModal from './Modals/Reply'
 import AuthModal from './Modals/Auth'
@@ -242,25 +243,10 @@ export class ItemDetailPage extends Component {
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
 
-              {comments.length > 0 && (
-                <div className="item-comments pe-box p-4 mt-3">
-                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                  {comments
-                    .filter(({ parent }) => !parent)
-                    .map(comment => (
-                      <div key={comment.id} className="mb-3">
-                        <ItemComment {...comment} addReply={this.handleOpenReplyModal} />
-                        {comment.children.length > 0 && (
-                          <div className="pl-5 mt-3 mb-5">
-                            {comment.children.map(childComment => (
-                              <ItemComment key={childComment.id} child={true} {...childComment} />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              )}
+              <div className="item-comments pe-box p-4 mt-3">
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                <ItemComments comments={comments} addReply={this.handleAddReply} />
+              </div>
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
               {this.canGiveEstimation && (
@@ -336,48 +322,93 @@ export class ItemDetailPage extends Component {
                 </div>
               </Col>
             </Row>
-            <Row className="mt-3">
-              <Col className="col-12">
-                <div className="item-fact pe-box p-4 position-relative">
-                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
-                  <ItemFact type={type} facts={facts} />
-                  <div className="item-listing-date">Listing date: {moment(date).format('DD.MM.YYYY')}</div>
-                </div>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col className="col-12">
-                <div className="item-details pe-box p-4">
-                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Details</h3>
-                  <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
-                </div>
-              </Col>
-            </Row>
-            {comments.length > 0 && (
-              <Row className="mt-3">
-                <Col className="col-12">
-                  <div className="item-comments pe-box p-4">
-                    <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                    {comments
-                      .filter(({ parent }) => !parent)
-                      .map(comment => (
-                        <div key={comment.id} className="mb-3">
-                          <ItemComment {...comment} addReply={this.handleOpenReplyModal} />
-                          {comment.children.length > 0 && (
-                            <div className="pl-5 mt-3 mb-5">
-                              {comment.children.map(childComment => (
-                                <ItemComment key={childComment.id} child={true} {...childComment} />
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                  </div>
-                </Col>
-              </Row>
-            )}
           </div>
         </Tablet>
+
+        <Mobile>
+          <div style={{ fontSize: '1rem' }}>
+            <Row>
+              <Col className="d-flex align-items-center justify-content-between">
+                <h3 className="my-0 text-uppercase">{name}</h3>
+                <div>
+                  {this.canGiveEstimation && (
+                    <Button className="pe-btn p-1 ml-2" onClick={this.handleGiveEstimate}>
+                      <FaCoins style={{ fontSize: '1.5rem' }} />
+                    </Button>
+                  )}
+                  {!in_watchlist && (
+                    <Button className="pe-btn p-1 ml-2" onClick={this.handleAddToWatchList} disabled={addingToWatchlist}>
+                      {addingToWatchlist ? (
+                        <QuarterSpinner width={32} height={32} fill="white" />
+                      ) : (
+                        <MdStar style={{ fontSize: '1.5rem' }} />
+                      )}
+                    </Button>
+                  )}
+                </div>
+              </Col>
+            </Row>
+
+            <Row className="mt-3">
+              <Col className="col-6">
+                <div
+                  className="item-main-thumb w-100"
+                  style={{ backgroundImage: `url("${getURL(mainThumb.obj)}")`, height: '100%', backgroundSize: 'cover' }}
+                  onClick={() => this.handleToggleModal('isImageSliderOpen')}
+                >
+                  <Button className="pe-btn p-1 item-thumb-magnify">
+                    <MdSearch style={{ fontSize: '2rem' }} />
+                  </Button>
+                </div>
+              </Col>
+              <Col className="col-6 pl-0">
+                <div className="pe-box mb-2 p-2 font-weight-bold">
+                  <div>ESTIMATION</div>
+                  <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
+                </div>
+                <div className="pe-box p-2">
+                  <div className="font-weight-bold">INFOS</div>
+                  <div className="text-capitalize font-weight-normal">
+                    Estimations: {numeral(estimations.length).format('0,0')}
+                    <br />
+                    Comments: {numeral(comments.length).format('0,0')}
+                    <br />
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Mobile>
+
+        <TabletOrMobile>
+          <Row className="mt-3">
+            <Col className="col-12">
+              <div className="item-fact pe-box p-4 position-relative">
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
+                <ItemFact type={type} facts={facts} />
+                <div className="item-listing-date">Listing date: {moment(date).format('DD.MM.YYYY')}</div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col className="col-12">
+              <div className="item-details pe-box p-4">
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Details</h3>
+                <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
+              </div>
+            </Col>
+          </Row>
+          {comments.length > 0 && (
+            <Row className="mt-3">
+              <Col className="col-12">
+                <div className="item-comments pe-box p-4">
+                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
+                </div>
+              </Col>
+            </Row>
+          )}
+        </TabletOrMobile>
       </div>
     )
   }

@@ -126,7 +126,7 @@ class ItemWizard extends Component {
           </Col>
           <Col md={12}>
             <div className="wizard-nav d-flex justify-content-center">
-              <div className={cx('wizard-nav-btn mr-5', { active: page === 1 })} onClick={this.gotoFirstPage}>
+              <div className={cx('wizard-nav-btn mr-3', { active: page === 1 })} onClick={this.gotoFirstPage}>
                 <div className="nav-order mr-3">1</div>
                 Item Details
               </div>

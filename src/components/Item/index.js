@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'reactstrap'
-import cx from 'classnames'
+import { Row, Col, Button } from 'reactstrap'
+import MediaQuery from 'react-responsive'
+import { MdEdit } from 'react-icons/md'
+import { IoIosTrash } from 'react-icons/io'
 import numeral from 'numeral'
 import { API_BASE_URL } from 'config/base'
 import { getEstimation } from 'utils/common'
@@ -56,46 +58,81 @@ export default class Item extends Component {
 
     return (
       <Row key={id} className="item mb-4">
-        <Col className="col-4" onClick={this.gotoItemDetailPage}>
-          <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} />
-        </Col>
-        <Col className="col-8">
-          <div className="d-flex flex-column h-100">
-            <h4 className="item-name mt-0 mb-3 text-uppercase c-pointer" onClick={this.gotoItemDetailPage}>
-              {name}
-            </h4>
-            <Row className="m-0 flex-grow-1">
-              <Col md={buttons !== 'none' ? 10 : 12} className="item-meta p-3 pe-box">
-                <Row className="font-weight-bold">
-                  <Col xs={6}>
-                    <h3 className="m-0">Estimation</h3>
-                  </Col>
-                  <Col xs={6} className="text-right">
-                    <h3 className="m-0">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={6}>Estimations: {numeral(estimations.length).format('0,0')}</Col>
-                  <Col xs={6} className="text-right">
-                    Comments: {numeral(comments_count).format('0,0')}
-                  </Col>
-                </Row>
-              </Col>
-              {buttons !== 'none' && (
-                <Col md={2} className={cx('item-action pr-0', { 'justify-content-end': buttons === 'delete' })}>
-                  {buttons === 'all' && (
-                    <div className="pe-btn item-edit-btn" onClick={this.handleEdit}>
-                      Edit
+        <MediaQuery minDeviceWidth={768}>
+          <Col className="col-4 pr-0" onClick={this.gotoItemDetailPage}>
+            <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} />
+          </Col>
+          <Col className="col-8">
+            <Row>
+              <Col className="col-12">
+                <div className="d-flex align-items-center justify-content-between" onClick={this.gotoItemDetailPage}>
+                  <h4 className="item-name my-0 text-uppercase c-pointer">{name}</h4>
+                  {buttons !== 'none' && (
+                    <div>
+                      {buttons === 'all' && (
+                        <Button className="pe-btn p-1" onClick={this.handleEdit}>
+                          <MdEdit style={{ fontSize: '1.5rem' }} />
+                        </Button>
+                      )}
+                      <Button className="pe-btn p-1 ml-1" onClick={this.handleDelete}>
+                        <IoIosTrash style={{ fontSize: '1.5rem' }} />
+                      </Button>
                     </div>
                   )}
-                  <div className="pe-btn item-delete-btn" onClick={this.handleDelete}>
-                    Delete
-                  </div>
-                </Col>
-              )}
+                </div>
+              </Col>
+              <Col className="col-12">
+                <div className="item-meta pe-box px-3 py-4 mt-3">
+                  <Row className="font-weight-bold">
+                    <Col sm={12} md={6}>
+                      <h3 className="m-0">Estimation</h3>
+                    </Col>
+                    <Col sm={12} md={6} className="text-right">
+                      <h3 className="m-0">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</h3>
+                    </Col>
+                  </Row>
+                  <Row className="mt-1">
+                    <Col xs={6}>Estimations: {numeral(estimations.length).format('0,0')}</Col>
+                    <Col xs={6} className="text-right">
+                      Comments: {numeral(comments_count).format('0,0')}
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
             </Row>
-          </div>
-        </Col>
+          </Col>
+        </MediaQuery>
+
+        <MediaQuery maxDeviceWidth={767}>
+          <Col className="col-12 d-flex align-items-center justify-content-between">
+            <h4 className="item-name my-0 text-uppercase c-pointer" onClick={this.gotoItemDetailPage}>
+              {name}
+            </h4>
+            <div className="d-flex align-items-center justify-content-between">
+              {buttons !== 'none' && (
+                <div>
+                  {buttons === 'all' && (
+                    <Button className="pe-btn p-1" onClick={this.handleEdit}>
+                      <MdEdit style={{ fontSize: '1.5rem' }} />
+                    </Button>
+                  )}
+                  <Button className="pe-btn p-1 ml-1" onClick={this.handleDelete}>
+                    <IoIosTrash style={{ fontSize: '1.5rem' }} />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Col>
+          <Col className="col-12 mt-2" onClick={this.gotoItemDetailPage}>
+            <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})`, height: 250 }} />
+            <div className="item-meta pe-box pt-2 pr-3 pb-1 pl-5 font-weight-bold" style={{ position: 'absolute', right: 16, bottom: 20 }}>
+              <h3 className="m-0 text-uppercase" style={{ fontSize: '1.2rem' }}>
+                Estimation
+                <br />$ {numeral(getEstimation(estimations)).format('0,0[.]00')}
+              </h3>
+            </div>
+          </Col>
+        </MediaQuery>
       </Row>
     )
   }

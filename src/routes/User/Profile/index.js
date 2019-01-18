@@ -55,11 +55,11 @@ export class Profile extends Component {
 
     return (
       <Row className="profile-page">
-        <Col sm={12}>
+        <Col className="col-12">
           {failed && error && <Alert color="danger">{error}</Alert>}
           <ProfileForm error={error} loading={pending} onSubmit={this.handleSubmit} />
         </Col>
-        <Col sm={12} className="mt-4">
+        <Col className="col-12 mt-4">
           <UserStats user={user} />
         </Col>
       </Row>

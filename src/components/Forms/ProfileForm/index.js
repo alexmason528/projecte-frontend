@@ -20,18 +20,18 @@ class ProfileForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col md={9} sm={12}>
+          <Col md={7} lg={9}>
             <Row>
-              <Col md={12} className="mb-3">
+              <Col className="col-12 mb-3">
                 <Field className="form-input" name="username" label="Username" component={Input} />
               </Col>
-              <Col md={12} className="mb-3">
+              <Col className="col-12 mb-3">
                 <Field className="form-input" name="email" label="Email" component={Input} />
               </Col>
-              <Col md={12} className="mb-3">
+              <Col className="col-12 mb-3">
                 <Field className="form-input" name="password" label="Password" type="password" placeholder="Password" component={Input} />
               </Col>
-              <Col md={12}>
+              <Col className="col-12 mb-3">
                 <Field
                   className="form-input"
                   name="confirmPassword"
@@ -43,7 +43,7 @@ class ProfileForm extends Component {
               </Col>
             </Row>
           </Col>
-          <Col md={3} sm={12} className="ml-auto">
+          <Col md={5} lg={3}>
             <Field name="photo" component={PhotoField} />
           </Col>
         </Row>

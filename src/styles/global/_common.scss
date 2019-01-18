@@ -146,6 +146,11 @@ input {
   }
 
   @include border-radius(0);
+
+  &.add-item-btn,
+  &.item-btn {
+    font-size: 1.2rem;
+  }
 }
 
 .pe-btn-link {
