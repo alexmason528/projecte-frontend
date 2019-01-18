@@ -1,6 +1,5 @@
 .item-main-thumb {
   position: relative;
-  min-height: 300px;
   cursor: pointer;
 }
 
@@ -45,10 +44,6 @@
   position: absolute;
   right: 0.5rem;
   bottom: 0.5rem;
-}
-
-.item-fact {
-  font-size: 1.2rem;
 }
 
 .item-comment {

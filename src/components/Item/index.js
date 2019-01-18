@@ -56,10 +56,10 @@ export default class Item extends Component {
 
     return (
       <Row key={id} className="item mb-4">
-        <Col sm={12} md={3} onClick={this.gotoItemDetailPage}>
+        <Col className="col-4" onClick={this.gotoItemDetailPage}>
           <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} />
         </Col>
-        <Col sm={12} md={9}>
+        <Col className="col-8">
           <div className="d-flex flex-column h-100">
             <h4 className="item-name mt-0 mb-3 text-uppercase c-pointer" onClick={this.gotoItemDetailPage}>
               {name}

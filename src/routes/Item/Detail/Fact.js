@@ -27,12 +27,10 @@ export default class ItemFact extends Component {
 
     forOwn(facts, (value, key) =>
       details.push(
-        <Col key={key} xs={6} className="mt-2">
+        <Col key={key} className="col-6 mt-2">
           <Row>
-            <Col md={6} className="font-weight-bold">
-              {capitalize(replace(key, /_/g, ' '))}
-            </Col>
-            <Col md={6} className="font-weight-light">
+            <Col className="col-6 font-weight-bold">{capitalize(replace(key, /_/g, ' '))}</Col>
+            <Col className="col-6 font-weight-light">
               {value} {this.getUnit(key)}
             </Col>
           </Row>

@@ -9,7 +9,7 @@ import { MdFirstPage, MdLastPage, MdChevronLeft, MdChevronRight } from 'react-ic
 import Pagination from 'react-js-pagination'
 import queryString from 'query-string'
 import { find, findIndex } from 'lodash'
-import { Breadcrumbs, Item, Loader } from 'components'
+import { Breadcrumbs, Item, Loader, Desktop, Tablet } from 'components'
 import { categoryFetch, selectCategories } from 'store/modules/category'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
 import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
@@ -120,45 +120,96 @@ class ItemListingPage extends Component {
     const path = getItemListingPagePath(type, location.search, categories)
 
     return (
-      <Row className="item-list-page pb-3">
+      <div className="item-list-page pb-3">
         {status === ITEM_LIST && <Loader />}
-        <Col md={9}>
-          {path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}
-          {itemData.results.length > 0 &&
-            itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
-          {totalItemsCount > 0 && (
-            <div className="pagination-wrapper text-right">
-              <Pagination
-                className="pe-pagination"
-                activePage={activePage}
-                itemsCountPerPage={itemsCountPerPage}
-                totalItemsCount={totalItemsCount}
-                firstPageText={<MdFirstPage />}
-                lastPageText={<MdLastPage />}
-                prevPageText={<MdChevronLeft />}
-                nextPageText={<MdChevronRight />}
-                onChange={this.handlePageChange}
-              />
-            </div>
-          )}
-        </Col>
-        <Col md={3}>
-          <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
-          <UncontrolledDropdown className="pe-dropdown mt-2">
-            <DropdownToggle className="w-100 text-left py-2" caret>
-              {this.getDropdownToggleContent()}
-            </DropdownToggle>
-            <DropdownMenu className="w-100">
-              {ORDERING_CONSTS.map(ordering => (
-                <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
-                  {ordering.content}
-                </DropdownItem>
-              ))}
-              <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </Col>
-      </Row>
+        <Desktop>
+          <Row>
+            <Col md={9}>
+              {path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}
+              {itemData.results.length > 0 &&
+                itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
+              {totalItemsCount > 0 && (
+                <div className="pagination-wrapper text-right">
+                  <Pagination
+                    className="pe-pagination"
+                    activePage={activePage}
+                    itemsCountPerPage={itemsCountPerPage}
+                    totalItemsCount={totalItemsCount}
+                    firstPageText={<MdFirstPage />}
+                    lastPageText={<MdLastPage />}
+                    prevPageText={<MdChevronLeft />}
+                    nextPageText={<MdChevronRight />}
+                    onChange={this.handlePageChange}
+                  />
+                </div>
+              )}
+            </Col>
+            <Col md={3}>
+              <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
+              <UncontrolledDropdown className="pe-dropdown mt-2">
+                <DropdownToggle className="w-100 text-left py-2" caret>
+                  {this.getDropdownToggleContent()}
+                </DropdownToggle>
+                <DropdownMenu className="w-100">
+                  {ORDERING_CONSTS.map(ordering => (
+                    <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
+                      {ordering.content}
+                    </DropdownItem>
+                  ))}
+                  <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Col>
+          </Row>
+        </Desktop>
+
+        <Tablet>
+          <Row>
+            <Col className="col-12">{path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}</Col>
+          </Row>
+          <Row>
+            <Col className="col-6">
+              <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
+            </Col>
+            <Col className="col-6">
+              <UncontrolledDropdown className="pe-dropdown">
+                <DropdownToggle className="w-100 text-left py-2" caret>
+                  {this.getDropdownToggleContent()}
+                </DropdownToggle>
+                <DropdownMenu className="w-100">
+                  {ORDERING_CONSTS.map(ordering => (
+                    <DropdownItem key={ordering.id} onClick={() => this.handleOrderingChange(ordering.id)}>
+                      {ordering.content}
+                    </DropdownItem>
+                  ))}
+                  <DropdownItem onClick={() => this.handleOrderingChange('clear')}>Clear filter</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col className="col-12">
+              {itemData.results.length > 0 &&
+                itemData.results.map(item => <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />)}
+              {totalItemsCount > 0 && (
+                <div className="pagination-wrapper text-right">
+                  <Pagination
+                    className="pe-pagination"
+                    activePage={activePage}
+                    itemsCountPerPage={itemsCountPerPage}
+                    totalItemsCount={totalItemsCount}
+                    firstPageText={<MdFirstPage />}
+                    lastPageText={<MdLastPage />}
+                    prevPageText={<MdChevronLeft />}
+                    nextPageText={<MdChevronRight />}
+                    onChange={this.handlePageChange}
+                  />
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Tablet>
+      </div>
     )
   }
 }

@@ -32,3 +32,4 @@ export {
 
 export * from './FormComponents'
 export * from './SvgIcon'
+export * from './Responsive'
