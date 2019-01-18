@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col } from 'reactstrap'
-// import Adsense from 'react-adsense'
+import Adsense from 'react-adsense'
 import queryString from 'query-string'
 import { find, findIndex } from 'lodash'
 import { Breadcrumbs, Item, ItemFilter, Loader, Pagination, Desktop, TabletOrMobile } from 'components'
@@ -138,13 +138,13 @@ class ItemListingPage extends Component {
             <Col md={3}>
               <input placeholder="Search..." className="pe-input w-100 mb-2" defaultValue={search} onKeyDown={this.handleSearchChange} />
               <ItemFilter caption={this.getDropdownToggleContent()} onChange={this.handleOrderingChange} />
-              {/* <Adsense.Google
+              <Adsense.Google
                 client="ca-pub-9509130066791988"
                 slot="4021498111"
                 style={{ display: 'block' }}
                 format="auto"
                 responsive="true"
-              /> */}
+              />
             </Col>
           </Row>
         </Desktop>
