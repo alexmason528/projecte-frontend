@@ -13,11 +13,11 @@ const Comments = ({ comments, addReply }) => {
         .filter(({ parent }) => !parent)
         .map(comment => (
           <div key={comment.id} className="mb-3">
-            <ItemComment {...comment} addReply={addReply} />
+            <ItemComment {...comment} addReply={() => addReply(comment.id)} />
             {comment.children.length > 0 && (
               <div className="pl-5 mt-3 mb-5">
                 {comment.children.map(childComment => (
-                  <ItemComment key={childComment.id} child={true} {...childComment} />
+                  <ItemComment key={childComment.id} child={true} addReply={() => addReply(comment.id)} {...childComment} />
                 ))}
               </div>
             )}

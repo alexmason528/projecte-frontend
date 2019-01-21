@@ -129,6 +129,7 @@ export class ItemDetailPage extends Component {
     const { type, item } = this.props
     const { selectedComment } = this.state
     const data = { ...values, item: item.id, parent: selectedComment }
+
     this.props.itemAddReply({ type, id: item.id, data })
   }
 
@@ -243,10 +244,12 @@ export class ItemDetailPage extends Component {
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
 
-              <div className="item-comments pe-box p-4 mt-3">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                <ItemComments comments={comments} addReply={this.handleAddReply} />
-              </div>
+              {comments.length && (
+                <div className="item-comments pe-box p-4 mt-3">
+                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
+                </div>
+              )}
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
               {this.canGiveEstimation && (
