@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md'
+import { getURL } from 'utils/common'
 
 export default class Image extends Component {
   static propTypes = {
-    file: PropTypes.object,
+    image: PropTypes.shape({
+      id: PropTypes.number,
+      obj: PropTypes.string,
+      description: PropTypes.string,
+    }),
     ind: PropTypes.number,
     onDescriptionChange: PropTypes.func,
     onDelete: PropTypes.func,
@@ -21,19 +26,19 @@ export default class Image extends Component {
   }
 
   render() {
-    const { file, ind } = this.props
+    const { image, ind } = this.props
 
-    if (!file.image) {
+    if (!image) {
       return null
     }
 
     return (
       <div className="d-flex justify-content-center mt-4">
-        <div className="image-preview mr-4" style={{ backgroundImage: `url(${file.image})` }} />
+        <div className="image-preview mr-4" style={{ backgroundImage: `url(${getURL(image.obj)})` }} />
         <div className="image-description">
           <div>
             <div className="mb-2 font-weight-bold">Image description</div>
-            <textarea className="p-2" value={file.description} onChange={this.handleDescriptionChange} />
+            <textarea className="p-2" value={image.description || ''} onChange={this.handleDescriptionChange} />
           </div>
           <div className="image-actions d-flex justify-content-end">
             <button type="button" className="pe-btn mr-2" onClick={this.handleMove}>

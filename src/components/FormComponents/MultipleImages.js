@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Row, Col } from 'reactstrap'
 import { values } from 'lodash'
+import axios from 'axios'
+import { API_BASE_URL } from 'config/base'
+import { Loader } from 'components'
 import PicImage from 'assets/images/pic.png'
 import Image from './Image'
 
@@ -15,14 +18,13 @@ export default class MultipleImages extends Component {
   }
 
   state = {
-    files: [],
+    images: [],
+    uploading: false,
   }
 
   componentWillMount() {
     const { input } = this.props
-    this.setState({ files: input.value })
-
-    this.readImages(input.value)
+    this.setState({ images: input.value })
   }
 
   handleOpenUploader = () => {
@@ -30,77 +32,74 @@ export default class MultipleImages extends Component {
   }
 
   handleUploaderChange = evt => {
-    const files = values(evt.target.files).map(obj => ({ description: '', obj, image: null }))
+    const images = values(evt.target.files)
 
-    const newFiles = [...this.state.files, ...files]
-
-    this.setState({ files: newFiles }, this.emitChange)
-    this.readImages(newFiles)
-  }
-
-  readImages = files => {
-    const comp = this
-
-    const readImage = (file, ind) => {
-      let reader = new FileReader()
-
-      reader.onload = function(e) {
-        comp.setState({ files: comp.state.files.map((file, fInd) => ({ ...file, image: ind === fInd ? e.target.result : file.image })) })
-      }
-
-      reader.readAsDataURL(file)
+    if (images.length === 0) {
+      return
     }
 
-    files &&
-      files.forEach((file, ind) => {
-        if (!file.image) {
-          readImage(file.obj, ind)
-        }
+    const formData = new FormData()
+    images.forEach(image => formData.append('images', image))
+
+    this.setState({ uploading: true })
+
+    axios
+      .post(`${API_BASE_URL}/api/image-upload/`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(res => {
+        this.setState(
+          {
+            images: res.data.images.map(({ id, description, obj }) => ({ id, description, obj })),
+            uploading: false,
+          },
+          this.emitChange,
+        )
+      })
+      .catch(error => {
+        this.setState({ uploading: false })
       })
   }
 
   handleDescriptionChange = (value, ind) => {
-    const { files } = this.state
-    const newFiles = files.map((file, fInd) => ({
-      ...file,
-      description: fInd === ind ? value : file.description,
+    const { images } = this.state
+    const newImages = images.map((image, iInd) => ({
+      ...image,
+      description: iInd === ind ? value : image.description,
     }))
 
-    this.setState({ files: newFiles }, this.emitChange)
+    this.setState({ images: newImages }, this.emitChange)
   }
 
-  handleMoveFile = (ind, dir) => {
-    const { files } = this.state
+  handleMoveImage = (ind, dir) => {
+    const { images } = this.state
 
-    if ((dir === 'up' && ind === 0) || (dir === 'down' && ind === files.length - 1)) {
+    if ((dir === 'up' && ind === 0) || (dir === 'down' && ind === images.length - 1)) {
       return
     }
 
     if (dir === 'up') {
-      const tmp = files[ind - 1]
-      files[ind - 1] = files[ind]
-      files[ind] = tmp
+      const tmp = images[ind - 1]
+      images[ind - 1] = images[ind]
+      images[ind] = tmp
     } else if (dir === 'down') {
-      const tmp = files[ind + 1]
-      files[ind + 1] = files[ind]
-      files[ind] = tmp
+      const tmp = images[ind + 1]
+      images[ind + 1] = images[ind]
+      images[ind] = tmp
     }
 
-    this.setState({ files }, this.emitChange)
+    this.setState({ images }, this.emitChange)
   }
 
-  handleDeleteFile = ind => {
-    const { files } = this.state
-    const newFiles = files.filter((file, fInd) => fInd !== ind)
+  handleDeleteImage = ind => {
+    const { images } = this.state
 
-    this.setState({ files: newFiles }, this.emitChange)
+    this.setState({ images: images.filter((image, iInd) => iInd !== ind) }, this.emitChange)
   }
 
   emitChange = () => {
     const { input } = this.props
-    const { files } = this.state
+    const { images } = this.state
 
-    input.onChange(files)
+    input.onChange(images)
   }
 
   render() {
@@ -108,30 +107,38 @@ export default class MultipleImages extends Component {
       input,
       meta: { touched, error },
     } = this.props
-    const { files } = this.state
+    const { images, uploading } = this.state
 
     return (
       <Row>
+        {uploading && <Loader />}
         <Col md={12}>
           {touched && error && <Alert color="danger">{error}</Alert>}
           <div className="d-flex justify-content-center">
             <img className="mr-2" src={PicImage} alt="" style={{ height: 45 }} />
-            <button type="button" className="pe-btn" onClick={this.handleOpenUploader}>
+            <button type="button" className="pe-btn" onClick={this.handleOpenUploader} disabled={uploading}>
               Select images
             </button>
-            <input type="file" className="d-none" multiple ref={ref => (this.uploader = ref)} onChange={this.handleUploaderChange} />
+            <input
+              type="file"
+              className="d-none"
+              accept="image/*"
+              multiple
+              ref={ref => (this.uploader = ref)}
+              onChange={this.handleUploaderChange}
+            />
           </div>
         </Col>
-        {files && files.length > 0 && (
+        {images && images.length > 0 && (
           <Col md={12}>
-            {files.map((file, ind) => (
+            {images.map((image, ind) => (
               <Image
                 key={ind}
-                file={file}
+                image={image}
                 ind={ind}
                 onDescriptionChange={value => this.handleDescriptionChange(value, ind)}
-                onMove={this.handleMoveFile}
-                onDelete={this.handleDeleteFile}
+                onMove={this.handleMoveImage}
+                onDelete={this.handleDeleteImage}
               />
             ))}
           </Col>

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import cx from 'classnames'
-import { forEach, keys, omit, pick, startCase } from 'lodash'
+import { omit, pick, startCase } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
 import { reset } from 'redux-form'
@@ -85,22 +85,10 @@ class ItemWizard extends Component {
       return
     }
 
-    const parsed = pick(values, ['name', 'details', 'category'])
-
-    const formData = new FormData()
-    forEach(keys(parsed), key => {
-      formData.append(key, parsed[key])
-    })
-
-    forEach(values.images, image => {
-      formData.append('images', image.obj)
-      formData.append('descriptions', image.description)
-    })
-
+    const parsed = pick(values, ['name', 'details', 'category', 'images'])
     const facts = omit(values, ['name', 'details', 'category', 'images'])
-    formData.append('facts', JSON.stringify(facts))
 
-    this.props.itemAdd({ type, data: formData })
+    this.props.itemAdd({ type, data: { ...parsed, facts } })
   }
 
   render() {
