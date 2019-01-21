@@ -6,6 +6,7 @@ import {
   ITEM_LIST,
   ITEM_ADD,
   ITEM_GET,
+  ITEM_UPDATE,
   ITEM_DELETE,
   ITEM_ADD_ESTIMATION,
   ITEM_ADD_TO_WATCHLIST,
@@ -41,6 +42,10 @@ export const itemGet = createAction(ITEM_GET)
 export const itemGetSuccess = createAction(successAction(ITEM_GET))
 export const itemGetFail = createAction(failAction(ITEM_GET))
 
+export const itemUpdate = createAction(ITEM_UPDATE)
+export const itemUpdateSuccess = createAction(successAction(ITEM_UPDATE))
+export const itemUpdateFail = createAction(successAction(ITEM_UPDATE))
+
 export const itemDelete = createAction(ITEM_DELETE)
 export const itemDeleteSuccess = createAction(successAction(ITEM_DELETE))
 export const itemDeleteFail = createAction(failAction(ITEM_DELETE))
@@ -63,7 +68,7 @@ export const reducer = handleActions(
   {
     [ITEM_LIST]: (state, { payload, type }) => ({ ...state, status: type, error: null }),
 
-    [combineActions(ITEM_ADD, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY)]: (state, { type }) => ({
+    [combineActions(ITEM_ADD, ITEM_UPDATE, ITEM_ADD_ESTIMATION, ITEM_ADD_TO_WATCHLIST, ITEM_ADD_REPLY)]: (state, { type }) => ({
       ...state,
       status: type,
       error: null,
@@ -76,6 +81,8 @@ export const reducer = handleActions(
     [successAction(ITEM_ADD)]: (state, { payload, type }) => ({ ...state, status: type, error: null }),
 
     [successAction(ITEM_GET)]: (state, { payload, type }) => ({ ...state, currentItem: payload, status: type }),
+
+    [successAction(ITEM_UPDATE)]: (state, { payload, type }) => ({ ...state, status: type, error: null }),
 
     [successAction(ITEM_ADD_ESTIMATION)]: (state, { payload, type }) => {
       const { comment, ...data } = payload

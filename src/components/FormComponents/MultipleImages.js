@@ -48,7 +48,7 @@ export default class MultipleImages extends Component {
       .then(res => {
         this.setState(
           {
-            images: res.data.images.map(({ id, description, obj }) => ({ id, description, obj })),
+            images: [...this.state.images, ...res.data.images.map(({ id, description, obj }) => ({ id, description, obj }))],
             uploading: false,
           },
           this.emitChange,

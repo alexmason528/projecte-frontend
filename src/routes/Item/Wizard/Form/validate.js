@@ -56,4 +56,12 @@ const schema = {
   },
 }
 
+export const ImageValidator = images => {
+  if (!images || images.length < 1) {
+    return 'Please add at least one image'
+  }
+
+  return undefined
+}
+
 export default validatorFactory(schema)

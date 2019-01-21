@@ -1,4 +1,4 @@
-import { sumBy } from 'lodash'
+import { forEach, keys, get, sumBy, isEqual } from 'lodash'
 import qs from 'query-string'
 import { API_BASE_URL, USER_RANK } from 'config/base'
 import UserPic from 'assets/images/profile.png'
@@ -85,4 +85,15 @@ export function getItemListingPagePath(type, search, categories) {
   const { cid } = qs.parse(search)
 
   return findCategoryPath(categories, parseInt(cid))
+}
+
+export function getChangedFields(origin, update) {
+  let payload = {}
+  forEach(keys(update), key => {
+    if (!isEqual(get(origin, key), get(update, key))) {
+      payload[key] = update[key]
+    }
+  })
+
+  return payload
 }

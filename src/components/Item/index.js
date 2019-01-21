@@ -65,16 +65,18 @@ export default class Item extends Component {
           <Col className="col-8">
             <Row>
               <Col className="col-12">
-                <div className="d-flex align-items-center justify-content-between" onClick={this.gotoItemDetailPage}>
-                  <h4 className="item-name my-0 text-uppercase c-pointer">{name}</h4>
+                <div className="d-flex align-items-center justify-content-between">
+                  <h4 className="item-name my-0 text-uppercase c-pointer" onClick={this.gotoItemDetailPage}>
+                    {name}
+                  </h4>
                   {buttons !== 'none' && (
                     <div>
                       {buttons === 'all' && (
-                        <Button className="pe-btn p-1" onClick={this.handleEdit}>
+                        <Button type="button" className="pe-btn p-1" onClick={this.handleEdit}>
                           <MdEdit style={{ fontSize: '1.5rem' }} />
                         </Button>
                       )}
-                      <Button className="pe-btn p-1 ml-1" onClick={this.handleDelete}>
+                      <Button type="button" className="pe-btn p-1 ml-1" onClick={this.handleDelete}>
                         <IoIosTrash style={{ fontSize: '1.5rem' }} />
                       </Button>
                     </div>

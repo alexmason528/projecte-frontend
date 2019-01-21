@@ -11,7 +11,6 @@ export class ItemEditPage extends Component {
     match: PropTypes.object,
     type: PropTypes.string,
     itemGet: PropTypes.func,
-    reset: PropTypes.func,
   }
 
   componentWillMount() {
@@ -29,7 +28,7 @@ export class ItemEditPage extends Component {
 
     return (
       <div className="item-edit-page">
-        <ItemWizard type={type} item={item} editing={true} />
+        <ItemWizard type={type} item={item} />
       </div>
     )
   }

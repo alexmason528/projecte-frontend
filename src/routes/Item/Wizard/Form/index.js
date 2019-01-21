@@ -3,15 +3,18 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import { Container, Row, Col, Button } from 'reactstrap'
-import { Input, CategoryDropdown, TextArea } from 'components'
+import { Row, Col, Container, Button } from 'reactstrap'
+import { pick } from 'lodash'
+import { Input, CategoryDropdown, TextArea, MultipleImages } from 'components'
 import { MAIN_ITEM_TYPES, REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
-import validate from './validate'
+import validate, { ImageValidator } from './validate'
 
-class DetailForm extends Component {
+class WizardForm extends Component {
   static propTypes = {
     type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
+    onNext: PropTypes.func,
+    onBack: PropTypes.func,
     handleSubmit: PropTypes.func,
   }
 
@@ -111,12 +114,16 @@ class DetailForm extends Component {
     return ''
   }
 
+  handleNext = () => {
+    this.props.onNext()
+  }
+
   render() {
-    const { type, categories, handleSubmit } = this.props
+    const { page, type, categories } = this.props
 
     return (
-      <form onSubmit={handleSubmit}>
-        <Row>
+      <form onSubmit={this.props.handleSubmit}>
+        <Row style={{ display: page === 1 ? 'block' : 'none' }}>
           <Col md={12} className="mb-3">
             <Field className="form-input" name="name" type="text" component={Input} label="NAME" labelSize={2} />
           </Col>
@@ -143,7 +150,22 @@ class DetailForm extends Component {
             </div>
           </Col>
           <Col md={12} className="text-right">
-            <Button className="form-submit-btn px-4 py-2">Next</Button>
+            <Button type="button" className="form-submit-btn px-4 py-2" onClick={this.handleNext}>
+              Next
+            </Button>
+          </Col>
+        </Row>
+        <Row style={{ display: page === 2 ? 'block' : 'none' }}>
+          <Col md={12} className="mb-3">
+            <Field name="images" component={MultipleImages} validate={[ImageValidator]} />
+          </Col>
+          <Col md={12}>
+            <div className="d-flex justify-content-between">
+              <Button type="button" className="form-submit-btn px-4 py-2" onClick={this.props.onBack}>
+                Back
+              </Button>
+              <Button className="form-submit-btn px-4 py-2">Publish</Button>
+            </div>
           </Col>
         </Row>
       </form>
@@ -152,11 +174,11 @@ class DetailForm extends Component {
 }
 
 const selectors = (state, props) => {
-  if (!props.item || !props.editing) {
+  if (!props.item) {
     return props
   }
 
-  const { category, facts, ...itemData } = props.item
+  const { category, facts, ...itemData } = pick(props.item, ['id', 'name', 'images', 'category', 'details', 'facts'])
 
   return { ...props, initialValues: { category: category.id, ...facts, ...itemData } }
 }
@@ -165,8 +187,6 @@ export default compose(
   connect(selectors),
   reduxForm({
     form: 'item-wizard',
-    destroyOnUnmount: false,
-    forceUnregisterOnUnmount: true,
     validate,
   }),
-)(DetailForm)
+)(WizardForm)

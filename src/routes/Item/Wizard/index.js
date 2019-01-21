@@ -8,25 +8,23 @@ import cx from 'classnames'
 import { omit, pick, startCase } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
-import { reset } from 'redux-form'
 import { MAIN_ITEM_TYPES } from 'config/base'
-import { itemAdd, selectItemStatus, selectItemError, ITEM_ADD } from 'store/modules/item'
+import { itemAdd, itemUpdate, selectItemStatus, selectItemError, ITEM_ADD, ITEM_UPDATE } from 'store/modules/item'
 import { categoryFetch, selectCategories } from 'store/modules/category'
+import { getChangedFields } from 'utils/common'
 import { successAction } from 'utils/state-helpers'
-import DetailForm from './DetailForm/'
-import ImageForm from './ImageForm/'
+import WizardForm from './Form'
 
 class ItemWizard extends Component {
   static propTypes = {
     item: PropTypes.object,
-    editing: PropTypes.bool,
     type: PropTypes.oneOf(MAIN_ITEM_TYPES),
     categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
     itemAdd: PropTypes.func,
+    itemUpdate: PropTypes.func,
     categoryFetch: PropTypes.func,
-    reset: PropTypes.func,
   }
 
   static defaultProps = {
@@ -45,7 +43,6 @@ class ItemWizard extends Component {
     const { type } = this.props
 
     this.props.categoryFetch(type)
-    this.props.reset('item-wizard')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,6 +52,14 @@ class ItemWizard extends Component {
       const success = nextProps.status === successAction(ITEM_ADD)
 
       swal({ className: 'pe-swal', text: success ? 'Successfully added your item.' : 'Failed to add your item.' }).then(() => {
+        success && this.props.history.push('/me/listings')
+      })
+    }
+
+    if (status === ITEM_UPDATE && nextProps.status !== status) {
+      const success = nextProps.status === successAction(ITEM_UPDATE)
+
+      swal({ className: 'pe-swal', text: success ? 'Successfully updated your item.' : 'Failed to updated your item.' }).then(() => {
         success && this.props.history.push('/me/listings')
       })
     }
@@ -78,21 +83,30 @@ class ItemWizard extends Component {
     return status === ITEM_ADD
   }
 
+  get editing() {
+    return !!this.props.item
+  }
+
   handleSubmit = values => {
-    const { type } = this.props
+    const { type, item } = this.props
 
     if (this.submitting) {
       return
     }
 
+    const facts = omit(values, ['id', 'name', 'details', 'category', 'images'])
     const parsed = pick(values, ['name', 'details', 'category', 'images'])
-    const facts = omit(values, ['name', 'details', 'category', 'images'])
+    const data = { ...parsed, facts }
 
-    this.props.itemAdd({ type, data: { ...parsed, facts } })
+    if (!this.editing) {
+      this.props.itemAdd({ type, data })
+    } else {
+      this.props.itemUpdate({ type, id: values.id, data: getChangedFields(item, data) })
+    }
   }
 
   render() {
-    const { editing, item, type, categories, error } = this.props
+    const { item, type, categories, error } = this.props
     const { page } = this.state
 
     if (categories.length === 0) {
@@ -109,7 +123,7 @@ class ItemWizard extends Component {
           )}
           <Col md={12}>
             <h4 className="mt-0 mb-3 text-uppercase">
-              {editing ? 'Edit' : 'Add'} {startCase(type)}
+              {this.editing ? 'Edit' : 'Add'} {startCase(type)}
             </h4>
           </Col>
           <Col md={12}>
@@ -127,8 +141,15 @@ class ItemWizard extends Component {
         </Row>
         <Row>
           <Col md={12} className="mt-3">
-            {page === 1 && <DetailForm type={type} categories={categories} item={item} onSubmit={this.gotoSecondPage} />}
-            {page === 2 && <ImageForm item={item} onBack={this.gotoFirstPage} onSubmit={this.handleSubmit} />}
+            <WizardForm
+              onSubmit={this.handleSubmit}
+              item={item}
+              type={type}
+              categories={categories}
+              page={page}
+              onBack={this.gotoFirstPage}
+              onNext={this.gotoSecondPage}
+            />
           </Col>
         </Row>
       </div>
@@ -144,8 +165,8 @@ const selectors = createStructuredSelector({
 
 const actions = {
   itemAdd,
+  itemUpdate,
   categoryFetch,
-  reset,
 }
 
 export default compose(
