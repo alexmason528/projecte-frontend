@@ -187,7 +187,7 @@ export class ItemDetailPage extends Component {
         <AuthModal isOpen={isAuthModalOpen} toggle={() => this.handleToggleModal('isAuthModalOpen')} />
 
         <ImageSliderModal isOpen={isImageSliderOpen} images={images} toggle={() => this.handleToggleModal('isImageSliderOpen')} />
-        <Breadcrumbs path={item.category.path} className="mb-4" listClassName="px-0 bg-transparent" />
+        <Breadcrumbs path={item.category.path} className="mb-4" listClassName="p-0 pb-2 bg-transparent" />
 
         <Desktop>
           <Row>
@@ -207,7 +207,7 @@ export class ItemDetailPage extends Component {
               <Row className="item-images -my-2">
                 <Col md={6} className="py-2">
                   <div
-                    className="item-main-thumb w-100"
+                    className="item-main-thumb screen-desktop w-100"
                     style={{ backgroundImage: `url("${getURL(mainThumb.obj)}")`, height: '100%', backgroundSize: 'cover' }}
                     onClick={() => this.handleToggleModal('isImageSliderOpen')}
                   >
@@ -244,7 +244,7 @@ export class ItemDetailPage extends Component {
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
 
-              {comments.length && (
+              {comments.length > 0 && (
                 <div className="item-comments pe-box p-4 mt-3">
                   <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
                   <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />

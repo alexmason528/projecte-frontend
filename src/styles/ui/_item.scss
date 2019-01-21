@@ -1,6 +1,10 @@
 .item-main-thumb {
   position: relative;
   cursor: pointer;
+
+  &.screen-desktop {
+    min-height: 285px;
+  }
 }
 
 .item-thumb {

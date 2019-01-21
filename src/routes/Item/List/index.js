@@ -124,7 +124,7 @@ class ItemListingPage extends Component {
         <Desktop>
           <Row>
             <Col md={9}>
-              {path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}
+              {path && <Breadcrumbs path={path} className="mb-4" listClassName="p-0 pb-2 bg-transparent" />}
               {itemData.results.map(item => (
                 <Item key={item.id} history={history} {...item} onRedirect={this.handleRedirect} />
               ))}
@@ -151,7 +151,7 @@ class ItemListingPage extends Component {
 
         <TabletOrMobile>
           <Row>
-            <Col className="col-12">{path && <Breadcrumbs path={path} className="mb-4" listClassName="px-0 bg-transparent" />}</Col>
+            <Col className="col-12">{path && <Breadcrumbs path={path} className="mb-4" listClassName="p-0 pb-2 bg-transparent" />}</Col>
           </Row>
           <Row>
             <Col className="col-6">
