@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Modal, ModalBody } from 'reactstrap'
 import swal from 'sweetalert'
@@ -46,6 +48,7 @@ export class AuthModal extends Component {
 
       if (success) {
         this.props.toggle()
+        this.props.history.push('/me/profile')
       } else {
         swal({ className: 'pe-swal', text: nextProps.error })
       }
@@ -56,6 +59,7 @@ export class AuthModal extends Component {
 
       if (success) {
         this.props.toggle()
+        this.props.history.push('/me/profile')
       }
 
       swal({ className: 'pe-swal', text: success ? 'You are registered successfully' : nextProps.error })
@@ -127,7 +131,10 @@ const actions = {
   sendPasswordResetEmail,
 }
 
-export default connect(
-  selectors,
-  actions,
+export default compose(
+  withRouter,
+  connect(
+    selectors,
+    actions,
+  ),
 )(AuthModal)
