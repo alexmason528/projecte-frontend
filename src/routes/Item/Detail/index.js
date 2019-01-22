@@ -244,12 +244,10 @@ export class ItemDetailPage extends Component {
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
 
-              {comments.length > 0 && (
-                <div className="item-comments pe-box p-4 mt-3">
-                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
-                </div>
-              )}
+              <div className="item-comments pe-box p-4 mt-3">
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
+              </div>
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
               {this.canGiveEstimation && (
@@ -401,16 +399,14 @@ export class ItemDetailPage extends Component {
               </div>
             </Col>
           </Row>
-          {comments.length > 0 && (
-            <Row className="mt-3">
-              <Col className="col-12">
-                <div className="item-comments pe-box p-4">
-                  <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
-                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
-                </div>
-              </Col>
-            </Row>
-          )}
+          <Row className="mt-3">
+            <Col className="col-12">
+              <div className="item-comments pe-box p-4">
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
+              </div>
+            </Col>
+          </Row>
         </TabletOrMobile>
       </div>
     )
