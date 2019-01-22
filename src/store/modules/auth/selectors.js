@@ -6,6 +6,8 @@ export const selectUserData = state => get(state, ['auth', 'user'])
 
 export const selectIsLoggedIn = state => !!get(state, ['auth', 'user'])
 
+export const selectIsVerified = state => !!get(state, ['auth', 'user', 'email_verified'])
+
 export const selectItemData = state => get(state, ['auth', 'items'])
 
 export const selectNewPassword = state => get(state, ['auth', 'newPassword'])

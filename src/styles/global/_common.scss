@@ -193,7 +193,8 @@ input {
   }
 }
 
-.pe-swal {
+.pe-swal,
+.pe-swal-left {
   background-color: $primaryColor;
   border: 0.5rem solid white;
 
@@ -221,6 +222,14 @@ input {
       background-color: lighten($primaryColor, 10%) !important;
     }
   }
+
+  &.add-item-alert .swal-text {
+    text-align: left;
+  }
+}
+
+.pe-swal-left .swal-text {
+  text-align: left;
 }
 
 .pe-quill {

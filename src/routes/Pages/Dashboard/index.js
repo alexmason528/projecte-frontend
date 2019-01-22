@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { createStructuredSelector } from 'reselect'
 import { Row, Col } from 'reactstrap'
 import { IoMdAddCircleOutline } from 'react-icons/io'
+import swal from 'sweetalert'
+import { sendVerifyEmail, selectIsLoggedIn, selectIsVerified } from 'store/modules/auth'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
 import { MainItemTable } from 'components'
 
 export class Dashboard extends Component {
   static propTypes = {
     history: PropTypes.object,
+    isLoggedIn: PropTypes.bool,
+    isVerified: PropTypes.bool,
+    sendVerifyEmail: PropTypes.func,
   }
 
   gotoItemListingPage = item => {
@@ -16,6 +24,25 @@ export class Dashboard extends Component {
   }
 
   gotoItemAddPage = item => {
+    const { isLoggedIn, isVerified } = this.props
+
+    if (!isLoggedIn) {
+      this.props.history.push('auth')
+      return
+    }
+
+    if (!isVerified) {
+      swal({
+        className: 'pe-swal-left',
+        text: `Please confirm your address before adding an item. \n\n Didn't get an email? Click here to send verification email again.`,
+      }).then(res => {
+        if (res) {
+          this.props.sendVerifyEmail()
+        }
+      })
+      return
+    }
+
     this.props.history.push('/add-item')
   }
 
@@ -46,4 +73,19 @@ export class Dashboard extends Component {
   }
 }
 
-export default withRouter(Dashboard)
+const selectors = createStructuredSelector({
+  isLoggedIn: selectIsLoggedIn,
+  isVerified: selectIsVerified,
+})
+
+const actions = {
+  sendVerifyEmail,
+}
+
+export default compose(
+  withRouter,
+  connect(
+    selectors,
+    actions,
+  ),
+)(Dashboard)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { ScrollToTop } from 'components'
-import { userIsAuthenticated, userIsNotAuthenticated } from 'utils/auth-wrappers'
+import { userIsAuthenticated, userIsNotAuthenticated, userIsVerified } from 'utils/auth-wrappers'
 import { MainLayout } from 'containers/Layouts'
 import { AuthPage, VerifyEmailPage, PasswordResetPage, Dashboard, AddItemPage, PublicUserPage, Page404 } from './Pages'
 import UserRoutes from './User'
@@ -12,7 +12,7 @@ const Routes = () => (
     <MainLayout>
       <ScrollToTop>
         <Route path="/auth" component={userIsNotAuthenticated(AuthPage)} />
-        <Route path="/add-item" component={userIsAuthenticated(AddItemPage)} />
+        <Route path="/add-item" component={userIsVerified(AddItemPage)} />
         <Route path="/me" component={userIsAuthenticated(UserRoutes)} />
         <Route path="/item/:type" component={ItemRoutes} />
         <Route path="/user/:id" component={PublicUserPage} />
