@@ -54,10 +54,10 @@ const doItemAdd = function*({ payload }) {
 }
 
 const doItemGet = function*({ payload }) {
-  const { type, id } = payload
+  const { type, slug } = payload
 
   try {
-    const res = yield call(axios.get, `${API_BASE_URL}/api/item/${type}/${id}/`)
+    const res = yield call(axios.get, `${API_BASE_URL}/api/item/${type}/${slug}/`)
     yield put(itemGetSuccess(res.data))
   } catch (error) {
     yield put(itemGetFail(parseError(error)))
@@ -65,10 +65,10 @@ const doItemGet = function*({ payload }) {
 }
 
 const doItemUpdate = function*({ payload }) {
-  const { type, id, data } = payload
+  const { type, slug, data } = payload
 
   try {
-    const res = yield call(axios.patch, `${API_BASE_URL}/api/item/${type}/${id}/`, data)
+    const res = yield call(axios.patch, `${API_BASE_URL}/api/item/${type}/${slug}/`, data)
     yield put(itemUpdateSuccess(res.data))
   } catch (error) {
     yield put(itemUpdateFail(parseError(error)))
@@ -76,10 +76,10 @@ const doItemUpdate = function*({ payload }) {
 }
 
 const doItemDelete = function*({ payload }) {
-  const { type, id } = payload
+  const { type, slug } = payload
 
   try {
-    const res = yield call(axios.delete, `${API_BASE_URL}/api/item/${type}/${id}/`)
+    const res = yield call(axios.delete, `${API_BASE_URL}/api/item/${type}/${slug}/`)
     yield put(itemDeleteSuccess(res.data))
   } catch (error) {
     yield put(itemDeleteFail(parseError(error)))
@@ -87,10 +87,10 @@ const doItemDelete = function*({ payload }) {
 }
 
 const doItemAddEstimation = function*({ payload }) {
-  const { type, id, data } = payload
+  const { type, slug, data } = payload
 
   try {
-    const res = yield call(axios.post, `${API_BASE_URL}/api/item/${type}/${id}/estimation/`, data)
+    const res = yield call(axios.post, `${API_BASE_URL}/api/item/${type}/${slug}/estimation/`, data)
     yield put(itemAddEstimationSuccess(res.data))
   } catch (error) {
     yield put(itemAddEstimationFail(parseError(error)))
@@ -109,10 +109,10 @@ const doItemAddToWatchlist = function*({ payload }) {
 }
 
 const doItemAddReply = function*({ payload }) {
-  const { type, id, data } = payload
+  const { type, slug, data } = payload
 
   try {
-    const res = yield call(axios.post, `${API_BASE_URL}/api/item/${type}/${id}/reply/`, data)
+    const res = yield call(axios.post, `${API_BASE_URL}/api/item/${type}/${slug}/reply/`, data)
     yield put(itemAddReplySuccess(res.data))
   } catch (error) {
     yield put(itemAddReplyFail(parseError(error)))

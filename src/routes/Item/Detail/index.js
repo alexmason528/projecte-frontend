@@ -64,7 +64,7 @@ export class ItemDetailPage extends Component {
   componentWillMount() {
     const { type, match } = this.props
 
-    this.props.itemGet({ type, id: match.params.id })
+    this.props.itemGet({ type, slug: match.params.slug })
     this.props.categoryFetch(type)
   }
 
@@ -100,7 +100,7 @@ export class ItemDetailPage extends Component {
     const { type, item } = this.props
 
     const data = { ...values, item: item.id }
-    this.props.itemAddEstimation({ type, id: item.id, data })
+    this.props.itemAddEstimation({ type, slug: item.slug, data })
   }
 
   handleAddToWatchList = () => {
@@ -130,7 +130,7 @@ export class ItemDetailPage extends Component {
     const { selectedComment } = this.state
     const data = { ...values, item: item.id, parent: selectedComment }
 
-    this.props.itemAddReply({ type, id: item.id, data })
+    this.props.itemAddReply({ type, slug: item.slug, data })
   }
 
   get canGiveEstimation() {

@@ -102,8 +102,8 @@ class ItemListingPage extends Component {
     this.setState({ ordering: id === 'clear' ? undefined : id }, this.changeLocation)
   }
 
-  handleRedirect = (id, type) => {
-    this.props.history.push(`/item/${type}/${id}`)
+  handleRedirect = (slug, type) => {
+    this.props.history.push(`/item/${type}/${slug}`)
   }
 
   render() {

@@ -70,16 +70,16 @@ export class MyListingsPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleRedirect = (id, type) => {
-    this.props.history.push(`/item/${type}/${id}`)
+  handleRedirect = (slug, type) => {
+    this.props.history.push(`/item/${type}/${slug}`)
   }
 
-  handleItemDelete = (id, type) => {
-    this.props.itemDelete({ id, type })
+  handleItemDelete = (slug, type) => {
+    this.props.itemDelete({ slug, type })
   }
 
-  handleItemEdit = (id, type) => {
-    this.props.history.push(`/item/${type}/${id}/edit`)
+  handleItemEdit = (slug, type) => {
+    this.props.history.push(`/item/${type}/${slug}/edit`)
   }
 
   render() {

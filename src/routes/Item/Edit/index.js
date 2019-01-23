@@ -16,7 +16,7 @@ export class ItemEditPage extends Component {
   componentWillMount() {
     const { type, match } = this.props
 
-    this.props.itemGet({ type, id: match.params.id })
+    this.props.itemGet({ type, slug: match.params.slug })
   }
 
   render() {

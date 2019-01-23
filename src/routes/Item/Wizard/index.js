@@ -94,14 +94,14 @@ class ItemWizard extends Component {
       return
     }
 
-    const facts = omit(values, ['id', 'name', 'details', 'category', 'images'])
+    const facts = omit(values, ['id', 'name', 'details', 'category', 'images', 'slug'])
     const parsed = pick(values, ['name', 'details', 'category', 'images'])
     const data = { ...parsed, facts }
 
     if (!this.editing) {
       this.props.itemAdd({ type, data })
     } else {
-      this.props.itemUpdate({ type, id: values.id, data: getChangedFields(item, data) })
+      this.props.itemUpdate({ type, slug: item.slug, data: getChangedFields(item, data) })
     }
   }
 

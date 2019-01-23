@@ -10,7 +10,7 @@ import { getEstimation } from 'utils/common'
 
 export default class Item extends Component {
   static propTypes = {
-    id: PropTypes.number,
+    slug: PropTypes.string,
     name: PropTypes.string,
     images: PropTypes.array,
     estimations: PropTypes.array,
@@ -36,28 +36,28 @@ export default class Item extends Component {
   }
 
   gotoItemDetailPage = () => {
-    const { id } = this.props
+    const { slug } = this.props
 
-    this.props.onRedirect(id, this.type)
+    this.props.onRedirect(slug, this.type)
   }
 
   handleEdit = () => {
-    const { id } = this.props
+    const { slug } = this.props
 
-    this.props.onEdit(id, this.type)
+    this.props.onEdit(slug, this.type)
   }
 
   handleDelete = () => {
-    const { id } = this.props
+    const { slug } = this.props
 
-    this.props.onDelete(id, this.type)
+    this.props.onDelete(slug, this.type)
   }
 
   render() {
-    const { id, name, images, estimations, comments_count, buttons } = this.props
+    const { slug, name, images, estimations, comments_count, buttons } = this.props
 
     return (
-      <Row key={id} className="item mb-4">
+      <Row key={slug} className="item mb-4">
         <MediaQuery minDeviceWidth={768}>
           <Col className="col-4 pr-0" onClick={this.gotoItemDetailPage}>
             <div className="item-thumb" style={{ background: `url(${API_BASE_URL}${images[0].obj})` }} />

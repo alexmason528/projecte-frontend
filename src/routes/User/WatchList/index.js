@@ -79,12 +79,12 @@ export class MyListingsPage extends Component {
     this.setState({ page }, this.changeLocation)
   }
 
-  handleRedirect = (id, type) => {
-    this.props.history.push(`/item/${type}/${id}`)
+  handleRedirect = (slug, type) => {
+    this.props.history.push(`/item/${type}/${slug}`)
   }
 
-  handleItemDelete = id => {
-    this.props.deleteItemFromWatchlist(id)
+  handleItemDelete = slug => {
+    this.props.deleteItemFromWatchlist(slug)
   }
 
   render() {
