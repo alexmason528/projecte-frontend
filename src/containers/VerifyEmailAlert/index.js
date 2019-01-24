@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Button, UncontrolledAlert } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import swal from 'sweetalert'
 import { sendVerifyEmail, selectUserData, selectAuthStatus, AUTH_SEND_VERIFY_EMAIL } from 'store/modules/auth'
 import { Loader } from 'components'
 import { successAction } from 'utils/state-helpers'
+import messages from 'messages'
 
 export class VerifyEmailAlert extends Component {
   static propTypes = {
@@ -17,18 +20,17 @@ export class VerifyEmailAlert extends Component {
     }),
     status: PropTypes.string,
     sendVerifyEmail: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status } = this.props
+    const { status, intl } = this.props
 
     if (status === AUTH_SEND_VERIFY_EMAIL && nextProps.status !== status) {
       const success = nextProps.status === successAction(AUTH_SEND_VERIFY_EMAIL)
       swal({
         className: 'pe-swal',
-        text: success
-          ? 'Successfully sent verification code to your email.\n\n Check your inbox.'
-          : 'Failed to send verification code to your email.',
+        text: intl.formatMessage(success ? messages.sendVerificationCodeSuccess : messages.sendVerificationCodeFail),
       })
     }
   }
@@ -39,7 +41,8 @@ export class VerifyEmailAlert extends Component {
   }
 
   render() {
-    const { user, status } = this.props
+    const { user, status, intl } = this.props
+    const { formatMessage } = intl
 
     if (!user || user.email_verified) {
       return null
@@ -50,12 +53,12 @@ export class VerifyEmailAlert extends Component {
 
     return (
       <UncontrolledAlert color="warning">
-        Hi {username}, your email - {email} is not verified yet. <br />
-        Please click{' '}
+        {formatMessage(messages.emailVerifyAlert, { username, email })} <br />
+        {formatMessage(messages.pleaseClick)}{' '}
         <Button color="link" className="decoration-none p-0" onClick={this.handleSendEmail}>
-          here
+          {formatMessage(messages.here)}
         </Button>{' '}
-        to send verification email.
+        {formatMessage(messages.toSendVerificationEmail)}
         {pending && <Loader className="loader pos-center" />}
       </UncontrolledAlert>
     )
@@ -71,7 +74,10 @@ const actions = {
   sendVerifyEmail,
 }
 
-export default connect(
-  selectors,
-  actions,
+export default compose(
+  injectIntl,
+  connect(
+    selectors,
+    actions,
+  ),
 )(VerifyEmailAlert)

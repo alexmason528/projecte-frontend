@@ -31,7 +31,7 @@ export class UserDetailLayout extends Component {
       },
       {
         link: 'notifications',
-        name: 'Notifications',
+        name: formatMessage(messages.notifications),
       },
       {
         link: 'profile',

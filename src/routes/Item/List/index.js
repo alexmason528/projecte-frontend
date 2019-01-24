@@ -61,7 +61,7 @@ class ItemListingPage extends Component {
     const { search, ordering, page, cid } = queryString.parse(location.search)
 
     if (initial) {
-      this.props.categoryFetch(type)
+      this.props.categoryFetch()
       this.props.clearItems()
       this.setState(Object.assign({ search, page, cid }, findIndex(ORDERING_CONSTS, { id: ordering }) !== -1 && { ordering }))
     }

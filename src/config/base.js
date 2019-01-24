@@ -47,26 +47,26 @@ export const USER_RANK = [
   {
     min: null,
     max: 50,
-    value: 'Newbie',
+    value: 'estify.newbie',
   },
   {
     min: 51,
     max: 200,
-    value: 'Junior',
+    value: 'estify.junior',
   },
   {
     min: 201,
     max: 500,
-    value: 'Senior',
+    value: 'estify.senior',
   },
   {
     min: 501,
     max: 1000,
-    value: 'Estimation King',
+    value: 'estify.estimationKing',
   },
   {
     min: 1001,
     max: null,
-    value: 'Ultimate Estimator',
+    value: 'estify.ultimateEstimator',
   },
 ]

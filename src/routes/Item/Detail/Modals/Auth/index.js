@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Modal, ModalBody } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import swal from 'sweetalert'
 import {
   logIn,
@@ -20,6 +21,7 @@ import { successAction } from 'utils/state-helpers'
 import LogInForm from './Forms/LogIn'
 import RegisterForm from './Forms/Register'
 import PasswordResetForm from './Forms/PasswordReset'
+import messages from 'messages'
 
 export class AuthModal extends Component {
   static propTypes = {
@@ -30,6 +32,7 @@ export class AuthModal extends Component {
     logIn: PropTypes.func,
     register: PropTypes.func,
     sendPasswordResetEmail: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   constructor(props) {
@@ -41,7 +44,7 @@ export class AuthModal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status } = this.props
+    const { status, intl } = this.props
 
     if (status === AUTH_LOGIN && nextProps.status !== status) {
       const success = nextProps.status === successAction(AUTH_LOGIN)
@@ -62,7 +65,7 @@ export class AuthModal extends Component {
         this.props.history.push('/me/profile')
       }
 
-      swal({ className: 'pe-swal', text: success ? 'You are registered successfully' : nextProps.error })
+      swal({ className: 'pe-swal', text: success ? intl.formatMessage(messages.registrationSuccess) : nextProps.error })
     }
 
     if (status === AUTH_SEND_PASSWORD_RESET_EMAIL && nextProps.status !== status) {
@@ -72,7 +75,7 @@ export class AuthModal extends Component {
         this.props.toggle()
       }
 
-      swal({ className: 'pe-swal', text: success ? 'Sent password reset email. \n\n Please check your inbox.' : nextProps.error })
+      swal({ className: 'pe-swal', text: success ? intl.formatMessage(messages.sentPasswordResetEmail) : nextProps.error })
     }
   }
 
@@ -132,6 +135,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

@@ -27,7 +27,7 @@ export class Dashboard extends Component {
   }
 
   gotoItemAddPage = item => {
-    const { isLoggedIn, isVerified } = this.props
+    const { isLoggedIn, isVerified, intl } = this.props
 
     if (!isLoggedIn) {
       this.props.history.push('auth')
@@ -37,7 +37,7 @@ export class Dashboard extends Component {
     if (!isVerified) {
       swal({
         className: 'pe-swal-left',
-        text: `Please confirm your address before adding an item. \n\n Didn't get an email? Click here to send verification email again.`,
+        text: intl.formatMessage(messages.emailConfirm),
       }).then(res => {
         if (res) {
           this.props.sendVerifyEmail()

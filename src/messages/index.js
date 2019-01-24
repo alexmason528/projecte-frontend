@@ -147,7 +147,7 @@ export default defineMessages({
     defaultMessage: 'Back',
   },
   publish: {
-    id: 'estify.pusblish',
+    id: 'estify.publish',
     defaultMessage: 'Publish',
   },
   comments: {
@@ -177,5 +177,286 @@ export default defineMessages({
   giveEstimate: {
     id: 'estify.giveEstimate',
     defaultMessage: 'Give Estimate',
+  },
+  totalAmount: {
+    id: 'estify.totalAmount',
+    defaultMessage: 'Total amount',
+  },
+  accuracy: {
+    id: 'estify.accuracy',
+    defaultMessage: 'Accuracy',
+  },
+  noEstimations: {
+    id: 'estify.noEstimations',
+    defaultMessage: 'No estimations',
+  },
+  notifications: {
+    id: 'estify.notifications',
+    defaultMessage: 'Notifications',
+  },
+  noCommentsYet: {
+    id: 'estify.noCommentsYet',
+    defaultMessage: 'No comments yet',
+  },
+  details: {
+    id: 'estify.details',
+    defaultMessage: 'Details',
+  },
+  noSubCategories: {
+    id: 'estify.noSubCategories',
+    defaultMessage: 'No sub categories',
+  },
+  forgotPassword: {
+    id: 'estify.forgotPassword',
+    defaultMessage: 'Forgot password',
+  },
+  noAccount: {
+    id: 'estify.noAccount',
+    defaultMessage: 'No account',
+  },
+  passwordReset: {
+    id: 'estify.passwordReset',
+    defaultMessage: 'Password reset',
+  },
+  send: {
+    id: 'estify.send',
+    defaultMessage: 'Send',
+  },
+  alreadyHaveAccount: {
+    id: 'estify.alreadyHaveAccount',
+    defaultMessage: 'Already have account',
+  },
+  ok: {
+    id: 'estify.ok',
+    defaultMessage: 'Ok',
+  },
+  writeComment: {
+    id: 'estify.writeComment',
+    defaultMessage: 'Write comment',
+  },
+  reply: {
+    id: 'estify.reply',
+    defaultMessage: 'Reply',
+  },
+  livingSpace: {
+    id: 'estify.livingSpace',
+    defaultMessage: 'Living space',
+  },
+  yearsOfCons: {
+    id: 'estify.yearsOfCons',
+    defaultMessage: 'Years of Cons.',
+  },
+  buildingArea: {
+    id: 'estify.buildingArea',
+    defaultMessage: 'Building area',
+  },
+  condition: {
+    id: 'estify.condition',
+    defaultMessage: 'Condition',
+  },
+  artist: {
+    id: 'estify.artist',
+    defaultMessage: 'Artist',
+  },
+  year: {
+    id: 'estify.year',
+    defaultMessage: 'Year',
+  },
+  fuel: {
+    id: 'estify.fuel',
+    defaultMessage: 'Fuel',
+  },
+  miles: {
+    id: 'estify.miles',
+    defaultMessage: 'Miles',
+  },
+  color: {
+    id: 'estify.color',
+    defaultMessage: 'Color',
+  },
+  material: {
+    id: 'estify.material',
+    defaultMessage: 'Material',
+  },
+  weight: {
+    id: 'estify.weight',
+    defaultMessage: 'Weight',
+  },
+  selectType: {
+    id: 'estify.selectType',
+    defaultMessage: 'Select type',
+  },
+  selectBrand: {
+    id: 'estify.selectBrand',
+    defaultMessage: 'Select Brand',
+  },
+  selectCategory: {
+    id: 'estify.selectCategory',
+    defaultMessage: 'Select category',
+  },
+  selectSubType: {
+    id: 'estify.selectSubType',
+    defaultMessage: 'Select sub-type',
+  },
+  selectRegion: {
+    id: 'estify.selectRegion',
+    defaultMessage: 'Select region',
+  },
+  name: {
+    id: 'estify.name',
+    defaultMessage: 'Name',
+  },
+  next: {
+    id: 'estify.next',
+    defaultMessage: 'Next',
+  },
+  replies: {
+    id: 'estify.replies',
+    defaultMessage: 'Replies',
+  },
+  itemDetails: {
+    id: 'estify.itemDetails',
+    defaultMessage: 'Item Details',
+  },
+  page404: {
+    id: 'estify.page404',
+    defaultMessage: 'Page 404',
+  },
+  newPassword: {
+    id: 'estify.newPassword',
+    defaultMessage: 'This is your new password',
+  },
+  clickHere: {
+    id: 'estify.clickHere',
+    defaultMessage: 'Click here',
+  },
+  toAuthPage: {
+    id: 'estify.toAuthPage',
+    defaultMessage: 'to go to Auth page',
+  },
+  toHomePage: {
+    id: 'estify.toHomePage',
+    defaultMessage: 'to go to Home page',
+  },
+  passwordResetPending: {
+    id: 'estify.passwordResetPending',
+    defaultMessage: 'Resetting your password now',
+  },
+  passwordResetSuccess: {
+    id: 'estify.passwordResetSuccess',
+    defaultMessage: 'Password is resetted',
+  },
+  passwordResetFail: {
+    id: 'estify.passwordResetFail',
+    defaultMessage: 'Failed to reset your password',
+  },
+  emailVerifyPending: {
+    id: 'estify.emailVerifyPending',
+    defaultMessage: 'Verifying email now',
+  },
+  emailVerifySuccess: {
+    id: 'estify.emailVerifySuccess',
+    defaultMessage: 'Email is verified',
+  },
+  emailVerifyFail: {
+    id: 'estify.emailVerifyFail',
+    defaultMessage: 'Failed to verify your email',
+  },
+  profileUpdateSuccess: {
+    id: 'estify.profileUpdateSuccess',
+    defaultMessage: 'Your profile is updated successfully',
+  },
+  profileUpdateFail: {
+    id: 'estify.profileUpdateFail',
+    defaultMessage: 'Failed to update your profile',
+  },
+  emailConfirm: {
+    id: 'estify.emailConfirm',
+    defaultMessage:
+      "Please confirm your address before adding an item. \n\n Didn't get an email? Click here to send verification email again",
+  },
+  updateItemSuccess: {
+    id: 'estify.updateItemSuccess',
+    defaultMessage: 'Successfully updated your item',
+  },
+  updateItemFail: {
+    id: 'estify.updateItemSuccess',
+    defaultMessage: 'Failed to update your item',
+  },
+  addItemSuccess: {
+    id: 'estify.addItemSuccess',
+    defaultMessage: 'Successfully added your item',
+  },
+  addItemFail: {
+    id: 'estify.addItemFail',
+    defaultMessage: 'Failed to add your item',
+  },
+  addCommentSuccess: {
+    id: 'estify.addCommentSuccess',
+    defaultMessage: 'Your comment is added successfully',
+  },
+  addCommentFail: {
+    id: 'estify.addCommentFail',
+    defaultMessage: 'Failed to add your comment',
+  },
+  addEstimationCommentSuccess: {
+    id: 'estify.addEstimationCommentSuccess',
+    defaultMessage: 'Your estimate and comment are added successfully',
+  },
+  sentPasswordResetEmail: {
+    id: 'estify.sentPasswordResetEmail',
+    defaultMessage: 'Sent password reset email. \n\n Please check your inbox',
+  },
+  registrationSuccess: {
+    id: 'estify.registrationSuccess',
+    defaultMessage: 'You are registered successfully',
+  },
+  addItemToWatchlistSuccess: {
+    id: 'estify.addItemToWatchlistSuccess',
+    defaultMessage: 'This item is added to the watchlist successfully',
+  },
+  sendVerificationCodeSuccess: {
+    id: 'estify.sendVerificationCodeSuccess',
+    defaultMessage: 'Successfully sent verification code to your email. Check your inbox',
+  },
+  sendVerificationCodeFail: {
+    id: 'estify.sendVerificationCodeFail',
+    defaultMessage: 'Failed to send verification code to your email',
+  },
+  pleaseClick: {
+    id: 'estify.pleaseClick',
+    defaultMessage: 'Please click',
+  },
+  here: {
+    id: 'estify.here',
+    defaultMessage: 'here',
+  },
+  toSendVerificationEmail: {
+    id: 'estify.toSendVerificationEmail',
+    defaultMessage: 'to send verification email',
+  },
+  emailVerifyAlert: {
+    id: 'estify.emailVerifyAlert',
+    defaultMessage: 'Hi {username}, your - {email} is not verified yet.',
+  },
+  newbie: {
+    id: 'estify.newbie',
+    defaultMessage: 'Newbie',
+  },
+  junior: {
+    id: 'estify.junior',
+    defaultMessage: 'Junior',
+  },
+  senior: {
+    id: 'estify.senior',
+    defaultMessage: 'Senior',
+  },
+  estimationKing: {
+    id: 'estify.estimationKing',
+    defaultMessage: 'Estimation King',
+  },
+  ultimateEstimator: {
+    id: 'estify.ultimateEstimator',
+    defaultMessage: 'Ultimate Estimator',
   },
 })

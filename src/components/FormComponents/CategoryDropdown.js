@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
+import { FormattedMessage } from 'react-intl'
 import { get, find } from 'lodash'
 
 export default class Dropdown extends Component {
@@ -116,7 +117,7 @@ export default class Dropdown extends Component {
         <Col md={6}>
           <UncontrolledDropdown className="pe-dropdown subcategory-dropdown">
             <DropdownToggle className="w-100 text-left py-2" caret>
-              {subCategories && subCategories.length > 0 ? subCategoryName : 'No sub categories'}
+              {subCategories && subCategories.length > 0 ? subCategoryName : <FormattedMessage id="estify.noSubCategories" />}
             </DropdownToggle>
             {subCategories && subCategories.length > 0 && (
               <DropdownMenu className="w-100">

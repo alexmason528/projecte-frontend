@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import cx from 'classnames'
@@ -19,7 +19,13 @@ const Comment = ({ user, id, estimation, content, children, child, addReply }) =
     </div>
     <div className="item-comment__content pe-textarea mt-3" dangerouslySetInnerHTML={{ __html: content }} />
     <div className="item-comment__reply mt-2">
-      <div>{children.length > 0 && `Replys (${children.length})`}</div>
+      <div>
+        {children.length > 0 && (
+          <Fragment>
+            <FormattedMessage id="estify.replies" /> ({children.length})
+          </Fragment>
+        )}
+      </div>
       <div>
         {!child && (
           <span className="c-pointer" onClick={() => addReply(id)}>

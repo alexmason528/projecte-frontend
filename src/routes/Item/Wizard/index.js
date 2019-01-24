@@ -42,18 +42,17 @@ class ItemWizard extends Component {
   }
 
   componentWillMount() {
-    const { type } = this.props
-
-    this.props.categoryFetch(type)
+    this.props.categoryFetch()
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status } = this.props
+    const { status, intl } = this.props
+    const { formatMessage } = intl
 
     if (status === ITEM_ADD && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD)
 
-      swal({ className: 'pe-swal', text: success ? 'Successfully added your item.' : 'Failed to add your item.' }).then(() => {
+      swal({ className: 'pe-swal', text: formatMessage(success ? messages.addItemSuccess : messages.addItemFail) }).then(() => {
         success && this.props.history.push('/me/listings')
       })
     }
@@ -61,7 +60,7 @@ class ItemWizard extends Component {
     if (status === ITEM_UPDATE && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_UPDATE)
 
-      swal({ className: 'pe-swal', text: success ? 'Successfully updated your item.' : 'Failed to updated your item.' }).then(() => {
+      swal({ className: 'pe-swal', text: formatMessage(success ? messages.updateItemSuccess : messages.updateItemFail) }).then(() => {
         success && this.props.history.push('/me/listings')
       })
     }
@@ -134,7 +133,7 @@ class ItemWizard extends Component {
             <div className="wizard-nav d-flex justify-content-center">
               <div className={cx('wizard-nav-btn mr-3', { active: page === 1 })} onClick={this.gotoFirstPage}>
                 <div className="nav-order mr-3">1</div>
-                Item Details
+                {formatMessage(messages.itemDetails)}
               </div>
               <div className={cx('wizard-nav-btn', { active: page === 2 })} onClick={this.gotoSecondPage}>
                 <div className="nav-order mr-3">2</div>

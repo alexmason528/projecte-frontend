@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 import { Button, Row, Col } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
 import { selectIsLoggedIn, selectAuthStatus, selectUserData, selectAuthError, verifyEmail, AUTH_VERIFY_EMAIL } from 'store/modules/auth'
 import { Loader } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
+import messages from 'messages'
 
 export class VerifyEmailPage extends Component {
   static propTypes = {
@@ -18,6 +20,7 @@ export class VerifyEmailPage extends Component {
     user: PropTypes.object,
     error: PropTypes.string,
     verifyEmail: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   componentWillMount() {
@@ -45,26 +48,28 @@ export class VerifyEmailPage extends Component {
   }
 
   getTitle = () => {
-    const { status } = this.props
+    const { status, intl } = this.props
+    const { formatMessage } = intl
 
     let text
 
     if (status === AUTH_VERIFY_EMAIL) {
-      text = 'Verifying your email now...'
+      text = formatMessage(messages.emailVerifyPending)
     } else if (status === successAction(AUTH_VERIFY_EMAIL)) {
-      text = 'Email is verified now'
+      text = formatMessage(messages.emailVerifySuccess)
     } else {
-      text = 'Failed to verify your email'
+      text = formatMessage(messages.emailVerifyFail)
     }
 
     return <h3>{text}</h3>
   }
 
   render() {
-    const { status, error } = this.props
+    const { intl, status, error } = this.props
     const loading = status === AUTH_VERIFY_EMAIL
     const success = status === successAction(AUTH_VERIFY_EMAIL)
     const fail = status === failAction(AUTH_VERIFY_EMAIL)
+    const { formatMessage } = intl
 
     return (
       <div className="verify-email-page">
@@ -82,9 +87,9 @@ export class VerifyEmailPage extends Component {
                 <IoIosCheckmarkCircleOutline style={{ fontSize: 50 }} />
               </div>
               <Button color="link" className="decoration-none p-0" onClick={this.gotoHomePage}>
-                Click here
+                {formatMessage(messages.clickHere)}
               </Button>{' '}
-              to go to Home Page
+              {formatMessage(messages.toHomePage)}
             </Col>
           )}
 
@@ -93,9 +98,9 @@ export class VerifyEmailPage extends Component {
               <IoIosCloseCircleOutline className="text-danger" style={{ fontSize: 50 }} />
               <div className="text-danger my-4">{error}</div>
               <Button color="link" className="decoration-none p-0" onClick={this.gotoAuthPage}>
-                Click here
+                {formatMessage(messages.clickHere)}
               </Button>{' '}
-              to go to Auth Page
+              {formatMessage(messages.toAuthPage)}
             </Col>
           )}
         </Row>
@@ -116,6 +121,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

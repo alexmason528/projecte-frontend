@@ -22,10 +22,15 @@ const EstimationForm = ({ loading, intl, handleSubmit }) => (
     <Row className="mt-3">
       <Col md={12} className="d-flex align-items-end">
         <div className="w-100 mr-2">
-          <Field name="comment" className="pe-quill bg-white color-black" placeholder="Write comment..." component={TextArea} />
+          <Field
+            name="comment"
+            className="pe-quill bg-white color-black"
+            placeholder={`${intl.formatMessage(messages.ok)}...`}
+            component={TextArea}
+          />
         </div>
         <LoaderButton className="form-submit-btn white" loading={loading}>
-          OK
+          {intl.formatMessage(messages.ok)}
         </LoaderButton>
       </Col>
     </Row>

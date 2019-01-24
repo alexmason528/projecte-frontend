@@ -12,18 +12,18 @@ const PasswordResetForm = ({ loading, intl, handleSubmit, onChangeFormType }) =>
   <Form onSubmit={handleSubmit}>
     <Row>
       <Col md={12}>
-        <h4 className="my-0 text-uppercase font-weight-bold">Password Reset</h4>
+        <h4 className="my-0 text-uppercase font-weight-bold">{intl.formatMessage(messages.passwordReset)}</h4>
       </Col>
       <Col md={12} className="mt-3">
         <Field name="email" placeholder={intl.formatMessage(messages.email)} component={Input} />
       </Col>
       <Col md={12} className="mt-3 text-right">
         <LoaderButton className="form-submit-btn white" loading={loading}>
-          Send
+          {intl.formatMessage(messages.send)}
         </LoaderButton>
       </Col>
       <Col md={12} className="mt-4 text-center" style={{ fontSize: '1.2rem' }}>
-        Already have account?{' '}
+        {intl.formatMessage(messages.alreadyHaveAccount)}?{' '}
         <Button
           type="button"
           className="pe-btn-link font-weight-bold"

@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Alert, Row, Col } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import { keys, forEach, pick } from 'lodash'
 import swal from 'sweetalert'
 import { ProfileForm, UserStats } from 'components'
 import { getProfile, updateProfile, selectUserData, selectAuthStatus, selectAuthError, AUTH_UPDATE_PROFILE } from 'store/modules/auth'
 import { failAction } from 'utils/state-helpers'
+import messages from 'messages'
 
 export class Profile extends Component {
   static propTypes = {
@@ -16,6 +19,7 @@ export class Profile extends Component {
     user: PropTypes.object,
     getProfile: PropTypes.func,
     updateProfile: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   componentWillMount() {
@@ -23,12 +27,13 @@ export class Profile extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status } = this.props
+    const { status, intl } = this.props
+    const { formatMessage } = intl
 
     if (status === AUTH_UPDATE_PROFILE && nextProps.status !== status) {
       const success = nextProps.status !== failAction(AUTH_UPDATE_PROFILE)
 
-      swal({ className: 'pe-swal', text: success ? 'Your profile is updated successfully.' : 'Failed to update your profile.' })
+      swal({ className: 'pe-swal', text: formatMessage(success ? messages.profileUpdateSuccess : messages.profileUpdateFail) })
     }
   }
 
@@ -78,7 +83,10 @@ const actions = {
   updateProfile,
 }
 
-export default connect(
-  selectors,
-  actions,
+export default compose(
+  injectIntl,
+  connect(
+    selectors,
+    actions,
+  ),
 )(Profile)

@@ -46,17 +46,23 @@ export class PublicUserPage extends Component {
                   <FormattedMessage id="estify.stats" />
                 </h3>
                 <div className="d-flex justify-content-between">
-                  <span>No estimations</span>
+                  <span>
+                    <FormattedMessage id="estify.noEstimations" />
+                  </span>
                   <span>{numeral(estimation_count).format('0,0')}</span>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span>Total amount</span>
+                  <span>
+                    <FormattedMessage id="estify.totalAmount" />
+                  </span>
                   <span>
                     <FormattedMessage id="estify.currency" /> {numeral(total_amount).format('0,0[.]00')}
                   </span>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <span>Accuracy</span>
+                  <span>
+                    <FormattedMessage id="estify.accuracy" />
+                  </span>
                   <span>{numeral(accuracy).format('0[.]00')}%</span>
                 </div>
               </div>
@@ -64,7 +70,7 @@ export class PublicUserPage extends Component {
                 <h3 className="mt-0 mb-2 font-weight-bold text-uppercase">
                   <FormattedMessage id="estify.rank" />
                 </h3>
-                {getUserRank(estimation_count)}
+                <FormattedMessage id={getUserRank(estimation_count)} />
                 {emblem && <img className="user-stats-emblem" style={{ top: 0 }} src={`../../assets/images/${emblem}-star.png`} alt="" />}
               </div>
             </div>

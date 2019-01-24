@@ -11,7 +11,7 @@ import moment from 'moment'
 import swal from 'sweetalert'
 import { MdStar, MdSearch } from 'react-icons/md'
 import { FaCoins } from 'react-icons/fa'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { selectUserData } from 'store/modules/auth'
 import {
   itemGet,
@@ -34,6 +34,7 @@ import EstimationModal from './Modals/Estimation'
 import ReplyModal from './Modals/Reply'
 import AuthModal from './Modals/Auth'
 import ImageSliderModal from './Modals/ImageSlider'
+import messages from 'messages'
 
 export class ItemDetailPage extends Component {
   static propTypes = {
@@ -47,6 +48,7 @@ export class ItemDetailPage extends Component {
     itemAddToWatchlist: PropTypes.func,
     itemAddReply: PropTypes.func,
     categoryFetch: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   constructor(props) {
@@ -65,18 +67,18 @@ export class ItemDetailPage extends Component {
     const { type, match } = this.props
 
     this.props.itemGet({ type, slug: match.params.slug })
-    this.props.categoryFetch(type)
+    this.props.categoryFetch()
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status } = this.props
+    const { status, intl } = this.props
 
     if (status === ITEM_ADD_TO_WATCHLIST && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD_TO_WATCHLIST)
 
       swal({
         className: 'pe-swal',
-        text: success ? 'This item is added to the watchlist successfully' : nextProps.error,
+        text: success ? intl.formatMessage(messages.addItemToWatchlistSuccess) : nextProps.error,
       })
     }
   }
@@ -234,7 +236,9 @@ export class ItemDetailPage extends Component {
               </Row>
 
               <div className="item-fact pe-box p-4 mt-3 position-relative">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.facts" />
+                </h3>
                 <ItemFact type={type} facts={facts} />
                 <div className="item-listing-date">
                   <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
@@ -242,7 +246,9 @@ export class ItemDetailPage extends Component {
               </div>
 
               <div className="item-details pe-box p-4 mt-3">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Details</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.details" />
+                </h3>
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
 
@@ -250,7 +256,11 @@ export class ItemDetailPage extends Component {
                 <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
                   <FormattedMessage id="estify.comments" />
                 </h3>
-                {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
+                {comments.length > 0 ? (
+                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
+                ) : (
+                  <FormattedMessage id="estify.noCommentsYet" />
+                )}
               </div>
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
@@ -263,7 +273,9 @@ export class ItemDetailPage extends Component {
                 <div>
                   <FormattedMessage id="estify.estimation" />
                 </div>
-                <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
+                <div className="text-right">
+                  <FormattedMessage id="estify.currency" /> {numeral(getEstimation(estimations)).format('0,0[.]00')}
+                </div>
               </div>
               <div className="pe-box p-3">
                 <div className="mb-2">
@@ -379,10 +391,14 @@ export class ItemDetailPage extends Component {
                   <div className="text-uppercase">
                     <FormattedMessage id="estify.estimation" />
                   </div>
-                  <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
+                  <div className="text-right">
+                    <FormattedMessage id="estify.currency" /> {numeral(getEstimation(estimations)).format('0,0[.]00')}
+                  </div>
                 </div>
                 <div className="pe-box p-2">
-                  <div className="font-weight-bold">INFOS</div>
+                  <div className="font-weight-bold">
+                    <FormattedMessage id="estify.infos" />
+                  </div>
                   <div className="text-capitalize font-weight-normal">
                     <FormattedMessage id="estify.estimations" />: {numeral(estimations.length).format('0,0')}
                     <br />
@@ -399,7 +415,9 @@ export class ItemDetailPage extends Component {
           <Row className="mt-3">
             <Col className="col-12">
               <div className="item-fact pe-box p-4 position-relative">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.facts" />
+                </h3>
                 <ItemFact type={type} facts={facts} />
                 <div className="item-listing-date">
                   <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
@@ -410,7 +428,9 @@ export class ItemDetailPage extends Component {
           <Row className="mt-3">
             <Col className="col-12">
               <div className="item-details pe-box p-4">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Details</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.details" />
+                </h3>
                 <div className="pe-textarea" dangerouslySetInnerHTML={{ __html: details }} />
               </div>
             </Col>
@@ -421,7 +441,11 @@ export class ItemDetailPage extends Component {
                 <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
                   <FormattedMessage id="estify.comments" />
                 </h3>
-                {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
+                {comments.length > 0 ? (
+                  <ItemComments comments={comments} addReply={this.handleOpenReplyModal} />
+                ) : (
+                  <FormattedMessage id="estify.noCommentsYet" />
+                )}
               </div>
             </Col>
           </Row>
@@ -447,6 +471,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

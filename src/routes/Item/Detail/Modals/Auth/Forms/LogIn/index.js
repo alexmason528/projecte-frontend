@@ -22,7 +22,7 @@ const LogInForm = ({ loading, intl, handleSubmit, onChangeFormType }) => (
       </Col>
       <Col md={12} className="mt-3">
         <Button type="button" className="pe-btn-link deco-underline" onClick={() => onChangeFormType('passwordReset')}>
-          Forgot Password?
+          {intl.formatMessage(messages.forgotPassword)}
         </Button>
       </Col>
       <Col md={12} className="mt-3 text-right">
@@ -31,7 +31,7 @@ const LogInForm = ({ loading, intl, handleSubmit, onChangeFormType }) => (
         </LoaderButton>
       </Col>
       <Col md={12} className="mt-4 text-center" style={{ fontSize: '1.2rem' }}>
-        No Account?{' '}
+        {intl.formatMessage(messages.noAccount)}?{' '}
         <Button
           type="button"
           className="pe-btn-link font-weight-bold"

@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 import { Button, Row, Col } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import { IoIosCheckmarkCircleOutline, IoIosCloseCircleOutline } from 'react-icons/io'
 import { parse } from 'query-string'
 import { selectAuthStatus, selectAuthError, passwordReset, selectNewPassword, AUTH_PASSWORD_RESET } from 'store/modules/auth'
 import { Loader } from 'components'
 import { successAction, failAction } from 'utils/state-helpers'
+import messages from 'messages'
 
 export class PasswordResetPage extends Component {
   static propTypes = {
@@ -17,6 +19,7 @@ export class PasswordResetPage extends Component {
     status: PropTypes.string,
     error: PropTypes.string,
     passwordReset: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   componentWillMount() {
@@ -36,26 +39,29 @@ export class PasswordResetPage extends Component {
   }
 
   getTitle = () => {
-    const { status } = this.props
+    const { status, intl } = this.props
+    const { formatMessage } = intl
 
     let text
 
     if (status === AUTH_PASSWORD_RESET) {
-      text = 'Resetting your passsword now...'
+      text = formatMessage(messages.passwordResetPending)
     } else if (status === successAction(AUTH_PASSWORD_RESET)) {
-      text = 'Password is resetted'
+      text = formatMessage(messages.passwordResetSuccess)
     } else {
-      text = 'Failed to reset your password'
+      text = formatMessage(messages.passwordResetFail)
     }
 
     return <h3>{text}</h3>
   }
 
   render() {
-    const { newPassword, status, error } = this.props
+    const { newPassword, status, error, intl } = this.props
     const loading = status === AUTH_PASSWORD_RESET
     const success = status === successAction(AUTH_PASSWORD_RESET)
     const fail = status === failAction(AUTH_PASSWORD_RESET)
+
+    const { formatMessage } = intl
 
     return (
       <div className="password-reset-page">
@@ -71,7 +77,9 @@ export class PasswordResetPage extends Component {
             {success && (
               <Fragment>
                 <IoIosCheckmarkCircleOutline style={{ fontSize: 50 }} />
-                <div className="text-success my-4">This is your new Password: {newPassword}</div>
+                <div className="text-success my-4">
+                  {formatMessage(messages.newPassword)}: {newPassword}
+                </div>
               </Fragment>
             )}
             {fail && (
@@ -83,9 +91,9 @@ export class PasswordResetPage extends Component {
             {!loading && (
               <Fragment>
                 <Button color="link" className="decoration-none p-0" onClick={this.gotoAuthPage}>
-                  Click here
+                  {formatMessage(messages.clickHere)}
                 </Button>{' '}
-                to go to Auth page
+                {formatMessage(messages.toAuthPage)}
               </Fragment>
             )}
           </Col>
@@ -106,6 +114,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

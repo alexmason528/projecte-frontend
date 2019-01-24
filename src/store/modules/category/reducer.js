@@ -8,6 +8,7 @@ import { CATEGORY_FETCH } from './constants'
 
 const initialState = {
   categories: [],
+  allCategories: [],
   status: null,
   error: null,
 }
