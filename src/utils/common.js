@@ -84,6 +84,10 @@ export function getItemListingPagePath(type, search, categories) {
 
   const { cid } = qs.parse(search)
 
+  if (!cid) {
+    return type
+  }
+
   return findCategoryPath(categories, parseInt(cid))
 }
 

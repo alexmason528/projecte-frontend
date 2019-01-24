@@ -1,25 +1,33 @@
 import React, { Component } from 'react'
+import { compose } from 'redux'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
+import { injectIntl, intlShape } from 'react-intl'
 import { Row, Col, Button } from 'reactstrap'
 import cx from 'classnames'
+import messages from 'messages'
 
 export class UserDetailLayout extends Component {
+  static propTypes = {
+    intl: intlShape.isRequired,
+  }
+
   isActiveLink = link => {
     const { location, match } = this.props
     return location.pathname === `${match.url}/${link}`
   }
 
   render() {
-    const { children, match } = this.props
+    const { children, match, intl } = this.props
+    const { formatMessage } = intl
     const pages = [
       {
         link: 'listings',
-        name: 'My Listings',
+        name: formatMessage(messages.myListings),
       },
       {
         link: 'watchlist',
-        name: 'Watchlist',
+        name: formatMessage(messages.watchlist),
       },
       {
         link: 'notifications',
@@ -27,7 +35,7 @@ export class UserDetailLayout extends Component {
       },
       {
         link: 'profile',
-        name: 'Profile',
+        name: formatMessage(messages.profile),
       },
     ]
 
@@ -50,4 +58,7 @@ export class UserDetailLayout extends Component {
   }
 }
 
-export default withRouter(UserDetailLayout)
+export default compose(
+  injectIntl,
+  withRouter,
+)(UserDetailLayout)

@@ -11,6 +11,7 @@ import moment from 'moment'
 import swal from 'sweetalert'
 import { MdStar, MdSearch } from 'react-icons/md'
 import { FaCoins } from 'react-icons/fa'
+import { FormattedMessage } from 'react-intl'
 import { selectUserData } from 'store/modules/auth'
 import {
   itemGet,
@@ -25,7 +26,6 @@ import {
 } from 'store/modules/item'
 import { categoryFetch } from 'store/modules/category'
 import { Loader, QuarterSpinner, Breadcrumbs, UserDetail, Desktop, Tablet, TabletOrMobile, Mobile } from 'components'
-import { MAIN_ITEM_TYPES } from 'config/base'
 import { getEstimation, getURL } from 'utils/common'
 import { successAction, failAction } from 'utils/state-helpers'
 import ItemFact from './Elements/Fact'
@@ -38,7 +38,7 @@ import ImageSliderModal from './Modals/ImageSlider'
 export class ItemDetailPage extends Component {
   static propTypes = {
     user: PropTypes.object,
-    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
+    type: PropTypes.string,
     item: PropTypes.object,
     status: PropTypes.string,
     error: PropTypes.string,
@@ -236,7 +236,9 @@ export class ItemDetailPage extends Component {
               <div className="item-fact pe-box p-4 mt-3 position-relative">
                 <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
                 <ItemFact type={type} facts={facts} />
-                <div className="item-listing-date">Listing date: {moment(date).format('DD.MM.YYYY')}</div>
+                <div className="item-listing-date">
+                  <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                </div>
               </div>
 
               <div className="item-details pe-box p-4 mt-3">
@@ -245,30 +247,38 @@ export class ItemDetailPage extends Component {
               </div>
 
               <div className="item-comments pe-box p-4 mt-3">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.comments" />
+                </h3>
                 {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
               </div>
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
               {this.canGiveEstimation && (
                 <Button className="pe-btn w-100 mb-3" onClick={this.handleGiveEstimate}>
-                  Give estimate
+                  <FormattedMessage id="estify.giveEstimate" />
                 </Button>
               )}
               <div className="pe-box mb-3 p-3">
-                <div>Estimation</div>
+                <div>
+                  <FormattedMessage id="estify.estimation" />
+                </div>
                 <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
               </div>
               <div className="pe-box p-3">
-                <div className="mb-2">Infos</div>
+                <div className="mb-2">
+                  <FormattedMessage id="estify.infos" />
+                </div>
                 <div className="text-capitalize font-weight-normal" style={{ fontSize: '1rem' }}>
-                  Estimations: {numeral(estimations.length).format('0,0')}
+                  <FormattedMessage id="estify.estimations" />: {numeral(estimations.length).format('0,0')}
                   <br />
-                  Comments: {numeral(comments.length).format('0,0')}
+                  <FormattedMessage id="estify.comments" />: {numeral(comments.length).format('0,0')}
                   <br />
                 </div>
                 <div className="item-lister mt-3">
-                  <div className="mb-2">Lister</div>
+                  <div className="mb-2">
+                    <FormattedMessage id="estify.lister" />
+                  </div>
                   <UserDetail user={user} isLister />
                 </div>
               </div>
@@ -305,7 +315,7 @@ export class ItemDetailPage extends Component {
               <Col className="col-6">
                 {this.canGiveEstimation && (
                   <Button className="pe-btn w-100 mb-3" onClick={this.handleGiveEstimate}>
-                    Give estimate
+                    <FormattedMessage id="estify.giveEstimate" />
                   </Button>
                 )}
                 <div className="pe-box mb-3 p-3 d-flex justify-content-between font-weight-bold">
@@ -313,11 +323,13 @@ export class ItemDetailPage extends Component {
                   <div>$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
                 </div>
                 <div className="pe-box p-3 d-flex justify-content-between align-items-center">
-                  <div className="font-weight-bold">INFOS</div>
+                  <div className="font-weight-bold text-uppercase">
+                    <FormattedMessage id="estify.infos" />
+                  </div>
                   <div className="text-capitalize font-weight-normal">
-                    Estimations: {numeral(estimations.length).format('0,0')}
+                    <FormattedMessage id="estify.estimations" />: {numeral(estimations.length).format('0,0')}
                     <br />
-                    Comments: {numeral(comments.length).format('0,0')}
+                    <FormattedMessage id="estify.comments" />: {numeral(comments.length).format('0,0')}
                     <br />
                   </div>
                 </div>
@@ -364,15 +376,17 @@ export class ItemDetailPage extends Component {
               </Col>
               <Col className="col-6 pl-0">
                 <div className="pe-box mb-2 p-2 font-weight-bold">
-                  <div>ESTIMATION</div>
+                  <div className="text-uppercase">
+                    <FormattedMessage id="estify.estimation" />
+                  </div>
                   <div className="text-right">$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
                 </div>
                 <div className="pe-box p-2">
                   <div className="font-weight-bold">INFOS</div>
                   <div className="text-capitalize font-weight-normal">
-                    Estimations: {numeral(estimations.length).format('0,0')}
+                    <FormattedMessage id="estify.estimations" />: {numeral(estimations.length).format('0,0')}
                     <br />
-                    Comments: {numeral(comments.length).format('0,0')}
+                    <FormattedMessage id="estify.comments" />: {numeral(comments.length).format('0,0')}
                     <br />
                   </div>
                 </div>
@@ -387,7 +401,9 @@ export class ItemDetailPage extends Component {
               <div className="item-fact pe-box p-4 position-relative">
                 <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Facts</h3>
                 <ItemFact type={type} facts={facts} />
-                <div className="item-listing-date">Listing date: {moment(date).format('DD.MM.YYYY')}</div>
+                <div className="item-listing-date">
+                  <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                </div>
               </div>
             </Col>
           </Row>
@@ -402,7 +418,9 @@ export class ItemDetailPage extends Component {
           <Row className="mt-3">
             <Col className="col-12">
               <div className="item-comments pe-box p-4">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">Comments</h3>
+                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
+                  <FormattedMessage id="estify.comments" />
+                </h3>
                 {comments.length > 0 ? <ItemComments comments={comments} addReply={this.handleOpenReplyModal} /> : 'No comments yet'}
               </div>
             </Col>

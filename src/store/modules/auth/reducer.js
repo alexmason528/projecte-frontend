@@ -18,6 +18,7 @@ import {
   AUTH_DELETE_ITEM_FROM_WATCHLIST,
   AUTH_GET_USER_INFO,
   CLEAR_ITEMS,
+  DEFAULT_LOCALE,
 } from './constants'
 
 import { ITEM_DELETE } from 'store/modules/item'
@@ -38,6 +39,7 @@ const initialState = {
   userInfo: null,
   status: null,
   error: null,
+  locale: DEFAULT_LOCALE,
 }
 
 /* Action creators */

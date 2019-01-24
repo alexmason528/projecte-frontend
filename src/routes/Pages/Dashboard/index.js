@@ -5,11 +5,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import swal from 'sweetalert'
 import { sendVerifyEmail, selectIsLoggedIn, selectIsVerified } from 'store/modules/auth'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
 import { MainItemTable } from 'components'
+import messages from 'messages'
 
 export class Dashboard extends Component {
   static propTypes = {
@@ -17,6 +19,7 @@ export class Dashboard extends Component {
     isLoggedIn: PropTypes.bool,
     isVerified: PropTypes.bool,
     sendVerifyEmail: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   gotoItemListingPage = item => {
@@ -47,6 +50,9 @@ export class Dashboard extends Component {
   }
 
   render() {
+    const { intl } = this.props
+    const { formatMessage } = intl
+
     return (
       <div className="dashboard">
         <Row>
@@ -59,7 +65,7 @@ export class Dashboard extends Component {
           <Col md={6}>
             <button className="pe-btn add-item-btn w-100 text-left p-2" style={{ fontSize: '1.2rem' }} onClick={this.gotoItemAddPage}>
               <IoMdAddCircleOutline className="mr-1" style={{ fontSize: '2.5rem', marginTop: -3 }} />
-              Add item for estimation
+              {formatMessage(messages.addItem)}
             </button>
           </Col>
         </Row>
@@ -83,6 +89,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { MdClose, MdExpandLess, MdExpandMore } from 'react-icons/md'
+import { FormattedMessage } from 'react-intl'
 import { getURL } from 'utils/common'
 
 export default class Image extends Component {
@@ -37,7 +38,9 @@ export default class Image extends Component {
         <div className="image-preview mr-4" style={{ backgroundImage: `url(${getURL(image.obj)})` }} />
         <div className="image-description">
           <div>
-            <div className="mb-2 font-weight-bold">Image description</div>
+            <div className="mb-2 font-weight-bold">
+              <FormattedMessage id="estify.imageDescription" />
+            </div>
             <textarea className="p-2" value={image.description || ''} onChange={this.handleDescriptionChange} />
           </div>
           <div className="image-actions d-flex justify-content-end">

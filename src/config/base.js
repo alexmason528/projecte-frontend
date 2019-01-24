@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { MdExpandLess, MdExpandMore } from 'react-icons/md'
 
 export const AUTH_DATA = 'projecte/auth/data'
@@ -18,44 +18,28 @@ export const MAIN_ITEM_TYPES = [REAL_ESTATE, AUTOMOBILE, ART, VALUABLE]
 export const ORDERING_CONSTS = [
   {
     id: '-price',
-    content: (
-      <Fragment>
-        Estimation <MdExpandMore />
-      </Fragment>
-    ),
+    icon: <MdExpandMore />,
+    text: 'estify.estimation',
   },
   {
     id: 'price',
-    content: (
-      <Fragment>
-        Estimation <MdExpandLess />
-      </Fragment>
-    ),
+    icon: <MdExpandLess />,
+    text: 'estify.estimation',
   },
   {
     id: '-estimation',
-    content: (
-      <Fragment>
-        Number of Estimations <MdExpandMore />
-      </Fragment>
-    ),
+    icon: <MdExpandMore />,
+    text: 'estify.numberOfEstimations',
   },
   {
     id: 'estimation',
-    content: (
-      <Fragment>
-        Number of Estimations <MdExpandLess />
-      </Fragment>
-    ),
+    icon: <MdExpandLess />,
+    text: 'estify.numberOfEstimations',
   },
   {
     id: '-date',
-    content: (
-      <Fragment>
-        Most Recent Listings
-        <MdExpandMore />
-      </Fragment>
-    ),
+    icon: <MdExpandMore />,
+    text: 'estify.mostRecentListings',
   },
 ]
 

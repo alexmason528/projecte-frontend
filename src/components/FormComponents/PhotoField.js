@@ -9,7 +9,7 @@ export default class PhotoField extends Component {
   static propTypes = {
     input: PropTypes.object,
     label: PropTypes.string,
-    placeholder: PropTypes.string,
+    buttonTitle: PropTypes.string,
     type: PropTypes.string,
     meta: PropTypes.shape({
       touched: PropTypes.bool,
@@ -74,14 +74,14 @@ export default class PhotoField extends Component {
   }
 
   render() {
-    const { input } = this.props
+    const { input, buttonTitle } = this.props
 
     return (
       <div>
         <div className="user-photo-wrapper mb-3 text-center">{this.renderPhoto()}</div>
         <input type="file" className="d-none" ref={ref => (this.uploader = ref)} onChange={this.handleChange} />
         <Button type="button" className="form-submit-btn w-100" onClick={this.handleOpenFileDialog}>
-          Upload new photo
+          {buttonTitle}
         </Button>
       </div>
     )

@@ -2,21 +2,23 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { injectIntl, intlShape } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col } from 'reactstrap'
 import Adsense from 'react-adsense'
 import queryString from 'query-string'
-import { find, findIndex } from 'lodash'
+import { findIndex } from 'lodash'
 import { Breadcrumbs, Item, ItemFilter, Loader, Pagination, Desktop, TabletOrMobile } from 'components'
 import { categoryFetch, selectCategories } from 'store/modules/category'
 import { itemList, clearItems, selectItemData, selectItemStatus, selectItemError, ITEM_LIST } from 'store/modules/item'
-import { ORDERING_CONSTS, MAIN_ITEM_TYPES } from 'config/base'
+import { ORDERING_CONSTS } from 'config/base'
 import { getItemListingPagePath } from 'utils/common'
+import messages from 'messages'
 
 class ItemListingPage extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
+    type: PropTypes.string,
     itemData: PropTypes.shape({
       totalItemsCount: PropTypes.number,
       itemsCountPerPage: PropTypes.number,
@@ -29,6 +31,7 @@ class ItemListingPage extends Component {
     itemList: PropTypes.func,
     clearItems: PropTypes.func,
     categoryFetch: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   constructor(props) {
@@ -66,17 +69,6 @@ class ItemListingPage extends Component {
     this.props.itemList({ type, params: { search, ordering, page, cid } })
   }
 
-  getDropdownToggleContent = () => {
-    const { ordering } = this.state
-    const current = find(ORDERING_CONSTS, { id: ordering })
-
-    if (ordering && current) {
-      return current.content
-    }
-
-    return 'Sort by'
-  }
-
   changeLocation = () => {
     const { page, ordering, search, cid } = this.state
     const { match } = this.props
@@ -107,13 +99,14 @@ class ItemListingPage extends Component {
   }
 
   render() {
-    const { itemData, history, status, location, categories, type } = this.props
+    const { itemData, history, status, location, categories, type, intl } = this.props
     const { search } = this.state
 
     if (!categories) {
       return null
     }
 
+    const { formatMessage } = intl
     const { totalItemsCount, itemsCountPerPage, activePage } = itemData
 
     const path = getItemListingPagePath(type, location.search, categories)
@@ -136,8 +129,13 @@ class ItemListingPage extends Component {
               />
             </Col>
             <Col md={3}>
-              <input placeholder="Search..." className="pe-input w-100 mb-2" defaultValue={search} onKeyDown={this.handleSearchChange} />
-              <ItemFilter caption={this.getDropdownToggleContent()} onChange={this.handleOrderingChange} />
+              <input
+                placeholder={`${formatMessage(messages.search)}...`}
+                className="pe-input w-100 mb-2"
+                defaultValue={search}
+                onKeyDown={this.handleSearchChange}
+              />
+              <ItemFilter ordering={this.state.ordering} onChange={this.handleOrderingChange} />
               <Adsense.Google
                 client="ca-pub-9509130066791988"
                 slot="4021498111"
@@ -155,10 +153,15 @@ class ItemListingPage extends Component {
           </Row>
           <Row>
             <Col className="col-6">
-              <input placeholder="Search..." className="pe-input w-100" defaultValue={search} onKeyDown={this.handleSearchChange} />
+              <input
+                placeholder={`${formatMessage(messages.search)}...`}
+                className="pe-input w-100"
+                defaultValue={search}
+                onKeyDown={this.handleSearchChange}
+              />
             </Col>
             <Col className="col-6">
-              <ItemFilter caption={this.getDropdownToggleContent()} onChange={this.handleOrderingChange} />
+              <ItemFilter ordering={this.state.ordering} onChange={this.handleOrderingChange} />
             </Col>
           </Row>
           <Row className="mt-4">
@@ -194,6 +197,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

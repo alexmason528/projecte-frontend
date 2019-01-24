@@ -4,18 +4,21 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { Row, Col, Container, Button } from 'reactstrap'
+import { injectIntl, intlShape } from 'react-intl'
 import { pick } from 'lodash'
 import { Input, CategoryDropdown, TextArea, MultipleImages } from 'components'
-import { MAIN_ITEM_TYPES, REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
+import { REAL_ESTATE, AUTOMOBILE, ART, VALUABLE } from 'config/base'
+import messages from 'messages'
 import validate, { ImageValidator } from './validate'
 
 class WizardForm extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
+    type: PropTypes.string,
     categories: PropTypes.array,
     onNext: PropTypes.func,
     onBack: PropTypes.func,
     handleSubmit: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   renderRealStateFacts = () => (
@@ -119,7 +122,8 @@ class WizardForm extends Component {
   }
 
   render() {
-    const { page, type, categories } = this.props
+    const { page, type, categories, intl } = this.props
+    const { formatMessage } = intl
 
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -162,9 +166,9 @@ class WizardForm extends Component {
           <Col md={12}>
             <div className="d-flex justify-content-between">
               <Button type="button" className="form-submit-btn px-4 py-2" onClick={this.props.onBack}>
-                Back
+                {formatMessage(messages.back)}
               </Button>
-              <Button className="form-submit-btn px-4 py-2">Publish</Button>
+              <Button className="form-submit-btn px-4 py-2">{formatMessage(messages.publish)}</Button>
             </div>
           </Col>
         </Row>
@@ -184,6 +188,7 @@ const selectors = (state, props) => {
 }
 
 export default compose(
+  injectIntl,
   connect(selectors),
   reduxForm({
     form: 'item-wizard',

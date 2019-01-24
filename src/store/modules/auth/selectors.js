@@ -17,3 +17,5 @@ export const selectUserInfo = state => get(state, ['auth', 'userInfo'])
 export const selectAuthStatus = state => get(state, ['auth', 'status'])
 
 export const selectAuthError = state => get(state, ['auth', 'error'])
+
+export const selectLocale = state => get(state, ['auth', 'locale'])

@@ -7,7 +7,7 @@ import ItemWizard from '../Wizard'
 
 class ItemAddPage extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
+    type: PropTypes.string,
     itemAdd: PropTypes.func,
   }
 

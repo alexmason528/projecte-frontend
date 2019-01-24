@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import MediaQuery from 'react-responsive'
 import { Logo } from 'components'
@@ -48,13 +49,17 @@ export default class NavBar extends Component {
                   <img src={getUserPhotoUrl(user.photo)} className="mx-2" style={{ width: 30, height: 30 }} alt="" />
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem onClick={() => navigate('/me')}>Profile</DropdownItem>
-                  <DropdownItem onClick={logOut}>Log out</DropdownItem>
+                  <DropdownItem onClick={() => navigate('/me')}>
+                    <FormattedMessage id="estify.profile" />
+                  </DropdownItem>
+                  <DropdownItem onClick={logOut}>
+                    <FormattedMessage id="estify.logOut" />
+                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             ) : (
               <NavItem className="text-uppercase c-pointer" onClick={() => navigate('/auth')}>
-                Login / Register
+                <FormattedMessage id="estify.logIn" /> / <FormattedMessage id="estify.register" />
               </NavItem>
             )}
           </Nav>

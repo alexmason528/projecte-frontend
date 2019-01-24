@@ -4,27 +4,29 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
+import { injectIntl, intlShape } from 'react-intl'
 import cx from 'classnames'
 import { omit, pick, startCase } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
-import { MAIN_ITEM_TYPES } from 'config/base'
 import { itemAdd, itemUpdate, selectItemStatus, selectItemError, ITEM_ADD, ITEM_UPDATE } from 'store/modules/item'
 import { categoryFetch, selectCategories } from 'store/modules/category'
 import { getChangedFields } from 'utils/common'
 import { successAction } from 'utils/state-helpers'
+import messages from 'messages'
 import WizardForm from './Form'
 
 class ItemWizard extends Component {
   static propTypes = {
     item: PropTypes.object,
-    type: PropTypes.oneOf(MAIN_ITEM_TYPES),
+    type: PropTypes.string,
     categories: PropTypes.array,
     status: PropTypes.string,
     error: PropTypes.string,
     itemAdd: PropTypes.func,
     itemUpdate: PropTypes.func,
     categoryFetch: PropTypes.func,
+    intl: intlShape.isRequired,
   }
 
   static defaultProps = {
@@ -106,12 +108,14 @@ class ItemWizard extends Component {
   }
 
   render() {
-    const { item, type, categories, error } = this.props
+    const { item, type, categories, error, intl } = this.props
     const { page } = this.state
 
     if (categories.length === 0) {
       return null
     }
+
+    const { formatMessage } = intl
 
     return (
       <div className="item-wizard w-75 mx-auto">
@@ -134,7 +138,7 @@ class ItemWizard extends Component {
               </div>
               <div className={cx('wizard-nav-btn', { active: page === 2 })} onClick={this.gotoSecondPage}>
                 <div className="nav-order mr-3">2</div>
-                Add images
+                {formatMessage(messages.addImages)}
               </div>
             </div>
           </Col>
@@ -170,6 +174,7 @@ const actions = {
 }
 
 export default compose(
+  injectIntl,
   withRouter,
   connect(
     selectors,

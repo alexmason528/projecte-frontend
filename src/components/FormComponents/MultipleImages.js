@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Row, Col } from 'reactstrap'
+import { FormattedMessage } from 'react-intl'
 import { values } from 'lodash'
 import axios from 'axios'
 import { API_BASE_URL } from 'config/base'
@@ -117,7 +118,7 @@ export default class MultipleImages extends Component {
           <div className="d-flex justify-content-center">
             <img className="mr-2" src={PicImage} alt="" style={{ height: 45 }} />
             <button type="button" className="pe-btn" onClick={this.handleOpenUploader} disabled={uploading}>
-              Select images
+              <FormattedMessage id="estify.selectImages" />
             </button>
             <input
               type="file"

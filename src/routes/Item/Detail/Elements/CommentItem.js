@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 import cx from 'classnames'
+import { FormattedMessage } from 'react-intl'
 import { MdReply } from 'react-icons/md'
 import { UserDetail } from 'components'
 
@@ -9,7 +10,12 @@ const Comment = ({ user, id, estimation, content, children, child, addReply }) =
   <div className={cx('item-comment', { 'mb-3': child })}>
     <div className="d-flex justify-content-between">
       <UserDetail user={user} />
-      {estimation && <h4 className="item-comment__estimation my-0">Estimation: $ {numeral(estimation.value).format('0,00[.]00')}</h4>}
+      {estimation && (
+        <h4 className="item-comment__estimation my-0">
+          <FormattedMessage id="estify.estimation" />: <FormattedMessage id="estify.currency" />{' '}
+          {numeral(estimation.value).format('0,00[.]00')}
+        </h4>
+      )}
     </div>
     <div className="item-comment__content pe-textarea mt-3" dangerouslySetInnerHTML={{ __html: content }} />
     <div className="item-comment__reply mt-2">
@@ -17,7 +23,8 @@ const Comment = ({ user, id, estimation, content, children, child, addReply }) =
       <div>
         {!child && (
           <span className="c-pointer" onClick={() => addReply(id)}>
-            Leave reply <MdReply style={{ fontSize: '1.5rem' }} />
+            <FormattedMessage id="estify.leaveReply" />
+            <MdReply style={{ fontSize: '1.5rem' }} />
           </span>
         )}
       </div>

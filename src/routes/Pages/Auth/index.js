@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { Alert, Row, Col } from 'reactstrap'
 import { logIn, register, selectAuthStatus, selectAuthError, AUTH_LOGIN, AUTH_REGISTER } from 'store/modules/auth'
@@ -35,7 +36,9 @@ export class AuthPage extends Component {
     return (
       <Row className="auth-page">
         <Col md={6} sm={12}>
-          <h4 className="text-uppercase form-title">LogIn</h4>
+          <h4 className="text-uppercase form-title">
+            <FormattedMessage id="estify.logIn" />
+          </h4>
           {loginFailed && (
             <Alert color="danger" className="mb-3">
               {error}
@@ -44,7 +47,9 @@ export class AuthPage extends Component {
           <LogInForm loggingIn={loggingIn} onSubmit={this.handleLogin} />
         </Col>
         <Col md={6} sm={12}>
-          <h4 className="text-uppercase form-title">Register</h4>
+          <h4 className="text-uppercase form-title">
+            <FormattedMessage id="estify.register" />
+          </h4>
           {registerFailed && (
             <Alert color="danger" className="mb-3">
               {error}

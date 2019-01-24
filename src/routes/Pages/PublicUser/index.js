@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col } from 'reactstrap'
 import numeral from 'numeral'
@@ -41,14 +42,18 @@ export class PublicUserPage extends Component {
           <Col md={8} className="mt-3">
             <div className="pe-box user-stats d-flex justify-content-between flex-column h-100 p-4">
               <div>
-                <h3 className="mt-0 mb-2 font-weight-bold">STATS</h3>
+                <h3 className="mt-0 mb-2 font-weight-bold text-uppercase">
+                  <FormattedMessage id="estify.stats" />
+                </h3>
                 <div className="d-flex justify-content-between">
                   <span>No estimations</span>
                   <span>{numeral(estimation_count).format('0,0')}</span>
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>Total amount</span>
-                  <span>$ {numeral(total_amount).format('0,0[.]00')}</span>
+                  <span>
+                    <FormattedMessage id="estify.currency" /> {numeral(total_amount).format('0,0[.]00')}
+                  </span>
                 </div>
                 <div className="d-flex justify-content-between">
                   <span>Accuracy</span>
@@ -56,7 +61,9 @@ export class PublicUserPage extends Component {
                 </div>
               </div>
               <div className="mt-3 position-relative">
-                <h3 className="mt-0 mb-2 font-weight-bold text-uppercase">Rank</h3>
+                <h3 className="mt-0 mb-2 font-weight-bold text-uppercase">
+                  <FormattedMessage id="estify.rank" />
+                </h3>
                 {getUserRank(estimation_count)}
                 {emblem && <img className="user-stats-emblem" style={{ top: 0 }} src={`../../assets/images/${emblem}-star.png`} alt="" />}
               </div>
