@@ -51,7 +51,6 @@ export class AuthModal extends Component {
 
       if (success) {
         this.props.toggle()
-        this.props.history.push('/me/profile')
       } else {
         swal({ className: 'pe-swal', text: nextProps.error })
       }
@@ -62,7 +61,6 @@ export class AuthModal extends Component {
 
       if (success) {
         this.props.toggle()
-        this.props.history.push('/me/profile')
       }
 
       swal({ className: 'pe-swal', text: success ? intl.formatMessage(messages.registrationSuccess) : nextProps.error })

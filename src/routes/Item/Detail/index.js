@@ -12,7 +12,7 @@ import swal from 'sweetalert'
 import { MdStar, MdSearch } from 'react-icons/md'
 import { FaCoins } from 'react-icons/fa'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { selectUserData } from 'store/modules/auth'
+import { selectUserData, selectAuthStatus, AUTH_LOGIN } from 'store/modules/auth'
 import {
   itemGet,
   itemAddEstimation,
@@ -42,6 +42,7 @@ export class ItemDetailPage extends Component {
     type: PropTypes.string,
     item: PropTypes.object,
     status: PropTypes.string,
+    authStatus: PropTypes.string,
     error: PropTypes.string,
     itemGet: PropTypes.func,
     itemAddEstimation: PropTypes.func,
@@ -60,6 +61,7 @@ export class ItemDetailPage extends Component {
       isAuthModalOpen: false,
       isImageSliderOpen: false,
       selectedComment: null,
+      modalAfterLoginSuccess: null,
     }
   }
 
@@ -71,7 +73,7 @@ export class ItemDetailPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { status, intl } = this.props
+    const { authStatus, status, intl } = this.props
 
     if (status === ITEM_ADD_TO_WATCHLIST && nextProps.status !== status) {
       const success = nextProps.status === successAction(ITEM_ADD_TO_WATCHLIST)
@@ -80,6 +82,15 @@ export class ItemDetailPage extends Component {
         className: 'pe-swal',
         text: success ? intl.formatMessage(messages.addItemToWatchlistSuccess) : nextProps.error,
       })
+    }
+
+    if (authStatus === AUTH_LOGIN && nextProps.authStatus !== authStatus) {
+      const { modalAfterLoginSuccess } = this.state
+      const { item, user } = nextProps
+
+      if (nextProps.authStatus === successAction(AUTH_LOGIN) && modalAfterLoginSuccess && this.canGiveEstimation(item, user)) {
+        this.setState({ [modalAfterLoginSuccess]: true, modalAfterLoginSuccess: null })
+      }
     }
   }
 
@@ -91,7 +102,7 @@ export class ItemDetailPage extends Component {
     const { user } = this.props
 
     if (!user) {
-      this.handleToggleModal('isAuthModalOpen')
+      this.setState({ isAuthModalOpen: true, modalAfterLoginSuccess: 'isEstimationModalOpen' })
       return
     }
 
@@ -135,9 +146,7 @@ export class ItemDetailPage extends Component {
     this.props.itemAddReply({ type, slug: item.slug, data })
   }
 
-  get canGiveEstimation() {
-    const { item, user } = this.props
-
+  canGiveEstimation(item, user) {
     if (user && user.id === item.user.id) {
       return false
     }
@@ -264,7 +273,7 @@ export class ItemDetailPage extends Component {
               </div>
             </Col>
             <Col md={3} className="right-panel text-uppercase font-weight-bold" style={{ fontSize: '1.3rem' }}>
-              {this.canGiveEstimation && (
+              {this.canGiveEstimation(item, this.props.user) && (
                 <Button className="pe-btn w-100 mb-3" onClick={this.handleGiveEstimate}>
                   <FormattedMessage id="estify.giveEstimate" />
                 </Button>
@@ -325,7 +334,7 @@ export class ItemDetailPage extends Component {
                 </div>
               </Col>
               <Col className="col-6">
-                {this.canGiveEstimation && (
+                {this.canGiveEstimation(item, this.props.user) && (
                   <Button className="pe-btn w-100 mb-3" onClick={this.handleGiveEstimate}>
                     <FormattedMessage id="estify.giveEstimate" />
                   </Button>
@@ -356,7 +365,7 @@ export class ItemDetailPage extends Component {
               <Col className="d-flex align-items-center justify-content-between">
                 <h3 className="my-0 text-uppercase">{name}</h3>
                 <div>
-                  {this.canGiveEstimation && (
+                  {this.canGiveEstimation(item, this.props.user) && (
                     <Button className="pe-btn p-1 ml-2" onClick={this.handleGiveEstimate}>
                       <FaCoins style={{ fontSize: '1.5rem' }} />
                     </Button>
@@ -459,6 +468,7 @@ const selectors = createStructuredSelector({
   user: selectUserData,
   item: selectCurrentItem,
   status: selectItemStatus,
+  authStatus: selectAuthStatus,
   error: selectItemError,
 })
 

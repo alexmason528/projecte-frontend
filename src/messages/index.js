@@ -86,8 +86,8 @@ export default defineMessages({
     id: 'estify.clearFilter',
     defaultMessage: 'Clear Filter',
   },
-  addItem: {
-    id: 'estify.addItem',
+  addItemForEstimation: {
+    id: 'estify.addItemForEstimation',
     defaultMessage: 'Add item for estimation',
   },
   realEstate: {
@@ -459,12 +459,12 @@ export default defineMessages({
     id: 'estify.ultimateEstimator',
     defaultMessage: 'Ultimate Estimator',
   },
-  add: {
-    id: 'estify.add',
-    defaultMessage: 'Add',
+  addItem: {
+    id: 'estify.addItem',
+    defaultMessage: 'Add Item',
   },
-  edit: {
-    id: 'estify.edit',
-    defaultMessage: 'Edit',
+  editItem: {
+    id: 'estify.editItem',
+    defaultMessage: 'Edit Item',
   },
 })

@@ -20,7 +20,7 @@
   "estify.numberOfEstimations": "Anzahl der Schätzungen",
   "estify.mostRecentListings": "Neueste Schätzartikel",
   "estify.clearFilter": "Filter löschen",
-  "estify.addItem": "Artikel einstellen",
+  "estify.addItemForEstimation": "Artikel einstellen",
   "estify.realEstate": "Immobilien",
   "estify.automobile": "Fahrzeuge",
   "estify.art": "Kunst",
@@ -51,7 +51,7 @@
   "estify.details": "Details",
   "estify.noSubCategories": "Keine Unterkategorien",
   "estify.forgotPassword": "Passwort vergessen",
-  "estify.noAccount": "Noch kein Account?",
+  "estify.noAccount": "Noch kein Account",
   "estify.passwordReset": "Passwort zurücksetzen",
   "estify.send": "Senden",
   "estify.alreadyHaveAccount": "Du hast schon einen Account",
@@ -112,6 +112,6 @@
   "estify.senior": "Senior",
   "estify.estimationKing": "Powerschätzer",
   "estify.ultimateEstimator": "Schätzmeisterr",
-  "estify.add": "Hinzufügen",
-  "estify.edit": "bearbeiten"
+  "estify.addItem": "Artikel hinzufügen",
+  "estify.editItem": "Artikel bearbeiten"
 }

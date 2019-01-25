@@ -20,7 +20,7 @@
   "estify.numberOfEstimations": "Number of estimations",
   "estify.mostRecentListings": "Most Recent Listings",
   "estify.clearFilter": "Clear filter",
-  "estify.addItem": "Add item for estimation",
+  "estify.addItemForEsitmation": "Add item for estimation",
   "estify.realEstate": "Real Estate",
   "estify.automobile": "Automobile",
   "estify.art": "Art",
@@ -112,6 +112,6 @@
   "estify.senior": "Senior",
   "estify.estimationKing": "Estimation King",
   "estify.ultimateEstimator": "Ultimate Estimator",
-  "estify.add": "Add",
-  "estify.edit": "Edit"
+  "estify.addItem": "Add item",
+  "estify.editItem": "Edit item"
 }

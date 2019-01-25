@@ -6,13 +6,13 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { injectIntl, intlShape } from 'react-intl'
 import cx from 'classnames'
-import { omit, pick, find } from 'lodash'
+import { omit, pick } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
 import { selectLocale } from 'store/modules/auth'
 import { itemAdd, itemUpdate, selectItemStatus, selectItemError, ITEM_ADD, ITEM_UPDATE } from 'store/modules/item'
 import { categoryFetch, selectCategories } from 'store/modules/category'
-import { getChangedFields, getCategoryName } from 'utils/common'
+import { getChangedFields } from 'utils/common'
 import { successAction } from 'utils/state-helpers'
 import messages from 'messages'
 import WizardForm from './Form'
@@ -127,9 +127,7 @@ class ItemWizard extends Component {
             </Col>
           )}
           <Col md={12}>
-            <h4 className="mt-0 mb-3 text-uppercase">
-              {formatMessage(this.editing ? messages.edit : messages.add)} {getCategoryName(find(categories, { slug: type }), locale)}
-            </h4>
+            <h4 className="mt-0 mb-3 text-uppercase">{formatMessage(this.editing ? messages.editItem : messages.addItem)}</h4>
           </Col>
           <Col md={12}>
             <div className="wizard-nav d-flex justify-content-center">
