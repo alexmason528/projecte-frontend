@@ -238,16 +238,16 @@ export default defineMessages({
     id: 'estify.reply',
     defaultMessage: 'Reply',
   },
-  livingSpace: {
-    id: 'estify.livingSpace',
+  living_space: {
+    id: 'estify.living_space',
     defaultMessage: 'Living space',
   },
-  yearsOfCons: {
-    id: 'estify.yearsOfCons',
+  years_of_cons: {
+    id: 'estify.years_of_cons',
     defaultMessage: 'Years of Cons.',
   },
-  buildingArea: {
-    id: 'estify.buildingArea',
+  building_area: {
+    id: 'estify.building_area',
     defaultMessage: 'Building area',
   },
   condition: {

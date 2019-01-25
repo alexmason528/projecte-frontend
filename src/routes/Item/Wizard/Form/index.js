@@ -32,7 +32,7 @@ class WizardForm extends Component {
               className="form-input"
               name="living_space"
               component={Input}
-              label={formatMessage(messages.livingSpace)}
+              label={formatMessage(messages.living_space)}
               labelSize={5}
               type="number"
             />
@@ -42,7 +42,7 @@ class WizardForm extends Component {
               className="form-input"
               name="years_of_cons"
               component={Input}
-              label={formatMessage(messages.yearsOfCons)}
+              label={formatMessage(messages.years_of_cons)}
               labelSize={5}
               type="number"
             />
@@ -54,7 +54,7 @@ class WizardForm extends Component {
               className="form-input"
               name="building_area"
               component={Input}
-              label={formatMessage(messages.buildingArea)}
+              label={formatMessage(messages.building_area)}
               labelSize={5}
               type="number"
             />

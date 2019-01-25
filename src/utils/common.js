@@ -1,4 +1,4 @@
-import { forEach, keys, get, sumBy, isEqual } from 'lodash'
+import { find, forEach, keys, get, sumBy, isEqual } from 'lodash'
 import qs from 'query-string'
 import { API_BASE_URL, USER_RANK } from 'config/base'
 import UserPic from 'assets/images/profile.png'
@@ -47,36 +47,6 @@ export function getUserEmblem(accuracy) {
   return emblem
 }
 
-export function findCategoryId(categories, path) {
-  for (let category of categories) {
-    if (category.path === path) {
-      return category.id
-    }
-
-    const { children } = category
-    for (let child of children) {
-      if (child.path === path) {
-        return child.id
-      }
-    }
-  }
-}
-
-export function findCategoryPath(categories, id) {
-  for (let category of categories) {
-    if (category.id === id) {
-      return category.path
-    }
-
-    const { children } = category
-    for (let child of children) {
-      if (child.id === id) {
-        return child.path
-      }
-    }
-  }
-}
-
 export function getItemListingPagePath(type, search, categories) {
   if (!search) {
     return type
@@ -88,7 +58,7 @@ export function getItemListingPagePath(type, search, categories) {
     return type
   }
 
-  return findCategoryPath(categories, parseInt(cid))
+  return find(categories, { id: cid })
 }
 
 export function getChangedFields(origin, update) {
