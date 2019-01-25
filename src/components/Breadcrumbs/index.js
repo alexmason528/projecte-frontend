@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Breadcrumb as RBreadcrumb, BreadcrumbItem as RBreadcrumbItem } from 'reactstrap'
-import { upperCase, find, slice } from 'lodash'
+import { get, upperCase, find, slice } from 'lodash'
 import { selectCategories } from 'store/modules/category'
 
 export class Breadcrumbs extends Component {
@@ -30,7 +30,7 @@ export class Breadcrumbs extends Component {
     }
 
     const path = slice(crumbs, 0, ind + 1).join('.')
-    const id = find(categories, { path })
+    const id = get(find(categories, { path }), 'id')
 
     id && this.props.history.push(`/item/${crumbs[0]}?cid=${id}`)
   }

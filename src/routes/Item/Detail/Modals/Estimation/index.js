@@ -27,7 +27,7 @@ export class EstimationModal extends Component {
 
       swal({
         className: 'pe-swal',
-        text: intl.formatMessage(success ? messages.addEsitmationCommentSuccess : messages.addEsitmationCommentFail),
+        text: intl.formatMessage(success ? messages.addEstimationCommentSuccess : messages.addEstimationCommentFail),
       })
     }
   }

@@ -25,7 +25,7 @@ const EstimationForm = ({ loading, intl, handleSubmit }) => (
           <Field
             name="comment"
             className="pe-quill bg-white color-black"
-            placeholder={`${intl.formatMessage(messages.ok)}...`}
+            placeholder={`${intl.formatMessage(messages.writeComment)}...`}
             component={TextArea}
           />
         </div>

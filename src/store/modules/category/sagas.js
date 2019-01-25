@@ -11,7 +11,7 @@ const doCategoryFetch = function*() {
   const categories = yield select(selectCategories)
 
   try {
-    if (!categories) {
+    if (!categories.length) {
       const res = yield call(axios.get, `${API_BASE_URL}/api/category/`)
       yield put(categoryFetchSuccess(res.data))
     } else {
