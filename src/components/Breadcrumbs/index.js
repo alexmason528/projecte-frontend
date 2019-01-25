@@ -5,34 +5,47 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Breadcrumb as RBreadcrumb, BreadcrumbItem as RBreadcrumbItem } from 'reactstrap'
-import { get, upperCase, find, slice } from 'lodash'
+import { find, findIndex, get, upperCase } from 'lodash'
+import { selectLocale } from 'store/modules/auth'
 import { selectCategories } from 'store/modules/category'
 
 export class Breadcrumbs extends Component {
   static propTypes = {
+    locale: PropTypes.string,
     categories: PropTypes.array,
     path: PropTypes.string,
     history: PropTypes.object,
     listClassName: PropTypes.string,
   }
 
-  getCrumbs = () => this.props.path.split('.')
+  getCrumbs = () => {
+    const { locale, path, categories } = this.props
 
-  handleClick = crumb => {
+    return path.split('.').map(seg => {
+      const category = find(categories, { slug: seg })
+
+      return {
+        slug: seg,
+        id: get(category, 'id'),
+        name: get(category, ['translation', locale]) || get(category, 'name'),
+      }
+    })
+  }
+
+  handleClick = slug => {
     const { categories } = this.props
     const crumbs = this.getCrumbs()
 
-    const ind = crumbs.indexOf(crumb)
+    const ind = findIndex(crumbs, { slug })
 
     if (ind === 0) {
-      this.props.history.push(`/item/${crumb}`)
+      this.props.history.push(`/item/${slug}`)
       return
     }
 
-    const path = slice(crumbs, 0, ind + 1).join('.')
-    const id = get(find(categories, { path }), 'id')
-
-    id && this.props.history.push(`/item/${crumbs[0]}?cid=${id}`)
+    const type = get(crumbs, [0, 'slug'])
+    const id = get(find(categories, { slug }), 'id')
+    id && this.props.history.push(`/item/${type}?cid=${id}`)
   }
 
   render() {
@@ -41,9 +54,9 @@ export class Breadcrumbs extends Component {
 
     return (
       <RBreadcrumb listClassName={listClassName}>
-        {crumbs.map((crumb, ind) => (
-          <RBreadcrumbItem className="c-pointer" key={ind} onClick={() => this.handleClick(crumb)}>
-            {upperCase(crumb)}
+        {crumbs.map(({ slug, name }, ind) => (
+          <RBreadcrumbItem className="c-pointer" key={ind} onClick={() => this.handleClick(slug)}>
+            {upperCase(name)}
           </RBreadcrumbItem>
         ))}
       </RBreadcrumb>
@@ -52,6 +65,7 @@ export class Breadcrumbs extends Component {
 }
 
 const selectors = createStructuredSelector({
+  locale: selectLocale,
   categories: selectCategories,
 })
 

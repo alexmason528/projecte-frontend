@@ -86,9 +86,9 @@
   "estify.passwordResetPending": "Passwort wird zurückgesetzt",
   "estify.passwordResetSuccess": "Passwort zurückgesetzt",
   "estify.passwordResetFail": "Passwort wurde nicht zurückgesetzt",
-  "estify.emailVerifyPending": "Verifying your email now",
-  "estify.emailVerifySuccess": "Email is verified",
-  "estify.emailVerifyFail": "Failed to verify your email",
+  "estify.emailVerifyPending": "Deine Email wird bestätigt...",
+  "estify.emailVerifySuccess": "Deine Email wurde bestätigt",
+  "estify.emailVerifyFail": "Deine Email wurde nicht bestätigt",
   "estify.profileUpdateSuccess": "Dein Profil wurde erfolgreich aktualisiert",
   "estify.profileUpdateFail": "Dein Profil wurde nicht aktualisiert",
   "estify.emailConfirm": "Bitte bestätige deine. Keine Email bekommen? Klick hier und wir senden dir die Email nochmal",
@@ -111,5 +111,7 @@
   "estify.junior": "Junior",
   "estify.senior": "Senior",
   "estify.estimationKing": "Powerschätzer",
-  "estify.ultimateEstimator": "Schätzmeisterr"
+  "estify.ultimateEstimator": "Schätzmeisterr",
+  "estify.add": "Hinzufügen",
+  "estify.edit": "bearbeiten"
 }

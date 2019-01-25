@@ -459,4 +459,12 @@ export default defineMessages({
     id: 'estify.ultimateEstimator',
     defaultMessage: 'Ultimate Estimator',
   },
+  add: {
+    id: 'estify.add',
+    defaultMessage: 'Add',
+  },
+  edit: {
+    id: 'estify.edit',
+    defaultMessage: 'Edit',
+  },
 })

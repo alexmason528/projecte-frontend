@@ -26,4 +26,4 @@ export const AUTH_GET_USER_INFO = 'projecte/auth/user_info'
 
 export const CLEAR_ITEMS = 'projecte/auth/clear_items'
 
-export const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'en'
+export const DEFAULT_LOCALE = 'de'

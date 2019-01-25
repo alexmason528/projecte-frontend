@@ -1,4 +1,4 @@
-import { find, forEach, keys, get, sumBy, isEqual } from 'lodash'
+import { find, filter, forEach, keys, get, sumBy, isEqual } from 'lodash'
 import qs from 'query-string'
 import { API_BASE_URL, USER_RANK } from 'config/base'
 import UserPic from 'assets/images/profile.png'
@@ -58,7 +58,7 @@ export function getItemListingPagePath(type, search, categories) {
     return type
   }
 
-  return find(categories, { id: cid })
+  return get(find(categories, { id: parseInt(cid) }), 'path')
 }
 
 export function getChangedFields(origin, update) {
@@ -70,4 +70,12 @@ export function getChangedFields(origin, update) {
   })
 
   return payload
+}
+
+export function getMainItemTypes(categories) {
+  return filter(categories, { parent: null })
+}
+
+export function getCategoryName(category, locale) {
+  return get(category, ['translation', locale]) || category.name
 }

@@ -111,5 +111,7 @@
   "estify.junior": "Junior",
   "estify.senior": "Senior",
   "estify.estimationKing": "Estimation King",
-  "estify.ultimateEstimator": "Ultimate Estimator"
+  "estify.ultimateEstimator": "Ultimate Estimator",
+  "estify.add": "Add",
+  "estify.edit": "Edit"
 }

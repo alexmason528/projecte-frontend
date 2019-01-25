@@ -6,12 +6,13 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { injectIntl, intlShape } from 'react-intl'
 import cx from 'classnames'
-import { omit, pick, startCase } from 'lodash'
+import { omit, pick, find } from 'lodash'
 import swal from 'sweetalert'
 import { Alert, Row, Col } from 'reactstrap'
+import { selectLocale } from 'store/modules/auth'
 import { itemAdd, itemUpdate, selectItemStatus, selectItemError, ITEM_ADD, ITEM_UPDATE } from 'store/modules/item'
 import { categoryFetch, selectCategories } from 'store/modules/category'
-import { getChangedFields } from 'utils/common'
+import { getChangedFields, getCategoryName } from 'utils/common'
 import { successAction } from 'utils/state-helpers'
 import messages from 'messages'
 import WizardForm from './Form'
@@ -21,6 +22,7 @@ class ItemWizard extends Component {
     item: PropTypes.object,
     type: PropTypes.string,
     categories: PropTypes.array,
+    locale: PropTypes.string,
     status: PropTypes.string,
     error: PropTypes.string,
     itemAdd: PropTypes.func,
@@ -107,7 +109,7 @@ class ItemWizard extends Component {
   }
 
   render() {
-    const { item, type, categories, error, intl } = this.props
+    const { item, type, categories, locale, error, intl } = this.props
     const { page } = this.state
 
     if (categories.length === 0) {
@@ -126,7 +128,7 @@ class ItemWizard extends Component {
           )}
           <Col md={12}>
             <h4 className="mt-0 mb-3 text-uppercase">
-              {this.editing ? 'Edit' : 'Add'} {startCase(type)}
+              {formatMessage(this.editing ? messages.edit : messages.add)} {getCategoryName(find(categories, { slug: type }), locale)}
             </h4>
           </Col>
           <Col md={12}>
@@ -145,11 +147,12 @@ class ItemWizard extends Component {
         <Row>
           <Col md={12} className="mt-3">
             <WizardForm
-              onSubmit={this.handleSubmit}
+              locale={locale}
               item={item}
               type={type}
-              categories={categories}
               page={page}
+              categories={categories}
+              onSubmit={this.handleSubmit}
               onBack={this.gotoFirstPage}
               onNext={this.gotoSecondPage}
             />
@@ -161,6 +164,7 @@ class ItemWizard extends Component {
 }
 
 const selectors = createStructuredSelector({
+  locale: selectLocale,
   categories: selectCategories,
   status: selectItemStatus,
   error: selectItemError,

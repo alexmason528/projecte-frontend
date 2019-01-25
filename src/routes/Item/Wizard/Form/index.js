@@ -194,7 +194,7 @@ class WizardForm extends Component {
   }
 
   render() {
-    const { page, type, intl } = this.props
+    const { locale, page, type, intl } = this.props
     const { formatMessage } = intl
 
     return (
@@ -211,7 +211,7 @@ class WizardForm extends Component {
             />
           </Col>
           <Col md={12} className="mb-3">
-            <Field name="category" component={CategoryDropdown} categories={this.parsedCategories} />
+            <Field name="category" component={CategoryDropdown} categories={this.parsedCategories} locale={locale} />
           </Col>
           <Col md={12} className="mb-3">
             <Container className="pe-box p-3">

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Row, Col, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import { FormattedMessage } from 'react-intl'
 import { get, find } from 'lodash'
+import { getCategoryName } from 'utils/common'
 
 export default class Dropdown extends Component {
   static propTypes = {
@@ -11,6 +12,7 @@ export default class Dropdown extends Component {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     type: PropTypes.string,
+    locale: PropTypes.string,
     meta: PropTypes.shape({
       touched: PropTypes.bool,
       error: PropTypes.string,
@@ -58,10 +60,10 @@ export default class Dropdown extends Component {
     this.setState({ categoryId, subCategoryId }, this.emitChange)
   }
 
-  getCategoryName = categoryId => {
-    const { categories } = this.props
+  getCurrentCategoryName = categoryId => {
+    const { categories, locale } = this.props
 
-    return get(find(categories, { id: categoryId }), 'name')
+    return getCategoryName(find(categories, { id: categoryId }), locale)
   }
 
   getSubCategories = subCategoryId => {
@@ -90,10 +92,10 @@ export default class Dropdown extends Component {
   }
 
   render() {
-    const { categories } = this.props
+    const { categories, locale } = this.props
     const { categoryId, subCategoryId } = this.state
 
-    const categoryName = this.getCategoryName(categoryId)
+    const categoryName = this.getCurrentCategoryName(categoryId)
     const subCategories = this.getSubCategories(categoryId)
     const subCategoryName = get(find(subCategories, { id: subCategoryId }), 'name')
 
@@ -107,7 +109,7 @@ export default class Dropdown extends Component {
             <DropdownMenu className="w-100">
               {categories.map(category => (
                 <DropdownItem key={category.id} onClick={() => this.handleCategoryChange(category.id)}>
-                  {category.name}
+                  {getCategoryName(category, locale)}
                 </DropdownItem>
               ))}
             </DropdownMenu>
@@ -123,7 +125,7 @@ export default class Dropdown extends Component {
               <DropdownMenu className="w-100">
                 {subCategories.map(category => (
                   <DropdownItem key={category.id} onClick={() => this.handleSubCategoryChange(category.id)}>
-                    {category.name}
+                    {getCategoryName(category, locale)}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
