@@ -33,7 +33,7 @@ export default class NavBar extends Component {
             return (
               <div className={matches ? 'd-flex align-items-center' : ''}>
                 <Logo className="logo mr-4 c-pointer mb-2" onClick={() => navigate('/')} />
-                Bares für Rares für jeden
+                {matches && 'Bares für Rares für jeden'}
               </div>
             )
           }}

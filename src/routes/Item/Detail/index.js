@@ -245,13 +245,18 @@ export class ItemDetailPage extends Component {
               </Row>
 
               <div className="item-fact pe-box p-4 mt-3 position-relative">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
-                  <FormattedMessage id="estify.facts" />
-                </h3>
-                <ItemFact type={type} facts={facts} />
-                <div className="item-listing-date">
-                  <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                <div className="row">
+                  <div className="col-8">
+                    <h3 className="text-uppercase font-weight-bold mt-0 mb-3">
+                      <FormattedMessage id="estify.facts" />
+                    </h3>
+                  </div>
+                  <div className="col-4 text-right">
+                    <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                  </div>
                 </div>
+
+                <ItemFact type={type} facts={facts} />
               </div>
 
               <div className="item-details pe-box p-4 mt-3">
@@ -424,13 +429,17 @@ export class ItemDetailPage extends Component {
           <Row className="mt-3">
             <Col className="col-12">
               <div className="item-fact pe-box p-4 position-relative">
-                <h3 className="mt-0 mb-3 text-uppercase font-weight-bold">
-                  <FormattedMessage id="estify.facts" />
-                </h3>
-                <ItemFact type={type} facts={facts} />
-                <div className="item-listing-date">
-                  <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                <div className="row">
+                  <div className="col-12">
+                    <h3 className="text-uppercase font-weight-bold m-0">
+                      <FormattedMessage id="estify.facts" />
+                    </h3>
+                  </div>
+                  <div className="col-12 mb-3">
+                    <FormattedMessage id="estify.listingDate" />: {moment(date).format('DD.MM.YYYY')}
+                  </div>
                 </div>
+                <ItemFact type={type} facts={facts} />
               </div>
             </Col>
           </Row>

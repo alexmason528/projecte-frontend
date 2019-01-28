@@ -8,15 +8,20 @@ import { UserDetail } from 'components'
 
 const Comment = ({ user, id, estimation, content, children, child, addReply }) => (
   <div className={cx('item-comment', { 'mb-3': child })}>
-    <div className="d-flex justify-content-between">
-      <UserDetail user={user} />
+    <div className="row">
+      <div className="col col-md-6 col-sm-12 mb-2">
+        <UserDetail user={user} />
+      </div>
       {estimation && (
-        <h4 className="item-comment__estimation my-0">
-          <FormattedMessage id="estify.estimation" />: <FormattedMessage id="estify.currency" />{' '}
-          {numeral(estimation.value).format('0,00[.]00')}
-        </h4>
+        <div className="col col-md-6 col-sm-12 mb-2">
+          <h4 className="item-comment__estimation my-0">
+            <FormattedMessage id="estify.estimation" />: <FormattedMessage id="estify.currency" />{' '}
+            {numeral(estimation.value).format('0,00[.]00')}
+          </h4>
+        </div>
       )}
     </div>
+
     <div className="item-comment__content pe-textarea mt-3" dangerouslySetInnerHTML={{ __html: content }} />
     <div className="item-comment__reply mt-2">
       <div>

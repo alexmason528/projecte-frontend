@@ -63,8 +63,8 @@ export class Dashboard extends Component {
         <Row className="mb-4">
           <Col md={6} />
           <Col md={6}>
-            <button className="pe-btn add-item-btn w-100 text-left p-2" style={{ fontSize: '1.2rem' }} onClick={this.gotoItemAddPage}>
-              <IoMdAddCircleOutline className="mr-1" style={{ fontSize: '2.5rem', marginTop: -3 }} />
+            <button className="pe-btn add-item-btn w-100 text-left p-2" onClick={this.gotoItemAddPage}>
+              <IoMdAddCircleOutline style={{ fontSize: '2.5rem', marginTop: -3, marginRight: '0.5rem' }} />
               {formatMessage(messages.addItemForEstimation)}
             </button>
           </Col>

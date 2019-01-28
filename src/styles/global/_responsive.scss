@@ -6,10 +6,18 @@
   .item-image {
     height: 150px !important;
   }
+}
 
-  // .item-thumb {
-  //   height: 200px !important;
-  // }
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .dashboard {
+    .item-btn {
+      padding: 2rem !important;
+    }
+
+    .item-btn img {
+      height: 40px;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -35,8 +43,22 @@
   }
 
   .dashboard {
+    .add-item-btn,
     .item-btn {
       padding: 1rem 2rem;
+      font-size: 0.9rem;
+
+      img {
+        height: 30px;
+      }
+    }
+
+    .add-item-btn {
+      padding-left: 1.5rem !important;
+
+      svg {
+        margin-right: 1.5rem !important;
+      }
     }
   }
 
