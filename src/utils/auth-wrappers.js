@@ -9,7 +9,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
 })
 
 export const userIsNotAuthenticated = connectedRouterRedirect({
-  redirectPath: '/',
+  redirectPath: '/me/profile',
   allowRedirectBack: false,
   authenticatedSelector: state => !selectIsLoggedIn(state),
   wrapperDisplayName: 'UserIsNotAuthenticated',

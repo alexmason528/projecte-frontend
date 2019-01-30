@@ -30,10 +30,6 @@ export class UserDetailLayout extends Component {
         name: formatMessage(messages.watchlist),
       },
       {
-        link: 'notifications',
-        name: formatMessage(messages.notifications),
-      },
-      {
         link: 'profile',
         name: formatMessage(messages.profile),
       },
@@ -43,7 +39,7 @@ export class UserDetailLayout extends Component {
       <div>
         <Row className="profile-nav">
           {pages.map(({ link, name }) => (
-            <Col key={link} sm={12} md={3} className="profile-nav-item">
+            <Col key={link} sm={12} md={4} className="profile-nav-item">
               <Link to={`${match.url}/${link}`}>
                 <Button className={cx('user-btn w-100', { 'active-link': this.isActiveLink(link) })}>{name}</Button>
               </Link>

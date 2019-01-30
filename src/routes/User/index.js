@@ -3,7 +3,6 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 import { UserDetailLayout } from 'containers/Layouts'
 import Profile from './Profile'
 import MyListings from './MyListings'
-import Notifications from './Notifications'
 import WatchList from './WatchList'
 
 const Routes = () => (
@@ -13,7 +12,6 @@ const Routes = () => (
       <Route path="/me/profile" component={Profile} />
       <Route path="/me/listings" component={MyListings} />
       <Route path="/me/watchlist" component={WatchList} />
-      <Route path="/me/notifications" component={Notifications} />
     </Switch>
   </UserDetailLayout>
 )
