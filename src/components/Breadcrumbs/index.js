@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { Breadcrumb as RBreadcrumb, BreadcrumbItem as RBreadcrumbItem } from 'reactstrap'
-import { find, findIndex, get, upperCase } from 'lodash'
+import { find, findIndex, get } from 'lodash'
 import { selectLocale } from 'store/modules/auth'
 import { selectCategories } from 'store/modules/category'
 
@@ -56,7 +56,7 @@ export class Breadcrumbs extends Component {
       <RBreadcrumb listClassName={listClassName}>
         {crumbs.map(({ slug, name }, ind) => (
           <RBreadcrumbItem className="c-pointer" key={ind} onClick={() => this.handleClick(slug)}>
-            {upperCase(name)}
+            <span className="text-uppercase">{name}</span>
           </RBreadcrumbItem>
         ))}
       </RBreadcrumb>
