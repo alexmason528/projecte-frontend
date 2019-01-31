@@ -7,9 +7,9 @@ import MediaQuery from 'react-responsive'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { injectIntl, intlShape } from 'react-intl'
-import { IoMdAddCircleOutline } from 'react-icons/io'
+import { IoIosUndo, IoMdAddCircleOutline } from 'react-icons/io'
 import swal from 'sweetalert'
-import { find, filter, get } from 'lodash'
+import { find, filter, get, upperCase } from 'lodash'
 import { sendVerifyEmail, setRedirectPath, selectIsLoggedIn, selectIsVerified, selectLocale } from 'store/modules/auth'
 import { selectCategories, categoryFetch } from 'store/modules/category'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
@@ -107,6 +107,13 @@ export class Dashboard extends Component {
     this.props.history.push(`/item/${currentItem}?cid=${id}`)
   }
 
+  goBack = () => {
+    this.setState({
+      currentItem: null,
+      rootCategoryId: null,
+    })
+  }
+
   getToggleCaption = () => {
     const { currentItem } = this.state
     const { intl } = this.props
@@ -201,8 +208,16 @@ export class Dashboard extends Component {
         {matches => {
           return (
             <div className="dashboard">
-              <Breadcrumbs path={this.getBreadcrumbPath()} className="mb-4" listClassName="p-0 pb-2 bg-transparent" />
-              <div className="row mx-auto mt-5" style={{ width: matches ? 700 : 'auto' }}>
+              <Breadcrumbs path={this.getBreadcrumbPath()} listClassName="p-0 bg-transparent" />
+              <div className="row mx-auto" style={{ width: matches ? 700 : 'auto' }}>
+                <div className="col-12">
+                  <h3 className="text-center color-primary position-relative">
+                    {upperCase(currentItem)}
+                    <button className="pe-btn px-1 py-0 pos-center-y" style={{ right: 0 }} onClick={this.goBack}>
+                      <IoIosUndo style={{ fontSize: '1rem' }} />
+                    </button>
+                  </h3>
+                </div>
                 {this.renderRootCategories()}
               </div>
               {rootCategoryId && (
