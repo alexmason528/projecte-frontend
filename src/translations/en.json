@@ -113,5 +113,8 @@
   "estify.estimationKing": "Estimation King",
   "estify.ultimateEstimator": "Ultimate Estimator",
   "estify.addItem": "Add item",
-  "estify.editItem": "Edit item"
+  "estify.editItem": "Edit item",
+  "estify.realEstateDrop": "Region",
+  "estify.automobileDrop": "Brand",
+  "estify.artDrop": "Period"
 }

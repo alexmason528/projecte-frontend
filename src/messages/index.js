@@ -467,4 +467,16 @@ export default defineMessages({
     id: 'estify.editItem',
     defaultMessage: 'Edit Item',
   },
+  realEstateDrop: {
+    id: 'estify.realEstateDrop',
+    defaultMessage: 'Region',
+  },
+  automobileDrop: {
+    id: 'estify.automobileDrop',
+    defaultMessage: 'Brand',
+  },
+  artDrop: {
+    id: 'estify.artDrop',
+    defaultMessage: 'Period',
+  },
 })

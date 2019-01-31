@@ -113,5 +113,8 @@
   "estify.estimationKing": "Powerschätzer",
   "estify.ultimateEstimator": "Schätzmeisterr",
   "estify.addItem": "Artikel hinzufügen",
-  "estify.editItem": "Artikel bearbeiten"
+  "estify.editItem": "Artikel bearbeiten",
+  "estify.realEstateDrop": "Region",
+  "estify.automobileDrop": "Marke",
+  "estify.artDrop": "Zeitraum"
 }
