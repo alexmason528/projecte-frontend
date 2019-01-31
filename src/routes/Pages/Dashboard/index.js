@@ -9,11 +9,11 @@ import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownI
 import { injectIntl, intlShape } from 'react-intl'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import swal from 'sweetalert'
-import { find, filter } from 'lodash'
+import { find, filter, get } from 'lodash'
 import { sendVerifyEmail, setRedirectPath, selectIsLoggedIn, selectIsVerified, selectLocale } from 'store/modules/auth'
 import { selectCategories, categoryFetch } from 'store/modules/category'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
-import { MainItemTable } from 'components'
+import { Breadcrumbs, MainItemTable } from 'components'
 import messages from 'messages'
 import { getCategoryName } from 'utils/common'
 
@@ -150,6 +150,17 @@ export class Dashboard extends Component {
     )
   }
 
+  getBreadcrumbPath = () => {
+    const { categories } = this.props
+    const { currentItem, rootCategoryId } = this.state
+
+    if (!rootCategoryId) {
+      return currentItem
+    }
+
+    return get(find(categories, { id: rootCategoryId }), 'path')
+  }
+
   render() {
     const { categories, intl } = this.props
     const { currentItem, rootCategoryId } = this.state
@@ -190,7 +201,8 @@ export class Dashboard extends Component {
         {matches => {
           return (
             <div className="dashboard">
-              <div className="row mx-auto" style={{ width: matches ? 700 : 'auto' }}>
+              <Breadcrumbs path={this.getBreadcrumbPath()} className="mb-4" listClassName="p-0 pb-2 bg-transparent" />
+              <div className="row mx-auto mt-5" style={{ width: matches ? 700 : 'auto' }}>
                 {this.renderRootCategories()}
               </div>
               {rootCategoryId && (
