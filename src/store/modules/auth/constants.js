@@ -24,6 +24,8 @@ export const AUTH_DELETE_ITEM_FROM_WATCHLIST = 'projecte/auth/delete_item_from_w
 
 export const AUTH_GET_USER_INFO = 'projecte/auth/user_info'
 
-export const CLEAR_ITEMS = 'projecte/auth/clear_items'
+export const AUTH_CLEAR_ITEMS = 'projecte/auth/clear_items'
+
+export const AUTH_SET_REDIRECT_PATH = 'projecte/auth/set_redirect_path'
 
 export const DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'en'

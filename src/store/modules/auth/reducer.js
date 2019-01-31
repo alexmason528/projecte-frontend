@@ -17,7 +17,8 @@ import {
   AUTH_LIST_WATCHLIST,
   AUTH_DELETE_ITEM_FROM_WATCHLIST,
   AUTH_GET_USER_INFO,
-  CLEAR_ITEMS,
+  AUTH_CLEAR_ITEMS,
+  AUTH_SET_REDIRECT_PATH,
   DEFAULT_LOCALE,
 } from './constants'
 
@@ -40,6 +41,7 @@ const initialState = {
   status: null,
   error: null,
   locale: DEFAULT_LOCALE,
+  redirectPath: null,
 }
 
 /* Action creators */
@@ -94,7 +96,9 @@ export const getUserInfo = createAction(AUTH_GET_USER_INFO)
 export const getUserInfoSuccess = createAction(successAction(AUTH_GET_USER_INFO))
 export const getUserInfoFail = createAction(failAction(AUTH_GET_USER_INFO))
 
-export const clearItems = createAction(CLEAR_ITEMS)
+export const setRedirectPath = createAction(AUTH_SET_REDIRECT_PATH)
+
+export const clearItems = createAction(AUTH_CLEAR_ITEMS)
 
 export const reducer = handleActions(
   {
@@ -167,7 +171,9 @@ export const reducer = handleActions(
       error: payload.message,
     }),
 
-    [CLEAR_ITEMS]: (state, { type }) => ({ ...state, items: { ...initialState.items }, status: type }),
+    [AUTH_SET_REDIRECT_PATH]: (state, { type, payload }) => ({ ...state, redirectPath: payload, status: type }),
+
+    [AUTH_CLEAR_ITEMS]: (state, { type }) => ({ ...state, items: { ...initialState.items }, status: type }),
 
     [LOCATION_CHANGE]: state => ({ ...state, error: null }),
   },

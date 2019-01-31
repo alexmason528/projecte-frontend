@@ -1,5 +1,5 @@
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-import { selectIsLoggedIn, selectIsVerified } from 'store/modules/auth'
+import { selectIsLoggedIn, selectIsVerified, selectRedirectPath } from 'store/modules/auth'
 
 export const userIsAuthenticated = connectedRouterRedirect({
   redirectPath: '/auth',
@@ -9,7 +9,10 @@ export const userIsAuthenticated = connectedRouterRedirect({
 })
 
 export const userIsNotAuthenticated = connectedRouterRedirect({
-  redirectPath: '/me/profile',
+  redirectPath: (state, ownProps) => {
+    const redirectPath = selectRedirectPath(state)
+    return redirectPath || '/me/profile'
+  },
   allowRedirectBack: false,
   authenticatedSelector: state => !selectIsLoggedIn(state),
   wrapperDisplayName: 'UserIsNotAuthenticated',

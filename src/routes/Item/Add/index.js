@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Alert } from 'reactstrap'
+import { setRedirectPath } from 'store/modules/auth'
 import ItemWizard from '../Wizard'
 
-export default class ItemAddPage extends Component {
+export class ItemAddPage extends Component {
   static propTypes = {
     type: PropTypes.string,
+    setRedirectPath: PropTypes.func,
+  }
+
+  componentWillMount() {
+    this.props.setRedirectPath()
   }
 
   render() {
@@ -22,3 +29,12 @@ export default class ItemAddPage extends Component {
     )
   }
 }
+
+const actions = {
+  setRedirectPath,
+}
+
+export default connect(
+  null,
+  actions,
+)(ItemAddPage)

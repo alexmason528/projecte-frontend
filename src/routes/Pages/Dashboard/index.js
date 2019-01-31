@@ -10,7 +10,7 @@ import { injectIntl, intlShape } from 'react-intl'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import swal from 'sweetalert'
 import { find, filter } from 'lodash'
-import { sendVerifyEmail, selectIsLoggedIn, selectIsVerified, selectLocale } from 'store/modules/auth'
+import { sendVerifyEmail, setRedirectPath, selectIsLoggedIn, selectIsVerified, selectLocale } from 'store/modules/auth'
 import { selectCategories, categoryFetch } from 'store/modules/category'
 import VerifyEmailAlert from 'containers/VerifyEmailAlert'
 import { MainItemTable } from 'components'
@@ -26,6 +26,7 @@ export class Dashboard extends Component {
     locale: PropTypes.string,
     categoryFetch: PropTypes.func,
     sendVerifyEmail: PropTypes.func,
+    setRedirectPath: PropTypes.func,
     intl: intlShape.isRequired,
   }
 
@@ -50,6 +51,7 @@ export class Dashboard extends Component {
     const { isLoggedIn, isVerified, intl } = this.props
 
     if (!isLoggedIn) {
+      this.props.setRedirectPath('/add-item')
       this.props.history.push('auth')
       return
     }
@@ -214,6 +216,7 @@ const selectors = createStructuredSelector({
 const actions = {
   categoryFetch,
   sendVerifyEmail,
+  setRedirectPath,
 }
 
 export default compose(
