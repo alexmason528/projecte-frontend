@@ -82,7 +82,7 @@ export class Dashboard extends Component {
       <Fragment>
         {parentCategories.map(category => (
           <div key={category.id} className="col-md-12 col-lg-6">
-            <button className="pe-btn w-100 mb-3" onClick={() => this.rootCategoryClick(category.id)}>
+            <button className="pe-btn w-100 mb-3 p-3" style={{ fontSize: '1.2rem' }} onClick={() => this.rootCategoryClick(category.id)}>
               {getCategoryName(category, locale)}
             </button>
           </div>
@@ -140,8 +140,8 @@ export class Dashboard extends Component {
     const subCategories = filter(categories, { parent: rootCategoryId })
 
     return (
-      <UncontrolledDropdown className="pe-dropdown subcategory-dropdown mt-2">
-        <DropdownToggle className="w-100 text-left py-2 text-uppercase font-weight-bold" caret>
+      <UncontrolledDropdown className="pe-dropdown subcategory-dropdown">
+        <DropdownToggle className="w-100 text-left py-2 text-uppercase font-weight-bold" style={{ fontSize: '1.2rem' }} caret>
           {this.getToggleCaption()}
         </DropdownToggle>
         {subCategories && subCategories.length > 0 && (
@@ -209,9 +209,9 @@ export class Dashboard extends Component {
           return (
             <div className="dashboard">
               <Breadcrumbs path={this.getBreadcrumbPath()} listClassName="p-0 bg-transparent" />
-              <div className="row mx-auto" style={{ width: matches ? 700 : 'auto' }}>
+              <div className="row">
                 <div className="col-12">
-                  <h3 className="text-center color-primary position-relative">
+                  <h3 className="text-center color-primary position-relative font-weight-bold mt-2">
                     {upperCase(currentItem)}
                     <button className="pe-btn px-1 py-0 pos-center-y" style={{ right: 0 }} onClick={this.goBack}>
                       <IoIosUndo style={{ fontSize: '1rem' }} />
@@ -221,8 +221,8 @@ export class Dashboard extends Component {
                 {this.renderRootCategories()}
               </div>
               {rootCategoryId && (
-                <div className="row mx-auto" style={{ width: matches ? 700 : 'auto' }}>
-                  <div className="col-lg-6 col-md-12 mx-auto">{this.renderSubCategories()}</div>
+                <div className="row mx-auto" style={{ width: matches ? 400 : 'auto' }}>
+                  <div className="w-100">{this.renderSubCategories()}</div>
                 </div>
               )}
             </div>
