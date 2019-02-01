@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import { Navbar, NavItem, NavbarToggler, Collapse, Nav, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import MediaQuery from 'react-responsive'
 import { Logo } from 'components'
 import { getUserPhotoUrl } from 'utils/common'
 
@@ -28,17 +27,7 @@ export default class NavBar extends Component {
 
     return (
       <Navbar expand="xs" style={{ padding: '1.5rem 0' }}>
-        <MediaQuery minDeviceWidth={768}>
-          {matches => {
-            return (
-              <div className={matches ? 'd-flex align-items-center' : ''}>
-                <Logo className="logo mr-4 c-pointer mb-2" onClick={() => navigate('/')} />
-                {matches && 'Bares für Rares für jeden'}
-              </div>
-            )
-          }}
-        </MediaQuery>
-
+        <Logo className="logo mr-4 c-pointer mb-2" onClick={() => navigate('/')} />
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={isOpen} navbar className="mt-0">
           <Nav className="ml-auto" navbar>
