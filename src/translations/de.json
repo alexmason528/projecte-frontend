@@ -116,5 +116,6 @@
   "estify.editItem": "Artikel bearbeiten",
   "estify.realEstateDrop": "Region",
   "estify.automobileDrop": "Marke",
-  "estify.artDrop": "Zeitraum"
+  "estify.artDrop": "Zeitraum",
+  "estify.all": "Alle"
 }

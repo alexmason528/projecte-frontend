@@ -479,4 +479,8 @@ export default defineMessages({
     id: 'estify.artDrop',
     defaultMessage: 'Period',
   },
+  all: {
+    id: 'estify.all',
+    defaultMessage: 'All',
+  },
 })

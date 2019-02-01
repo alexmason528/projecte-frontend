@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import MediaQuery from 'react-responsive'
 import { createStructuredSelector } from 'reselect'
 import { Row, Col, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { IoIosUndo, IoMdAddCircleOutline } from 'react-icons/io'
 import swal from 'sweetalert'
 import { find, filter, get, upperCase } from 'lodash'
@@ -103,8 +103,9 @@ export class Dashboard extends Component {
   }
 
   gotoItemDetailPage = id => {
-    const { currentItem } = this.state
-    this.props.history.push(`/item/${currentItem}?cid=${id}`)
+    const { currentItem, rootCategoryId } = this.state
+
+    this.props.history.push(`/item/${currentItem}?cid=${id || rootCategoryId}`)
   }
 
   goBack = () => {
@@ -146,6 +147,9 @@ export class Dashboard extends Component {
         </DropdownToggle>
         {subCategories && subCategories.length > 0 && (
           <DropdownMenu className="w-100">
+            <DropdownItem key="all" onClick={() => this.gotoItemDetailPage()}>
+              <FormattedMessage id="estify.all" />
+            </DropdownItem>
             {subCategories.map(category => (
               <DropdownItem key={category.id} onClick={() => this.gotoItemDetailPage(category.id)}>
                 {getCategoryName(category, locale)}

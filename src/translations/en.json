@@ -116,5 +116,6 @@
   "estify.editItem": "Edit item",
   "estify.realEstateDrop": "Region",
   "estify.automobileDrop": "Brand",
-  "estify.artDrop": "Period"
+  "estify.artDrop": "Period",
+  "estify.all": "All"
 }
