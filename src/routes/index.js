@@ -29,7 +29,7 @@ const Routes = () => (
         <Route exact path="/verify-email" component={VerifyEmailPage} />
         <Route exact path="/password-reset" component={PasswordResetPage} />
         <Route exact path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route exact path="/imporint" component={ImprintPage} />
+        <Route exact path="/imprint" component={ImprintPage} />
         <Route path="/error-404" component={Page404} />
         <Route exact path="/" component={Dashboard} />
       </ScrollToTop>

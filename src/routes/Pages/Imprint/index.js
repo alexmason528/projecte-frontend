@@ -1,8 +1,8 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
 
-const PrivacyPolicyPage = () => (
-  <Row className="privacy-policy-page">
+const ImprintPage = () => (
+  <Row className="imprint-page">
     <Col>
       <h1 className="text-uppercase">Imprint</h1>
       <p>
@@ -752,4 +752,4 @@ const PrivacyPolicyPage = () => (
   </Row>
 )
 
-export default PrivacyPolicyPage
+export default ImprintPage
