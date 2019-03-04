@@ -91,10 +91,10 @@ class WizardForm extends Component {
       <Fragment>
         <Row className="mb-2">
           <Col md={6}>
-            <Field className="form-input" name="year" component={Input} label={formatMessage(messages.year)} labelSize={4} type="number" />
+            <Field className="form-input" name="year" component={Input} label={formatMessage(messages.year)} labelSize={6} type="number" />
           </Col>
           <Col md={6}>
-            <Field className="form-input" name="fuel" component={Input} label={formatMessage(messages.fuel)} labelSize={4} />
+            <Field className="form-input" name="fuel" component={Input} label={formatMessage(messages.fuel)} labelSize={6} />
           </Col>
         </Row>
         <Row className="mb-2">
@@ -104,12 +104,12 @@ class WizardForm extends Component {
               name="miles"
               component={Input}
               label={formatMessage(messages.miles)}
-              labelSize={4}
+              labelSize={6}
               type="number"
             />
           </Col>
           <Col md={6}>
-            <Field className="form-input" name="color" component={Input} label={formatMessage(messages.color)} labelSize={4} />
+            <Field className="form-input" name="color" component={Input} label={formatMessage(messages.color)} labelSize={6} />
           </Col>
         </Row>
       </Fragment>

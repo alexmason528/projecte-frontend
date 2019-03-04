@@ -348,8 +348,8 @@ export class ItemDetailPage extends Component {
                   <div>EST.</div>
                   <div>$ {numeral(getEstimation(estimations)).format('0,0[.]00')}</div>
                 </div>
-                <div className="pe-box p-3 d-flex justify-content-between align-items-center">
-                  <div className="font-weight-bold text-uppercase">
+                <div className="pe-box p-3">
+                  <div className="font-weight-bold">
                     <FormattedMessage id="estify.infos" />
                   </div>
                   <div className="text-capitalize font-weight-normal">
@@ -357,6 +357,12 @@ export class ItemDetailPage extends Component {
                     <br />
                     <FormattedMessage id="estify.comments" />: {numeral(comments.length).format('0,0')}
                     <br />
+                  </div>
+                  <div className="item-lister mt-3">
+                    <div className="mb-2 font-weight-bold">
+                      <FormattedMessage id="estify.lister" />
+                    </div>
+                    <UserDetail user={user} isLister />
                   </div>
                 </div>
               </Col>

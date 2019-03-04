@@ -9,7 +9,8 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .dashboard {
+  .dashboard,
+  .item-add-page {
     .item-btn {
       padding: 2rem !important;
     }
@@ -42,7 +43,8 @@
     }
   }
 
-  .dashboard {
+  .dashboard,
+  .item-add-page {
     .add-item-btn,
     .item-btn {
       padding: 1rem 2rem;

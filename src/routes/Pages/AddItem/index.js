@@ -11,7 +11,7 @@ class AddItemPage extends Component {
 
   render() {
     return (
-      <Row className="item-add-age">
+      <Row className="item-add-page">
         <Col md={12}>
           <h3 className="pe-heading text-center mt-3" style={{ marginBottom: '1.8rem' }}>
             <FormattedMessage id="estify.wantAdd" />
